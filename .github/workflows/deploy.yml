@@ -25,5 +25,4 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/.github/**
-            **/wp-content/cache/**
-            **/.ftp-deploy-sync-state.json
+            
