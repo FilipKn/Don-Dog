@@ -1,28 +1,66 @@
-name: Deploy WordPress to InfinityFree
+name: Deploy child theme to cPanel
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-don-dog-theme
+  cancel-in-progress: true
 
 jobs:
   deploy:
+    name: Upload theme to cPanel
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_TARGET_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.github/**
-            
+      - name: Configure SSH key and known_hosts
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s' "${{ secrets.CPANEL_SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p "${{ secrets.CPANEL_PORT }}" -H "${{ secrets.CPANEL_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Create deploy archive
+        shell: bash
+        run: |
+          tar \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude=".gitignore" \
+            --exclude="README.md" \
+            -czf theme.tar.gz .
+
+      - name: Upload archive to server
+        shell: bash
+        run: |
+          scp -P "${{ secrets.CPANEL_PORT }}" \
+            theme.tar.gz \
+            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}:~/theme.tar.gz"
+
+      - name: Deploy archive on cPanel
+        shell: bash
+        run: |
+          ssh -p "${{ secrets.CPANEL_PORT }}" \
+            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" << 'EOF'
+              set -e
+
+              TARGET_DIR="${{ secrets.CPANEL_TARGET_DIR }}"
+
+              mkdir -p "$TARGET_DIR"
+
+              find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+
+              tar -xzf ~/theme.tar.gz -C "$TARGET_DIR"
+
+              rm -f ~/theme.tar.gz
+          EOF
+
+      - name: Deployment finished
+        run: echo "Theme deployed successfully."
