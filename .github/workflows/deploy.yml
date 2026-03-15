@@ -35,31 +35,32 @@ jobs:
             --exclude=".github" \
             --exclude=".gitignore" \
             --exclude="README.md" \
-            -czf theme.tar.gz .
+            --exclude=".DS_Store" \
+            -czf /tmp/theme.tar.gz .
 
       - name: Upload archive to server
         shell: bash
         run: |
           scp -P "${{ secrets.CPANEL_PORT }}" \
-            theme.tar.gz \
+            /tmp/theme.tar.gz \
             "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}:~/theme.tar.gz"
 
       - name: Deploy archive on cPanel
         shell: bash
         run: |
           ssh -p "${{ secrets.CPANEL_PORT }}" \
-            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" << 'EOF'
-              set -e
+            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" << EOF
+            set -e
 
-              TARGET_DIR="${{ secrets.CPANEL_TARGET_DIR }}"
+            TARGET_DIR="${{ secrets.CPANEL_TARGET_DIR }}"
 
-              mkdir -p "$TARGET_DIR"
+            mkdir -p "$TARGET_DIR"
 
-              find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+            find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
 
-              tar -xzf ~/theme.tar.gz -C "$TARGET_DIR"
+            tar -xzf ~/theme.tar.gz -C "$TARGET_DIR"
 
-              rm -f ~/theme.tar.gz
+            rm -f ~/theme.tar.gz
           EOF
 
       - name: Deployment finished
