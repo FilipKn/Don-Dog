@@ -48,15 +48,20 @@ jobs:
 
       - name: Deploy archive on cPanel
         shell: bash
+        env:
+          TARGET_DIR: ${{ secrets.CPANEL_TARGET_DIR }}
         run: |
+          [ -n "$TARGET_DIR" ] || { echo "CPANEL_TARGET_DIR is empty"; exit 1; }
+
           ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes -p "${{ secrets.CPANEL_PORT }}" \
-            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" << EOF
-            set -e
-            TARGET_DIR="${{ secrets.CPANEL_TARGET_DIR }}"
-            mkdir -p "$TARGET_DIR"
-            find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
-            tar -xzf ~/theme.tar.gz -C "$TARGET_DIR"
-            rm -f ~/theme.tar.gz
+            "${{ secrets.CPANEL_USERNAME }}@${{ secrets.CPANEL_HOST }}" \
+            bash -s -- "$TARGET_DIR" <<'EOF'
+          set -e
+          TARGET_DIR="$1"
+          mkdir -p "$TARGET_DIR"
+          find "$TARGET_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          tar -xzf ~/theme.tar.gz -C "$TARGET_DIR"
+          rm -f ~/theme.tar.gz
           EOF
 
       - name: Deployment finished
