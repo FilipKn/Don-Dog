@@ -1,0 +1,38 @@
+<?php
+/**
+ * Theme asset loading.
+ *
+ * @package DonDog
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Enqueue child theme styles.
+ *
+ * @return void
+ */
+function dondog_enqueue_theme_styles() {
+	wp_enqueue_style(
+		'hello-elementor-child-style',
+		get_stylesheet_directory_uri() . '/style.css',
+		[
+			'hello-elementor-theme-style',
+		],
+		DONDOG_THEME_VERSION
+	);
+
+	if ( is_404() ) {
+		wp_enqueue_style(
+			'dondog-404-style',
+			get_stylesheet_directory_uri() . '/assets/css/404.css',
+			[
+				'hello-elementor-child-style',
+			],
+			DONDOG_THEME_VERSION
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', 'dondog_enqueue_theme_styles', 20 );
