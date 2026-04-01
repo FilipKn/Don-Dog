@@ -24,7 +24,7 @@ nocache_headers();
 <main class="dondog-404" role="main">
 	<section class="dondog-404__shell" aria-labelledby="dondog-404-title">
 		<div class="dondog-404__masthead">
-			<p class="dondog-404__brand">Don Dog premium salon</p>
+			
 			<p class="dondog-404__stamp">404</p>
 		</div>
 
