@@ -44,6 +44,15 @@ function dondog_enqueue_theme_styles() {
 		DONDOG_THEME_VERSION
 	);
 
+	wp_enqueue_style(
+		'dondog-before-after-shortcode-style',
+		get_stylesheet_directory_uri() . '/assets/css/before-after-shortcode.css',
+		[
+			'hello-elementor-child-style',
+		],
+		DONDOG_THEME_VERSION
+	);
+
 	wp_enqueue_script(
 		'dondog-hero-shortcode',
 		get_stylesheet_directory_uri() . '/assets/js/hero-shortcode.js',
