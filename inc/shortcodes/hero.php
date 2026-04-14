@@ -117,6 +117,7 @@ function dondog_render_hero_shortcode( $atts ) {
 				opacity: 1;
 				filter: none;
 				transform: none;
+				animation: none;
 			}
 
 			.dondog-hero.is-ready .dondog-hero__image::before {
