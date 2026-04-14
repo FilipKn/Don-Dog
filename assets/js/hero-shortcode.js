@@ -5,10 +5,18 @@
 		return;
 	}
 
+	function revealHero(hero) {
+		window.requestAnimationFrame(function () {
+			window.requestAnimationFrame(function () {
+				hero.classList.add('is-visible');
+			});
+		});
+	}
+
 	if (!('IntersectionObserver' in window)) {
 		heroes.forEach(function (hero) {
 			hero.classList.add('is-ready');
-			hero.classList.add('is-visible');
+			revealHero(hero);
 		});
 		return;
 	}
@@ -20,7 +28,7 @@
 					return;
 				}
 
-				entry.target.classList.add('is-visible');
+				revealHero(entry.target);
 				observer.unobserve(entry.target);
 			});
 		},
