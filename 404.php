@@ -30,7 +30,7 @@ nocache_headers();
 
 		<div class="dondog-404__hero">
 			<div class="dondog-404__copy">
-				<p class="dondog-404__eyebrow">Ups, ta pot se tukaj konca</p>
+				<p class="dondog-404__eyebrow">Ups, ta pot se tukaj konca.</p>
 				<h1 class="dondog-404__title" id="dondog-404-title">Te strani nismo nasli</h1>
 				<p class="dondog-404__text">
 					Videti je, da je povezava odtavala po svoje. Nasli smo samo nekaj odtisov tack
