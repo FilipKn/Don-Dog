@@ -31,16 +31,16 @@ add_action( 'init', 'dondog_register_hero_shortcode' );
 function dondog_render_hero_shortcode( $atts ) {
 	$atts = shortcode_atts(
 		[
-			'eyebrow'        => 'Premium salon za nego zivali',
+			'eyebrow'        => 'Salon za nego živali',
 			'title_top'      => 'Vrhunska nega za',
-			'title_bottom'   => 'vasega',
-			'title_accent'   => 'kosmatinca.',
-			'text'           => 'Profesionalno strizenje, kopanje in nega za pse, macke in druge male zivali - nezno, strokovno in z ljubeznijo.',
+			'title_bottom'   => 'vašega',
+			'title_accent'   => 'PSA.',
+			'text'           => 'Striženje, kopanje in nega za pse, macke in druge male Živali.',
 			'primary_text'   => 'Rezerviraj termin',
 			'primary_url'    => '#',
-			'secondary_text' => 'Nase storitve',
+			'secondary_text' => 'Naše storitve',
 			'secondary_url'  => '#',
-			'features'       => '500+ zadovoljnih strank|Nezen pristop|Profesionalna nega',
+			'features'       => '33+ zadovoljnih strank|Nežen pristop|Profesionalna nega',
 			'main_image'     => '',
 			'top_image'      => '',
 			'right_image'    => '',
