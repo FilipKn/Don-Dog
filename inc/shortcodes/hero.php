@@ -55,7 +55,7 @@ function dondog_render_hero_shortcode( $atts ) {
 
 	ob_start();
 	?>
-	<section class="dondog-hero" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
+	<section class="dondog-hero" data-dondog-animate="hero" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
 		<div class="dondog-hero__container">
 			<div class="dondog-hero__content">
 				<p class="dondog-hero__eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></p>

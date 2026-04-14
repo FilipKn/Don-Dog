@@ -43,5 +43,13 @@ function dondog_enqueue_theme_styles() {
 		],
 		DONDOG_THEME_VERSION
 	);
+
+	wp_enqueue_script(
+		'dondog-hero-shortcode',
+		get_stylesheet_directory_uri() . '/assets/js/hero-shortcode.js',
+		[],
+		DONDOG_THEME_VERSION,
+		true
+	);
 }
 add_action( 'wp_enqueue_scripts', 'dondog_enqueue_theme_styles', 20 );
