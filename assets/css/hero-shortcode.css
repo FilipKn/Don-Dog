@@ -1,0 +1,476 @@
+.dondog-hero {
+	--dondog-hero-bg: #faf8f5;
+	--dondog-hero-ink: #1a1a1a;
+	--dondog-hero-muted: #6b6560;
+	--dondog-hero-olive: #7a8b6f;
+	--dondog-hero-line: rgba(122, 139, 111, 0.1);
+	--dondog-hero-line-soft: rgba(122, 139, 111, 0.05);
+
+	overflow: hidden;
+	background: var(--dondog-hero-bg);
+	color: var(--dondog-hero-ink);
+	font-family: Inter, "Segoe UI", Arial, sans-serif;
+	padding: clamp(96px, 14.6vw, 168px) 32px clamp(64px, 8vw, 96px);
+}
+
+.dondog-hero,
+.dondog-hero * {
+	box-sizing: border-box;
+}
+
+.dondog-hero__container {
+	display: grid;
+	grid-template-columns: minmax(0, 500px) minmax(420px, 520px);
+	align-items: center;
+	gap: clamp(44px, 5.5vw, 64px);
+	width: min(1088px, 100%);
+	min-height: 520px;
+	margin: 0 auto;
+}
+
+.dondog-hero__content {
+	position: relative;
+	z-index: 3;
+	max-width: 500px;
+}
+
+.dondog-hero__eyebrow {
+	margin: 0 0 19px;
+	color: var(--dondog-hero-olive);
+	font-size: 13px;
+	font-weight: 500;
+	letter-spacing: 1.04px;
+	line-height: 1.5;
+	text-transform: uppercase;
+}
+
+.dondog-hero__title {
+	display: grid;
+	gap: 0;
+	margin: 0;
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+	font-size: clamp(39px, 4vw, 46px);
+	font-weight: 600;
+	letter-spacing: -0.92px;
+	line-height: 1.1;
+}
+
+.dondog-hero__title span {
+	display: block;
+}
+
+.dondog-hero__title em {
+	color: var(--dondog-hero-olive);
+	font-style: normal;
+}
+
+.dondog-hero__text {
+	max-width: 420px;
+	margin: 19px 0 0;
+	color: var(--dondog-hero-muted);
+	font-size: 17px;
+	font-weight: 400;
+	line-height: 1.7;
+}
+
+.dondog-hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px;
+	margin-top: 31px;
+}
+
+.dondog-hero__button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 52px;
+	border-radius: 999px;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.5;
+	text-decoration: none;
+	transition:
+		transform 180ms ease,
+		box-shadow 180ms ease,
+		background-color 180ms ease;
+}
+
+.dondog-hero__button:hover,
+.dondog-hero__button:focus-visible {
+	transform: translateY(-1px);
+}
+
+.dondog-hero__button--primary {
+	gap: 10px;
+	padding: 14px 28px;
+	background: var(--dondog-hero-olive);
+	box-shadow: 0 4px 16px rgba(122, 139, 111, 0.25);
+	color: #fff;
+}
+
+.dondog-hero__button--primary:hover,
+.dondog-hero__button--primary:focus-visible {
+	background: #6f8065;
+	color: #fff;
+	box-shadow: 0 8px 22px rgba(122, 139, 111, 0.28);
+}
+
+.dondog-hero__button--secondary {
+	padding: 14px 24px;
+	border: 1px solid rgba(26, 26, 26, 0.1);
+	background: rgba(255, 255, 255, 0.36);
+	color: var(--dondog-hero-ink);
+}
+
+.dondog-hero__button--secondary:hover,
+.dondog-hero__button--secondary:focus-visible {
+	background: #fff;
+	color: var(--dondog-hero-ink);
+	box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+}
+
+.dondog-hero__arrow {
+	font-size: 18px;
+	line-height: 1;
+}
+
+.dondog-hero__features {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 18px;
+	margin: 32px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.dondog-hero__features li {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--dondog-hero-muted);
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.dondog-hero__features li::before {
+	content: "\2713";
+	color: var(--dondog-hero-olive);
+	font-size: 14px;
+	line-height: 1;
+}
+
+.dondog-hero__visual {
+	position: relative;
+	width: min(520px, 100%);
+	aspect-ratio: 1;
+	justify-self: end;
+}
+
+.dondog-hero__ring,
+.dondog-hero__dot,
+.dondog-hero__image {
+	position: absolute;
+	border-radius: 999px;
+}
+
+.dondog-hero__ring {
+	border: 1px solid var(--dondog-hero-line);
+	pointer-events: none;
+}
+
+.dondog-hero__ring--outer {
+	inset: 5%;
+	border-color: var(--dondog-hero-line-soft);
+}
+
+.dondog-hero__ring--inner {
+	inset: 14%;
+}
+
+.dondog-hero__dot {
+	pointer-events: none;
+}
+
+.dondog-hero__dot--large {
+	top: 36%;
+	left: 64%;
+	width: 9.23%;
+	background: rgba(122, 139, 111, 0.2);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__dot--small {
+	top: 88%;
+	left: 16%;
+	width: 6.15%;
+	background: rgba(122, 139, 111, 0.1);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__image {
+	z-index: 2;
+	overflow: hidden;
+	margin: 0;
+	background: rgba(255, 255, 255, 0.55);
+}
+
+.dondog-hero__image--main {
+	top: 8%;
+	left: 18%;
+	width: 53.85%;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__image--top {
+	top: 2%;
+	left: 72%;
+	width: 30.77%;
+	border: 3px solid rgba(255, 255, 255, 0.9);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__image--right {
+	top: 48%;
+	left: 68%;
+	width: 23.08%;
+	box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__image--left {
+	top: 62%;
+	left: 4%;
+	width: 26.92%;
+	box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__image--bottom {
+	top: 78%;
+	left: 42%;
+	width: 18.46%;
+	border: 3px solid rgba(255, 255, 255, 0.9);
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+	aspect-ratio: 1;
+}
+
+.dondog-hero__img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+	object-fit: cover;
+}
+
+.dondog-hero__image--placeholder {
+	display: grid;
+	place-items: center;
+	border: 1px dashed rgba(122, 139, 111, 0.35);
+	color: var(--dondog-hero-olive);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.dondog-hero__image--placeholder span {
+	padding: 10px;
+}
+
+@media (max-width: 980px) {
+	.dondog-hero {
+		padding: 96px 24px 76px;
+	}
+
+	.dondog-hero__container {
+		grid-template-columns: 1fr;
+		gap: 54px;
+		min-height: 0;
+	}
+
+	.dondog-hero__content {
+		max-width: 680px;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.dondog-hero__text {
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.dondog-hero__actions,
+	.dondog-hero__features {
+		justify-content: center;
+	}
+
+	.dondog-hero__visual {
+		width: min(500px, 82vw);
+		justify-self: center;
+	}
+}
+
+@media (max-width: 760px) {
+	.dondog-hero {
+		padding: 82px 22px 68px;
+	}
+
+	.dondog-hero__container {
+		gap: 44px;
+	}
+
+	.dondog-hero__eyebrow {
+		font-size: 12px;
+		letter-spacing: 0.9px;
+	}
+
+	.dondog-hero__title {
+		font-size: clamp(38px, 9vw, 44px);
+	}
+
+	.dondog-hero__visual {
+		width: min(430px, 88vw);
+	}
+
+	.dondog-hero__image--top {
+		left: 68%;
+		width: 29%;
+	}
+
+	.dondog-hero__image--right {
+		left: 67%;
+		width: 22%;
+	}
+}
+
+@media (max-width: 640px) {
+	.dondog-hero {
+		padding: 72px 20px 58px;
+	}
+
+	.dondog-hero__container {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		padding: 10px 0 18px;
+	}
+
+	.dondog-hero__content {
+		position: relative;
+		z-index: 3;
+		margin: 0;
+		text-align: left;
+	}
+
+	.dondog-hero__eyebrow,
+	.dondog-hero__title,
+	.dondog-hero__text {
+		position: relative;
+		z-index: 2;
+	}
+
+	.dondog-hero__title {
+		font-size: clamp(36px, 11.5vw, 42px);
+		letter-spacing: -0.74px;
+	}
+
+	.dondog-hero__text {
+		max-width: 78%;
+		margin-right: 0;
+		margin-left: 0;
+		font-size: 16px;
+		line-height: 1.65;
+	}
+
+	.dondog-hero__actions,
+	.dondog-hero__features {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.dondog-hero__button {
+		width: 100%;
+	}
+
+	.dondog-hero__features {
+		gap: 10px;
+		margin-top: 26px;
+		text-align: left;
+	}
+
+	.dondog-hero__features li {
+		justify-content: flex-start;
+	}
+
+	.dondog-hero__visual {
+		position: absolute;
+		z-index: 1;
+		top: -18px;
+		right: -118px;
+		width: min(330px, 84vw);
+		opacity: 0.32;
+		pointer-events: none;
+		transform: rotate(-5deg);
+	}
+
+	.dondog-hero__image--main {
+		top: 9%;
+		left: 18%;
+		width: 54%;
+	}
+
+	.dondog-hero__image--top {
+		top: 3%;
+		left: 66%;
+		width: 28%;
+	}
+
+	.dondog-hero__image--right {
+		top: 48%;
+		left: 67%;
+		width: 22%;
+	}
+
+	.dondog-hero__image--left {
+		top: 63%;
+		left: 4%;
+		width: 27%;
+	}
+
+	.dondog-hero__image--bottom {
+		top: 77%;
+		left: 42%;
+		width: 19%;
+	}
+}
+
+@media (max-width: 420px) {
+	.dondog-hero {
+		padding: 62px 16px 52px;
+	}
+
+	.dondog-hero__title {
+		font-size: clamp(33px, 11vw, 38px);
+	}
+
+	.dondog-hero__button {
+		min-height: 50px;
+	}
+
+	.dondog-hero__text {
+		max-width: 84%;
+	}
+
+	.dondog-hero__visual {
+		top: 0;
+		right: -112px;
+		width: min(290px, 88vw);
+		opacity: 0.3;
+	}
+}
