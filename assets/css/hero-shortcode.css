@@ -45,37 +45,6 @@
 	margin-top: 60px;
 }
 
-.dondog-hero__eyebrow,
-.dondog-hero__title,
-.dondog-hero__text,
-.dondog-hero__actions,
-.dondog-hero__features {
-	opacity: 0;
-	filter: blur(12px);
-	transform: translate3d(-42vw, 0, 0);
-	will-change: opacity, filter, transform;
-}
-
-.dondog-hero__eyebrow {
-	animation: dondogHeroTextEnter 950ms cubic-bezier(0.16, 1, 0.3, 1) 140ms forwards;
-}
-
-.dondog-hero__title {
-	animation: dondogHeroTextEnter 1050ms cubic-bezier(0.16, 1, 0.3, 1) 260ms forwards;
-}
-
-.dondog-hero__text {
-	animation: dondogHeroTextEnter 980ms cubic-bezier(0.16, 1, 0.3, 1) 470ms forwards;
-}
-
-.dondog-hero__actions {
-	animation: dondogHeroActionEnter 900ms cubic-bezier(0.16, 1, 0.3, 1) 680ms forwards;
-}
-
-.dondog-hero__features {
-	animation: dondogHeroActionEnter 900ms cubic-bezier(0.16, 1, 0.3, 1) 860ms forwards;
-}
-
 .dondog-hero__eyebrow {
 	margin: 0 0 19px;
 	color: var(--dondog-hero-olive);
@@ -202,6 +171,61 @@
 	color: var(--dondog-hero-olive);
 	font-size: 14px;
 	line-height: 1;
+}
+
+.dondog-hero.is-text-ready .dondog-hero__eyebrow,
+.dondog-hero.is-text-ready .dondog-hero__title,
+.dondog-hero.is-text-ready .dondog-hero__text,
+.dondog-hero.is-text-ready .dondog-hero__actions,
+.dondog-hero.is-text-ready .dondog-hero__features {
+	opacity: 0;
+	filter: blur(10px);
+	transform: translate3d(-96px, 0, 0);
+	transition:
+		opacity 850ms cubic-bezier(0.16, 1, 0.3, 1),
+		filter 850ms cubic-bezier(0.16, 1, 0.3, 1),
+		transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
+	will-change: opacity, filter, transform;
+}
+
+.dondog-hero.is-text-ready .dondog-hero__title {
+	transform: translate3d(-132px, 0, 0);
+	transition-duration: 980ms;
+}
+
+.dondog-hero.is-text-ready .dondog-hero__actions,
+.dondog-hero.is-text-ready .dondog-hero__features {
+	transform: translate3d(-88px, 18px, 0);
+}
+
+.dondog-hero.is-text-visible .dondog-hero__eyebrow,
+.dondog-hero.is-text-visible .dondog-hero__title,
+.dondog-hero.is-text-visible .dondog-hero__text,
+.dondog-hero.is-text-visible .dondog-hero__actions,
+.dondog-hero.is-text-visible .dondog-hero__features {
+	opacity: 1;
+	filter: blur(0);
+	transform: translate3d(0, 0, 0);
+}
+
+.dondog-hero.is-text-visible .dondog-hero__eyebrow {
+	transition-delay: 80ms;
+}
+
+.dondog-hero.is-text-visible .dondog-hero__title {
+	transition-delay: 190ms;
+}
+
+.dondog-hero.is-text-visible .dondog-hero__text {
+	transition-delay: 340ms;
+}
+
+.dondog-hero.is-text-visible .dondog-hero__actions {
+	transition-delay: 500ms;
+}
+
+.dondog-hero.is-text-visible .dondog-hero__features {
+	transition-delay: 650ms;
 }
 
 .dondog-hero__visual {
@@ -398,46 +422,6 @@
 	padding: 10px;
 }
 
-@keyframes dondogHeroTextEnter {
-	0% {
-		opacity: 0;
-		filter: blur(12px);
-		transform: translate3d(-42vw, 0, 0);
-	}
-
-	72% {
-		opacity: 1;
-		filter: blur(0);
-		transform: translate3d(14px, 0, 0);
-	}
-
-	100% {
-		opacity: 1;
-		filter: blur(0);
-		transform: translate3d(0, 0, 0);
-	}
-}
-
-@keyframes dondogHeroActionEnter {
-	0% {
-		opacity: 0;
-		filter: blur(10px);
-		transform: translate3d(-30vw, 18px, 0);
-	}
-
-	72% {
-		opacity: 1;
-		filter: blur(0);
-		transform: translate3d(10px, 0, 0);
-	}
-
-	100% {
-		opacity: 1;
-		filter: blur(0);
-		transform: translate3d(0, 0, 0);
-	}
-}
-
 @keyframes dondogHeroImageIn {
 	0% {
 		opacity: 0;
@@ -618,15 +602,11 @@
 	}
 
 	.dondog-hero__image--top {
-		top: -4%;
-		left: 56%;
-		width: 30%;
+		display: none;
 	}
 
 	.dondog-hero__image--right {
-		top: 36%;
-		left: 62%;
-		width: 24%;
+		display: none;
 	}
 
 	.dondog-hero__image--left {
@@ -684,6 +664,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.dondog-hero.is-text-ready .dondog-hero__eyebrow,
+	.dondog-hero.is-text-ready .dondog-hero__title,
+	.dondog-hero.is-text-ready .dondog-hero__text,
+	.dondog-hero.is-text-ready .dondog-hero__actions,
+	.dondog-hero.is-text-ready .dondog-hero__features,
 	.dondog-hero.is-ready .dondog-hero__eyebrow,
 	.dondog-hero.is-ready .dondog-hero__title,
 	.dondog-hero.is-ready .dondog-hero__text,
@@ -696,6 +681,7 @@
 		filter: none;
 		transform: none;
 		animation: none;
+		transition: none;
 	}
 
 	.dondog-hero__image::before {

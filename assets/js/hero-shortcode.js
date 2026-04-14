@@ -5,10 +5,21 @@
 		return;
 	}
 
+	function revealText(hero) {
+		hero.classList.add('is-text-ready');
+
+		window.requestAnimationFrame(function () {
+			window.setTimeout(function () {
+				hero.classList.add('is-text-visible');
+			}, 140);
+		});
+	}
+
 	function revealHero(hero) {
 		window.requestAnimationFrame(function () {
 			window.requestAnimationFrame(function () {
 				hero.classList.add('is-visible');
+				revealText(hero);
 			});
 		});
 	}

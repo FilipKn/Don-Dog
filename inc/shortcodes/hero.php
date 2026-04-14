@@ -55,7 +55,7 @@ function dondog_render_hero_shortcode( $atts ) {
 
 	ob_start();
 	?>
-	<section class="dondog-hero is-ready" data-dondog-animate="hero" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
+	<section class="dondog-hero is-ready is-text-ready" data-dondog-animate="hero" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
 		<div class="dondog-hero__container">
 			<div class="dondog-hero__content">
 				<p class="dondog-hero__eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></p>
@@ -111,6 +111,11 @@ function dondog_render_hero_shortcode( $atts ) {
 			.dondog-hero.is-ready .dondog-hero__text,
 			.dondog-hero.is-ready .dondog-hero__actions,
 			.dondog-hero.is-ready .dondog-hero__features,
+			.dondog-hero.is-text-ready .dondog-hero__eyebrow,
+			.dondog-hero.is-text-ready .dondog-hero__title,
+			.dondog-hero.is-text-ready .dondog-hero__text,
+			.dondog-hero.is-text-ready .dondog-hero__actions,
+			.dondog-hero.is-text-ready .dondog-hero__features,
 			.dondog-hero.is-ready .dondog-hero__image,
 			.dondog-hero.is-ready .dondog-hero__ring,
 			.dondog-hero.is-ready .dondog-hero__dot {
@@ -118,6 +123,7 @@ function dondog_render_hero_shortcode( $atts ) {
 				filter: none;
 				transform: none;
 				animation: none;
+				transition: none;
 			}
 
 			.dondog-hero.is-ready .dondog-hero__image::before {
