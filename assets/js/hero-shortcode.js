@@ -11,7 +11,7 @@
 		window.requestAnimationFrame(function () {
 			window.setTimeout(function () {
 				hero.classList.add('is-text-visible');
-			}, 140);
+			}, 1000);
 		});
 	}
 
