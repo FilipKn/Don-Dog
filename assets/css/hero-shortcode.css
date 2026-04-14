@@ -1,5 +1,5 @@
 .dondog-hero {
-	--dondog-hero-bg: #faf8f5;
+	--dondog-hero-bg: #f7f5f0;
 	--dondog-hero-ink: #1a1a1a;
 	--dondog-hero-muted: #6b6560;
 	--dondog-hero-olive: #7a8b6f;
@@ -44,27 +44,29 @@
 .dondog-hero.is-ready .dondog-hero__actions,
 .dondog-hero.is-ready .dondog-hero__features {
 	opacity: 0;
-	transform: translateX(28px);
+	filter: blur(10px);
+	transform: translateX(-34vw);
+	will-change: opacity, filter, transform;
 }
 
 .dondog-hero.is-visible .dondog-hero__eyebrow {
-	animation: dondogHeroFadeLeft 720ms cubic-bezier(0.23, 1, 0.32, 1) 120ms forwards;
+	animation: dondogHeroTextSweep 900ms cubic-bezier(0.16, 1, 0.3, 1) 80ms forwards;
 }
 
 .dondog-hero.is-visible .dondog-hero__title {
-	animation: dondogHeroFadeLeft 760ms cubic-bezier(0.23, 1, 0.32, 1) 240ms forwards;
+	animation: dondogHeroTextSweep 980ms cubic-bezier(0.16, 1, 0.3, 1) 210ms forwards;
 }
 
 .dondog-hero.is-visible .dondog-hero__text {
-	animation: dondogHeroFadeLeft 760ms cubic-bezier(0.23, 1, 0.32, 1) 390ms forwards;
+	animation: dondogHeroTextSweep 940ms cubic-bezier(0.16, 1, 0.3, 1) 410ms forwards;
 }
 
 .dondog-hero.is-visible .dondog-hero__actions {
-	animation: dondogHeroFadeUp 720ms cubic-bezier(0.23, 1, 0.32, 1) 520ms forwards;
+	animation: dondogHeroActionRise 860ms cubic-bezier(0.16, 1, 0.3, 1) 610ms forwards;
 }
 
 .dondog-hero.is-visible .dondog-hero__features {
-	animation: dondogHeroFadeUp 720ms cubic-bezier(0.23, 1, 0.32, 1) 680ms forwards;
+	animation: dondogHeroActionRise 860ms cubic-bezier(0.16, 1, 0.3, 1) 780ms forwards;
 }
 
 .dondog-hero__eyebrow {
@@ -389,26 +391,42 @@
 	padding: 10px;
 }
 
-@keyframes dondogHeroFadeLeft {
+@keyframes dondogHeroTextSweep {
 	0% {
 		opacity: 0;
-		transform: translateX(28px);
+		filter: blur(10px);
+		transform: translateX(-34vw);
+	}
+
+	72% {
+		opacity: 1;
+		filter: blur(0);
+		transform: translateX(8px);
 	}
 
 	100% {
 		opacity: 1;
+		filter: blur(0);
 		transform: translateX(0);
 	}
 }
 
-@keyframes dondogHeroFadeUp {
+@keyframes dondogHeroActionRise {
 	0% {
 		opacity: 0;
-		transform: translateY(18px);
+		filter: blur(8px);
+		transform: translateX(-18vw) translateY(22px);
+	}
+
+	72% {
+		opacity: 1;
+		filter: blur(0);
+		transform: translateX(6px) translateY(0);
 	}
 
 	100% {
 		opacity: 1;
+		filter: blur(0);
 		transform: translateY(0);
 	}
 }
@@ -666,6 +684,7 @@
 	.dondog-hero__ring,
 	.dondog-hero__dot {
 		opacity: 1;
+		filter: none;
 		transform: none;
 		animation: none;
 	}
