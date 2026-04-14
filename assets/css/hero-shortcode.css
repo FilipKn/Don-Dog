@@ -10,9 +10,10 @@
 	background: var(--dondog-hero-bg);
 	color: var(--dondog-hero-ink);
 	font-family: Inter, "Segoe UI", Arial, sans-serif;
-	width: 100vw;
-	margin-right: calc(50% - 50vw);
-	margin-left: calc(50% - 50vw);
+	width: 100%;
+	max-width: 100%;
+	margin-right: 0;
+	margin-left: 0;
 	padding: clamp(56px, 6.5vw, 76px) 32px clamp(56px, 7vw, 86px);
 }
 
@@ -601,7 +602,7 @@
 	.dondog-hero__visual {
 		position: absolute;
 		z-index: 1;
-		top: 48px;
+		top: -18px;
 		right: auto;
 		left: 18%;
 		width: min(430px, 112vw);
@@ -611,21 +612,21 @@
 	}
 
 	.dondog-hero__image--main {
-		top: 0%;
+		top: -4%;
 		left: 25%;
-		width: 56%;
+		width: 54%;
 	}
 
 	.dondog-hero__image--top {
-		top: -2%;
+		top: -8%;
 		left: 58%;
 		width: 27%;
 	}
 
 	.dondog-hero__image--right {
-		top: 34%;
+		top: 29%;
 		left: 58%;
-		width: 22%;
+		width: 21%;
 	}
 
 	.dondog-hero__image--left {
@@ -663,7 +664,7 @@
 	}
 
 	.dondog-hero__visual {
-		top: 54px;
+		top: -6px;
 		left: 16%;
 		right: auto;
 		width: min(386px, 116vw);
