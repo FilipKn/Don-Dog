@@ -4,14 +4,17 @@
 	--dondog-ba-muted: #6b6560;
 	--dondog-ba-green: #7a8b6f;
 	--dondog-ba-card: #ffffff;
-	--dondog-ba-radius: 14px;
-	width: 100%;
-	max-width: 100%;
+	--dondog-ba-radius: 18px;
+	position: relative;
+	left: 50%;
+	width: min(100vw, 1560px);
+	max-width: calc(100vw - 28px);
 	margin: 0;
-	padding: clamp(22px, 4vw, 42px) 0;
+	padding: clamp(34px, 5vw, 72px) 0;
 	color: var(--dondog-ba-text);
 	font-family: Inter, sans-serif;
-	overflow: hidden;
+	overflow: clip;
+	transform: translateX(-50%);
 }
 
 .dondog-before-after,
@@ -22,25 +25,35 @@
 .dondog-before-after__grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: clamp(22px, 3vw, 34px);
-	width: min(100%, 1200px);
+	gap: clamp(26px, 3vw, 42px);
+	width: 100%;
 	margin: 0 auto;
-	padding: 0 clamp(18px, 4vw, 36px);
+	padding: 0 clamp(18px, 3.5vw, 42px);
 }
 
 .dondog-before-after__card {
 	min-width: 0;
+	padding: clamp(8px, 1vw, 12px);
+	border-radius: calc(var(--dondog-ba-radius) + 8px);
+	background: rgba(255, 255, 255, 0.52);
+	box-shadow: 0 24px 70px rgba(26, 26, 26, 0.08);
+	transition: transform 350ms ease, box-shadow 350ms ease;
 }
 
 .dondog-before-after__images {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	aspect-ratio: 1.78 / 1;
+	aspect-ratio: 1.42 / 1;
 	width: 100%;
 	overflow: hidden;
 	border-radius: var(--dondog-ba-radius);
 	background: var(--dondog-ba-card);
-	box-shadow: 0 18px 46px rgba(26, 26, 26, 0.08);
+	box-shadow: 0 18px 42px rgba(26, 26, 26, 0.1);
+}
+
+.dondog-before-after__card:hover {
+	box-shadow: 0 34px 90px rgba(26, 26, 26, 0.13);
+	transform: translateY(-8px);
 }
 
 .dondog-before-after__image {
@@ -69,19 +82,19 @@
 
 .dondog-before-after__badge {
 	position: absolute;
-	right: 12px;
-	bottom: 12px;
+	right: 16px;
+	bottom: 16px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 42px;
-	min-height: 30px;
-	padding: 7px 13px;
+	min-width: 50px;
+	min-height: 34px;
+	padding: 9px 15px;
 	border-radius: 999px;
 	background: rgba(245, 243, 237, 0.92);
 	box-shadow: 0 10px 24px rgba(26, 26, 26, 0.1);
 	color: var(--dondog-ba-muted);
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: 500;
 	line-height: 1;
 	backdrop-filter: blur(8px);
@@ -99,34 +112,34 @@
 	align-items: center;
 	justify-content: center;
 	color: rgba(107, 101, 96, 0.72);
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 500;
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 }
 
 .dondog-before-after__content {
-	padding: 14px 4px 0;
+	padding: 18px 6px 4px;
 }
 
 .dondog-before-after__name {
 	margin: 0;
 	color: var(--dondog-ba-text);
 	font-family: Inter, sans-serif;
-	font-size: clamp(16px, 1.6vw, 18px);
+	font-size: clamp(19px, 1.7vw, 24px);
 	font-weight: 600;
 	line-height: 1.25;
 }
 
 .dondog-before-after__breed {
-	margin: 7px 0 0;
+	margin: 8px 0 0;
 	color: var(--dondog-ba-muted);
-	font-size: clamp(13px, 1.3vw, 15px);
+	font-size: clamp(14px, 1.25vw, 17px);
 	font-weight: 400;
 	line-height: 1.35;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
 	.dondog-before-after__grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
@@ -134,17 +147,21 @@
 
 @media (max-width: 640px) {
 	.dondog-before-after {
+		left: auto;
+		width: 100%;
+		max-width: 100%;
 		padding: 26px 0;
+		transform: none;
 	}
 
 	.dondog-before-after__grid {
 		grid-template-columns: 1fr;
-		gap: 26px;
+		gap: 28px;
 		padding: 0 20px;
 	}
 
 	.dondog-before-after__images {
-		aspect-ratio: 1.55 / 1;
+		aspect-ratio: 1.36 / 1;
 		border-radius: 12px;
 	}
 
