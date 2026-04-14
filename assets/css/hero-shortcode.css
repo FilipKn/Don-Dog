@@ -548,13 +548,13 @@
 		position: relative;
 		display: block;
 		overflow: hidden;
-		min-height: 760px;
+		min-height: 680px;
 		padding: 10px 0 18px;
 	}
 
 	.dondog-hero__content {
 		position: relative;
-		z-index: 3;
+		z-index: 2;
 		margin: 0;
 		text-align: left;
 	}
@@ -601,44 +601,44 @@
 
 	.dondog-hero__visual {
 		position: absolute;
-		z-index: 1;
-		top: -18px;
-		right: auto;
-		left: 18%;
-		width: min(430px, 112vw);
-		opacity: 0.36;
+		z-index: 0;
+		top: clamp(18px, 8vw, 46px);
+		right: clamp(-118px, -18vw, -48px);
+		left: auto;
+		width: clamp(280px, 76vw, 410px);
+		opacity: 0.26;
 		pointer-events: none;
-		transform: rotate(-4deg);
+		transform: rotate(-3deg);
 	}
 
 	.dondog-hero__image--main {
-		top: -4%;
-		left: 25%;
-		width: 54%;
+		top: 2%;
+		left: 12%;
+		width: 62%;
 	}
 
 	.dondog-hero__image--top {
-		top: -8%;
-		left: 58%;
-		width: 27%;
+		top: -4%;
+		left: 56%;
+		width: 30%;
 	}
 
 	.dondog-hero__image--right {
-		top: 29%;
-		left: 58%;
-		width: 21%;
+		top: 36%;
+		left: 62%;
+		width: 24%;
 	}
 
 	.dondog-hero__image--left {
-		top: 88%;
-		left: 18%;
-		width: 26%;
+		top: 56%;
+		left: 4%;
+		width: 28%;
 	}
 
 	.dondog-hero__image--bottom {
-		top: 100%;
-		left: 56%;
-		width: 19%;
+		top: 66%;
+		left: 44%;
+		width: 20%;
 	}
 }
 
@@ -648,7 +648,7 @@
 	}
 
 	.dondog-hero__container {
-		min-height: 735px;
+		min-height: 660px;
 	}
 
 	.dondog-hero__title {
@@ -664,11 +664,11 @@
 	}
 
 	.dondog-hero__visual {
-		top: -6px;
-		left: 16%;
-		right: auto;
-		width: min(386px, 116vw);
-		opacity: 0.36;
+		top: clamp(16px, 9vw, 38px);
+		right: clamp(-112px, -22vw, -58px);
+		left: auto;
+		width: clamp(270px, 82vw, 350px);
+		opacity: 0.27;
 	}
 }
 
@@ -678,9 +678,8 @@
 	}
 
 	.dondog-hero__visual {
-		left: 10%;
-		right: auto;
-		width: 360px;
+		right: -96px;
+		width: 292px;
 	}
 }
 
