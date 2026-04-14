@@ -1,20 +1,12 @@
 .dondog-before-after {
-	--dondog-ba-bg: #f5f3ed;
 	--dondog-ba-text: #1a1a1a;
 	--dondog-ba-muted: #6b6560;
 	--dondog-ba-green: #7a8b6f;
-	--dondog-ba-card: #ffffff;
-	--dondog-ba-radius: 18px;
-	position: relative;
-	left: 50%;
-	width: min(100vw, 1560px);
-	max-width: calc(100vw - 28px);
+	width: 100%;
 	margin: 0;
-	padding: clamp(34px, 5vw, 72px) 0;
+	padding: 0;
 	color: var(--dondog-ba-text);
 	font-family: Inter, sans-serif;
-	overflow: clip;
-	transform: translateX(-50%);
 }
 
 .dondog-before-after,
@@ -24,46 +16,42 @@
 
 .dondog-before-after__grid {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: clamp(26px, 3vw, 42px);
+	grid-template-columns: repeat(3, minmax(0, 341.34px));
+	justify-content: center;
+	gap: 32px;
 	width: 100%;
 	margin: 0 auto;
-	padding: 0 clamp(18px, 3.5vw, 42px);
+	padding: 0;
 }
 
 .dondog-before-after__card {
-	min-width: 0;
-	padding: clamp(8px, 1vw, 12px);
-	border-radius: calc(var(--dondog-ba-radius) + 8px);
-	background: rgba(255, 255, 255, 0.52);
-	box-shadow: 0 24px 70px rgba(26, 26, 26, 0.08);
-	transition: transform 350ms ease, box-shadow 350ms ease;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+	width: 100%;
+	max-width: 341.34px;
+	margin: 0;
+	padding: 0;
 }
 
 .dondog-before-after__images {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	aspect-ratio: 1.42 / 1;
+	gap: 4px;
 	width: 100%;
+	height: 260px;
 	overflow: hidden;
-	border-radius: var(--dondog-ba-radius);
-	background: var(--dondog-ba-card);
-	box-shadow: 0 18px 42px rgba(26, 26, 26, 0.1);
-}
-
-.dondog-before-after__card:hover {
-	box-shadow: 0 34px 90px rgba(26, 26, 26, 0.13);
-	transform: translateY(-8px);
+	border-radius: 16px;
 }
 
 .dondog-before-after__image {
 	position: relative;
 	min-width: 0;
+	height: 260px;
 	margin: 0;
 	overflow: hidden;
-	background:
-		radial-gradient(circle at 30% 25%, rgba(122, 139, 111, 0.16), transparent 34%),
-		var(--dondog-ba-bg);
+	background: #f5f3ed;
 }
 
 .dondog-before-after__img {
@@ -71,37 +59,32 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transform: scale(1.01);
-	transition: transform 500ms ease, filter 500ms ease;
-}
-
-.dondog-before-after__card:hover .dondog-before-after__img {
-	filter: saturate(1.04) contrast(1.02);
-	transform: scale(1.055);
 }
 
 .dondog-before-after__badge {
 	position: absolute;
-	right: 16px;
-	bottom: 16px;
+	bottom: 12px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 50px;
-	min-height: 34px;
-	padding: 9px 15px;
+	min-width: 38.88px;
+	height: 32px;
+	padding: 0 12px;
 	border-radius: 999px;
-	background: rgba(245, 243, 237, 0.92);
-	box-shadow: 0 10px 24px rgba(26, 26, 26, 0.1);
+	background: rgba(255, 255, 255, 0.9);
 	color: var(--dondog-ba-muted);
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: 500;
-	line-height: 1;
-	backdrop-filter: blur(8px);
+	line-height: 18px;
+}
+
+.dondog-before-after__image--before .dondog-before-after__badge {
+	left: 12px;
 }
 
 .dondog-before-after__image--after .dondog-before-after__badge {
-	background: rgba(122, 139, 111, 0.94);
+	right: 12px;
+	background: var(--dondog-ba-green);
 	color: #ffffff;
 }
 
@@ -111,65 +94,55 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: rgba(107, 101, 96, 0.72);
-	font-size: 15px;
+	color: var(--dondog-ba-muted);
+	font-size: 12px;
 	font-weight: 500;
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
 }
 
 .dondog-before-after__content {
-	padding: 18px 6px 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 2px;
+	width: 100%;
+	padding: 0 4px;
 }
 
 .dondog-before-after__name {
+	width: 100%;
 	margin: 0;
 	color: var(--dondog-ba-text);
 	font-family: Inter, sans-serif;
-	font-size: clamp(19px, 1.7vw, 24px);
+	font-size: 16px;
 	font-weight: 600;
-	line-height: 1.25;
+	line-height: 24px;
 }
 
 .dondog-before-after__breed {
-	margin: 8px 0 0;
+	width: 100%;
+	margin: 0;
 	color: var(--dondog-ba-muted);
-	font-size: clamp(14px, 1.25vw, 17px);
+	font-size: 14px;
 	font-weight: 400;
-	line-height: 1.35;
+	line-height: 21px;
 }
 
 @media (max-width: 1100px) {
 	.dondog-before-after__grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: repeat(2, minmax(0, 341.34px));
 	}
 }
 
-@media (max-width: 640px) {
-	.dondog-before-after {
-		left: auto;
-		width: 100%;
-		max-width: 100%;
-		padding: 26px 0;
-		transform: none;
-	}
-
+@media (max-width: 720px) {
 	.dondog-before-after__grid {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 341.34px);
 		gap: 28px;
-		padding: 0 20px;
 	}
+}
 
-	.dondog-before-after__images {
-		aspect-ratio: 1.36 / 1;
-		border-radius: 12px;
-	}
-
-	.dondog-before-after__badge {
-		right: 10px;
-		bottom: 10px;
-		min-width: 38px;
-		min-height: 28px;
-		padding: 7px 11px;
+@media (max-width: 390px) {
+	.dondog-before-after__images,
+	.dondog-before-after__image {
+		height: 240px;
 	}
 }
