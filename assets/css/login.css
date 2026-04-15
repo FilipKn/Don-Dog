@@ -190,7 +190,7 @@ body.login #login {
 
 .login .button.wp-hide-pw {
 	position: absolute;
-	top: 30px;
+	top: 24px;
 	right: 12px;
 	display: inline-flex;
 	align-items: center;
