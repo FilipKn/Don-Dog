@@ -134,6 +134,9 @@ function dondog_translate_login_text( $translation, $text ) {
 		'Get New Password'          => 'Pridobi novo geslo',
 		'Email Address'             => 'E-poštni naslov',
 		'Username'                  => 'Uporabniško ime',
+		'Go to DonDog'              => 'Nazaj na Don Dog spletno stran',
+		'← Go to DonDog'            => 'Nazaj na Don Dog spletno stran',
+		'&larr; Go to DonDog'       => 'Nazaj na Don Dog spletno stran',
 	];
 
 	return $translations[ $text ] ?? $translation;
