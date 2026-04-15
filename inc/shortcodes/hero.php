@@ -37,7 +37,7 @@ function dondog_render_hero_shortcode( $atts ) {
 			'title_accent'   => 'PSA.',
 			'text'           => 'Striženje, kopanje in nega za pse, mačke in druge male Živali.',
 			'primary_text'   => 'Rezerviraj termin',
-			'primary_url'    => 'https://dondog.si/rezervacije/',
+			'primary_url'    => 'https://dondog.si/rezervacije',
 			'secondary_text' => 'Naše storitve',
 			'secondary_url'  => 'https://dondog.si/cenik/',
 			'features'       => '33+ zadovoljnih strank|Nežen pristop|Profesionalna nega',
