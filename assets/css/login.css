@@ -89,28 +89,27 @@ body.login #login {
 }
 
 .login h1 a {
-	display: inline-flex;
-	align-items: center;
-	width: auto;
-	height: 42px;
-	min-width: 196px;
+	display: block;
+	width: 170px;
+	height: 58px;
 	margin: 0;
-	padding: 0 0 0 54px;
+	padding: 0;
 	background-image: var(--dondog-login-logo);
 	background-position: left center;
 	background-repeat: no-repeat;
-	background-size: 42px 42px;
+	background-size: contain;
 	color: var(--dondog-login-ink);
 	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
-	font-size: 24px;
+	font-size: 0;
 	font-weight: 600;
 	line-height: 1;
-	text-indent: 0;
+	overflow: hidden;
+	text-indent: -9999px;
 	text-decoration: none;
 }
 
 .login h1 a::after {
-	content: "Don Dog";
+	content: none;
 }
 
 .login form {
@@ -197,6 +196,12 @@ body.login #login {
 	font-weight: 500;
 }
 
+.login .submit {
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+
 .login input[type="checkbox"] {
 	width: 18px;
 	height: 18px;
@@ -214,19 +219,32 @@ body.login #login {
 	min-height: 56px;
 	border: 0;
 	border-radius: 999px;
-	background: var(--dondog-login-olive);
-	box-shadow: 0 16px 30px rgba(122, 139, 111, 0.22);
+	background: linear-gradient(135deg, #7f9274, #6f8065);
+	box-shadow:
+		0 16px 30px rgba(122, 139, 111, 0.3),
+		0 0 34px rgba(122, 139, 111, 0.18);
 	color: #ffffff;
 	font-size: 15px;
 	font-weight: 700;
+	letter-spacing: 0.01em;
 	text-shadow: none;
 	transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
+.login .submit .button-primary {
+	display: inline-flex;
+	float: none;
+	align-items: center;
+	justify-content: center;
+	margin: 4px 0 0;
+}
+
 .wp-core-ui .button-primary:hover,
 .wp-core-ui .button-primary:focus {
-	background: #6f8065;
-	box-shadow: 0 22px 42px rgba(122, 139, 111, 0.3);
+	background: linear-gradient(135deg, #718567, #60755a);
+	box-shadow:
+		0 22px 42px rgba(122, 139, 111, 0.38),
+		0 0 58px rgba(122, 139, 111, 0.28);
 	transform: translateY(-1px);
 }
 
@@ -278,7 +296,7 @@ body.login #login {
 }
 
 .login #backtoblog a::before {
-	content: "<- ";
+	content: "";
 }
 
 .login .privacy-policy-page-link {

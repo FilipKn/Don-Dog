@@ -63,8 +63,8 @@ function dondog_render_login_visual_panel() {
 	?>
 	<section class="dondog-login-visual" aria-label="<?php echo esc_attr__( 'Don Dog prijava', 'dondog' ); ?>">
 		<div class="dondog-login-visual__content">
-			<p class="dondog-login-visual__eyebrow">Nadzorna plosca</p>
-			<p class="dondog-login-visual__title">Dobrodosli nazaj v Don Dog.</p>
+			<p class="dondog-login-visual__eyebrow">Nadzorna plošča</p>
+			<p class="dondog-login-visual__title">Dobrodošli nazaj v Don Dog.</p>
 			<p class="dondog-login-visual__text">Upravljajte svoje termine, stranke in storitve na enem mestu.</p>
 		</div>
 	</section>
@@ -83,7 +83,7 @@ function dondog_login_intro_message( $message ) {
 		'<div class="dondog-login-intro"><p class="dondog-login-intro__eyebrow">%1$s</p><h2>%2$s</h2><p>%3$s</p></div>',
 		esc_html__( 'WP-ADMIN', 'dondog' ),
 		esc_html__( 'Prijava v upravljanje', 'dondog' ),
-		esc_html__( 'Vnesite svoje podatke za dostop do nadzorne plosce.', 'dondog' )
+		esc_html__( 'Vnesite svoje podatke za dostop do nadzorne plošče.', 'dondog' )
 	);
 
 	return $intro . $message;
@@ -110,4 +110,105 @@ function dondog_login_logo_text() {
 }
 add_filter( 'login_headertext', 'dondog_login_logo_text' );
 
+/**
+ * Translate the default WordPress login form strings.
+ *
+ * @param string $translation Translated text.
+ * @param string $text        Original text.
+ * @return string
+ */
+function dondog_translate_login_text( $translation, $text ) {
+	if ( ! dondog_is_login_screen() ) {
+		return $translation;
+	}
+
+	$translations = [
+		'Username or Email Address' => 'Uporabniško ime ali e-pošta',
+		'Password'                  => 'Geslo',
+		'Remember Me'               => 'Zapomni si me',
+		'Log In'                    => 'Prijava',
+		'Lost your password?'       => 'Ste pozabili geslo?',
+		'You are now logged out.'   => 'Uspešno ste odjavljeni.',
+		'Show password'             => 'Prikaži geslo',
+		'Hide password'             => 'Skrij geslo',
+		'Get New Password'          => 'Pridobi novo geslo',
+		'Email Address'             => 'E-poštni naslov',
+		'Username'                  => 'Uporabniško ime',
+	];
+
+	return $translations[ $text ] ?? $translation;
+}
+add_filter( 'gettext', 'dondog_translate_login_text', 20, 2 );
+
+/**
+ * Translate strings that contain placeholders.
+ *
+ * @param string $translation Translated text.
+ * @param string $text        Original text.
+ * @return string
+ */
+function dondog_translate_login_text_with_context( $translation, $text ) {
+	if ( ! dondog_is_login_screen() ) {
+		return $translation;
+	}
+
+	if ( '&larr; Go to %s' === $text || false !== strpos( $text, 'Go to %s' ) ) {
+		return 'Nazaj na %s';
+	}
+
+	return $translation;
+}
+add_filter( 'gettext', 'dondog_translate_login_text_with_context', 21, 2 );
+
 add_filter( 'login_display_language_dropdown', '__return_false' );
+
+/**
+ * Clear browser-filled values after logout.
+ *
+ * Some password managers refill the just-used password into both login fields
+ * after WordPress redirects back with loggedout=true.
+ *
+ * @return void
+ */
+function dondog_clear_login_fields_after_logout() {
+	if ( ! isset( $_GET['loggedout'] ) ) {
+		return;
+	}
+	?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var user = document.getElementById('user_login');
+			var pass = document.getElementById('user_pass');
+
+			function clearLoginFields() {
+				if (user) {
+					user.value = '';
+					user.setAttribute('autocomplete', 'off');
+				}
+
+				if (pass) {
+					pass.value = '';
+					pass.setAttribute('autocomplete', 'off');
+				}
+			}
+
+			clearLoginFields();
+			window.setTimeout(clearLoginFields, 120);
+			window.setTimeout(clearLoginFields, 450);
+			window.setTimeout(clearLoginFields, 900);
+		});
+	</script>
+	<?php
+}
+add_action( 'login_footer', 'dondog_clear_login_fields_after_logout' );
+
+/**
+ * Check whether the current request is the WordPress login screen.
+ *
+ * @return bool
+ */
+function dondog_is_login_screen() {
+	global $pagenow;
+
+	return 'wp-login.php' === $pagenow;
+}
