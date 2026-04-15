@@ -180,22 +180,87 @@ add_filter( 'gettext', 'dondog_translate_login_text_with_context', 21, 2 );
 add_filter( 'login_display_language_dropdown', '__return_false' );
 
 /**
- * Clear browser-filled values after logout.
+ * Keep the customized login form stable after WordPress redirects.
  *
  * Some password managers refill the just-used password into both login fields
- * after WordPress redirects back with loggedout=true.
+ * after WordPress redirects back with loggedout=true. WordPress and security
+ * plugins can also re-render the password wrapper slightly later, so the form
+ * is normalized a few times after load.
  *
  * @return void
  */
-function dondog_clear_login_fields_after_logout() {
-	if ( ! isset( $_GET['loggedout'] ) ) {
-		return;
-	}
+function dondog_stabilize_login_form() {
+	$is_logged_out = isset( $_GET['loggedout'] );
 	?>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
+			var loggedOut = <?php echo $is_logged_out ? 'true' : 'false'; ?>;
+			var form = document.getElementById('loginform');
 			var user = document.getElementById('user_login');
 			var pass = document.getElementById('user_pass');
+			var passwordWrap = document.querySelector('.user-pass-wrap');
+			var passwordField = document.querySelector('.wp-pwd');
+			var submit = document.getElementById('wp-submit');
+
+			function ensureLoginForm() {
+				if (!form) {
+					return;
+				}
+
+				if (passwordWrap) {
+					passwordWrap.style.display = 'block';
+					passwordWrap.style.visibility = 'visible';
+					passwordWrap.style.opacity = '1';
+				}
+
+				if (passwordField) {
+					passwordField.style.display = 'block';
+					passwordField.style.visibility = 'visible';
+					passwordField.style.opacity = '1';
+				}
+
+				if (!pass && passwordField) {
+					pass = document.createElement('input');
+					pass.type = 'password';
+					pass.name = 'pwd';
+					pass.id = 'user_pass';
+					pass.className = 'input password-input';
+					pass.size = '20';
+					pass.autocomplete = 'current-password';
+					pass.spellcheck = false;
+					passwordField.insertBefore(pass, passwordField.firstChild);
+				}
+
+				if (pass) {
+					pass.type = 'password';
+					pass.style.display = 'block';
+					pass.style.visibility = 'visible';
+					pass.style.opacity = '1';
+					pass.setAttribute('autocomplete', 'current-password');
+				}
+
+				if (!submit) {
+					var submitWrap = document.createElement('p');
+					submitWrap.className = 'submit';
+
+					submit = document.createElement('input');
+					submit.type = 'submit';
+					submit.name = 'wp-submit';
+					submit.id = 'wp-submit';
+					submit.className = 'button button-primary button-large';
+					submit.value = 'Prijava';
+
+					submitWrap.appendChild(submit);
+					form.appendChild(submitWrap);
+				}
+
+				if (submit) {
+					submit.value = 'Prijava';
+					submit.style.display = 'flex';
+					submit.style.visibility = 'visible';
+					submit.style.opacity = '1';
+				}
+			}
 
 			function clearLoginFields() {
 				if (user) {
@@ -205,19 +270,27 @@ function dondog_clear_login_fields_after_logout() {
 
 				if (pass) {
 					pass.value = '';
-					pass.setAttribute('autocomplete', 'off');
+					pass.setAttribute('autocomplete', 'current-password');
 				}
 			}
 
-			clearLoginFields();
-			window.setTimeout(clearLoginFields, 120);
-			window.setTimeout(clearLoginFields, 450);
-			window.setTimeout(clearLoginFields, 900);
+			function normalizeLoginForm() {
+				ensureLoginForm();
+
+				if (loggedOut) {
+					clearLoginFields();
+				}
+			}
+
+			normalizeLoginForm();
+			window.setTimeout(normalizeLoginForm, 120);
+			window.setTimeout(normalizeLoginForm, 450);
+			window.setTimeout(normalizeLoginForm, 900);
 		});
 	</script>
 	<?php
 }
-add_action( 'login_footer', 'dondog_clear_login_fields_after_logout' );
+add_action( 'login_footer', 'dondog_stabilize_login_form' );
 
 /**
  * Check whether the current request is the WordPress login screen.

@@ -122,6 +122,17 @@ body.login #login {
 	box-shadow: none;
 }
 
+.login #loginform {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.login #loginform p,
+.login #loginform .user-pass-wrap {
+	margin: 0;
+}
+
 .dondog-login-intro {
 	margin: 0 0 28px;
 }
@@ -162,8 +173,11 @@ body.login #login {
 
 .login form .input,
 .login input[type="text"],
+.login input[type="email"],
 .login input[type="password"] {
+	display: block;
 	width: 100%;
+	height: 52px;
 	min-height: 52px;
 	margin: 8px 0 24px;
 	padding: 0 18px;
@@ -176,15 +190,33 @@ body.login #login {
 	line-height: 52px;
 }
 
+.login #loginform .user-pass-wrap {
+	display: block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+}
+
 .login .user-pass-wrap .wp-pwd {
 	position: relative;
-	display: block;
+	display: block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+	width: 100%;
+	min-height: 52px;
 	margin: 8px 0 24px;
 }
 
+.login #loginform #user_pass,
 .login .user-pass-wrap .wp-pwd .input {
+	display: block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+	width: 100% !important;
+	height: 52px !important;
+	min-height: 52px !important;
 	margin: 0;
 	padding-right: 58px;
+	line-height: 52px !important;
 }
 
 .login form .input:focus,
@@ -217,6 +249,7 @@ body.login #login {
 	box-shadow: none;
 	color: var(--dondog-login-olive);
 	transform: translateY(-50%);
+	z-index: 2;
 }
 
 .login .button.wp-hide-pw:hover,
@@ -246,9 +279,21 @@ body.login #login {
 }
 
 .login .submit {
+	display: block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+	width: 100%;
 	clear: both;
 	margin: 0;
 	padding: 0;
+}
+
+.login #loginform #wp-submit {
+	display: flex !important;
+	float: none !important;
+	align-items: center;
+	justify-content: center;
+	width: 100% !important;
 }
 
 .login input[type="checkbox"] {
@@ -281,10 +326,11 @@ body.login #login {
 }
 
 .login .submit .button-primary {
-	display: inline-flex;
-	float: none;
+	display: flex !important;
+	float: none !important;
 	align-items: center;
 	justify-content: center;
+	width: 100% !important;
 	margin: 4px 0 0;
 }
 
