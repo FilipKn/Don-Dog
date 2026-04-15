@@ -98,13 +98,15 @@
 }
 
 .dondog-footer__social {
-	width: 40px;
-	height: 40px;
+	width: 44px;
+	height: 44px;
 	transition: background-color 180ms ease, transform 180ms ease;
 }
 
 .dondog-footer__social .dondog-footer__icon {
 	background: transparent;
+	width: 30px;
+	height: 30px;
 }
 
 .dondog-footer__social:hover,
@@ -121,8 +123,8 @@
 }
 
 .dondog-footer__social .dondog-footer__icon-img {
-	width: 17px;
-	height: 17px;
+	width: 24px;
+	height: 24px;
 }
 
 .dondog-footer__icon--fallback {

@@ -12,11 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! defined( 'DONDOG_LOGIN_IMAGE_URL' ) ) {
-	define( 'DONDOG_LOGIN_IMAGE_URL', '' );
+	define( 'DONDOG_LOGIN_IMAGE_URL', 'https://dondog.si/wp-content/uploads/2026/03/dondog_promo_januar2025_fotonezaternik-53-scaled.jpg' );
 }
 
 if ( ! defined( 'DONDOG_LOGIN_LOGO_URL' ) ) {
-	define( 'DONDOG_LOGIN_LOGO_URL', '' );
+	define( 'DONDOG_LOGIN_LOGO_URL', 'https://dondog.si/wp-content/uploads/2026/03/dd-removebg-preview-e1774854354872.png' );
 }
 
 /**
