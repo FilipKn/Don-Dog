@@ -111,6 +111,20 @@ function dondog_login_logo_text() {
 add_filter( 'login_headertext', 'dondog_login_logo_text' );
 
 /**
+ * Replace the default "Go to site" button on the login screen.
+ *
+ * @return string
+ */
+function dondog_login_site_link() {
+	return sprintf(
+		'<a href="%1$s">%2$s</a>',
+		esc_url( home_url( '/' ) ),
+		esc_html__( 'Nazaj na Don Dog spletno stran', 'dondog' )
+	);
+}
+add_filter( 'login_site_html_link', 'dondog_login_site_link' );
+
+/**
  * Translate the default WordPress login form strings.
  *
  * @param string $translation Translated text.
