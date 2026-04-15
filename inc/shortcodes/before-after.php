@@ -64,8 +64,7 @@ function dondog_render_before_after_shortcode( $atts ) {
 							$item['before'],
 							'before',
 							$atts['before_label'],
-							$item['name'],
-							0 === $index ? 'eager' : 'lazy'
+							$item['name']
 						);
 
 						echo dondog_before_after_render_image(

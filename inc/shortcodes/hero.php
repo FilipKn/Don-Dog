@@ -162,15 +162,21 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 	$class_name   = 'dondog-hero__image dondog-hero__image--' . sanitize_html_class( $position );
 
 	if ( is_numeric( $image_source ) ) {
+		$image_attrs = [
+			'class'    => 'dondog-hero__img',
+			'loading'  => $loading,
+			'decoding' => 'async',
+		];
+
+		if ( 'eager' === $loading ) {
+			$image_attrs['fetchpriority'] = 'high';
+		}
+
 		$image = wp_get_attachment_image(
 			absint( $image_source ),
 			'large',
 			false,
-			[
-				'class'    => 'dondog-hero__img',
-				'loading'  => $loading,
-				'decoding' => 'async',
-			]
+			$image_attrs
 		);
 
 		if ( $image ) {
@@ -184,10 +190,11 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 
 	if ( filter_var( $image_source, FILTER_VALIDATE_URL ) ) {
 		return sprintf(
-			'<figure class="%1$s"><img class="dondog-hero__img" src="%2$s" alt="" loading="%3$s" decoding="async"></figure>',
+			'<figure class="%1$s"><img class="dondog-hero__img" src="%2$s" alt="" loading="%3$s" decoding="async"%4$s></figure>',
 			esc_attr( $class_name ),
 			esc_url( $image_source ),
-			esc_attr( $loading )
+			esc_attr( $loading ),
+			'eager' === $loading ? ' fetchpriority="high"' : ''
 		);
 	}
 
