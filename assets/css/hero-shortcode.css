@@ -524,6 +524,29 @@
 }
 
 @media (max-width: 640px) {
+	.dondog-hero.is-text-ready .dondog-hero__eyebrow,
+	.dondog-hero.is-text-ready .dondog-hero__title,
+	.dondog-hero.is-text-ready .dondog-hero__text,
+	.dondog-hero.is-text-ready .dondog-hero__actions,
+	.dondog-hero.is-text-ready .dondog-hero__features {
+		filter: none;
+		transform: translate3d(-28px, 0, 0);
+		transition-duration: 520ms;
+		will-change: auto;
+	}
+
+	.dondog-hero.is-text-ready .dondog-hero__actions,
+	.dondog-hero.is-text-ready .dondog-hero__features {
+		transform: translate3d(-22px, 8px, 0);
+	}
+
+	.dondog-hero.is-visible .dondog-hero__image,
+	.dondog-hero.is-visible .dondog-hero__image::before,
+	.dondog-hero.is-visible .dondog-hero__ring,
+	.dondog-hero.is-visible .dondog-hero__dot {
+		animation-duration: 420ms;
+	}
+
 	.dondog-hero {
 		padding: 54px 20px 58px;
 	}

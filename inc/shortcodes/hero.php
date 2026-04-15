@@ -159,13 +159,16 @@ function dondog_hero_get_features( $features ) {
  */
 function dondog_hero_render_image( $image_source, $position, $fallback, $loading = 'lazy' ) {
 	$image_source = trim( (string) $image_source );
+	$position     = sanitize_html_class( $position );
 	$class_name   = 'dondog-hero__image dondog-hero__image--' . sanitize_html_class( $position );
+	$image_meta   = dondog_hero_get_image_meta( $position );
 
 	if ( is_numeric( $image_source ) ) {
 		$image_attrs = [
 			'class'    => 'dondog-hero__img',
 			'loading'  => $loading,
 			'decoding' => 'async',
+			'sizes'    => $image_meta['sizes'],
 		];
 
 		if ( 'eager' === $loading ) {
@@ -174,7 +177,7 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 
 		$image = wp_get_attachment_image(
 			absint( $image_source ),
-			'large',
+			$image_meta['size'],
 			false,
 			$image_attrs
 		);
@@ -190,9 +193,11 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 
 	if ( filter_var( $image_source, FILTER_VALIDATE_URL ) ) {
 		return sprintf(
-			'<figure class="%1$s"><img class="dondog-hero__img" src="%2$s" alt="" loading="%3$s" decoding="async"%4$s></figure>',
+			'<figure class="%1$s"><img class="dondog-hero__img" src="%2$s" alt="" width="%3$d" height="%4$d" loading="%5$s" decoding="async"%6$s></figure>',
 			esc_attr( $class_name ),
 			esc_url( $image_source ),
+			absint( $image_meta['width'] ),
+			absint( $image_meta['height'] ),
 			esc_attr( $loading ),
 			'eager' === $loading ? ' fetchpriority="high"' : ''
 		);
@@ -203,4 +208,47 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 		esc_attr( $class_name ),
 		esc_html( $fallback )
 	);
+}
+
+/**
+ * Return optimized image size metadata for each hero circle.
+ *
+ * @param string $position Circle position class suffix.
+ * @return array{size:string,sizes:string,width:int,height:int}
+ */
+function dondog_hero_get_image_meta( $position ) {
+	$images = [
+		'main'   => [
+			'size'   => 'medium_large',
+			'sizes'  => '(max-width: 640px) 52vw, (max-width: 980px) 44vw, 280px',
+			'width'  => 560,
+			'height' => 560,
+		],
+		'top'    => [
+			'size'   => 'medium',
+			'sizes'  => '(max-width: 640px) 1px, (max-width: 980px) 26vw, 160px',
+			'width'  => 320,
+			'height' => 320,
+		],
+		'right'  => [
+			'size'   => 'medium',
+			'sizes'  => '(max-width: 640px) 1px, (max-width: 980px) 20vw, 120px',
+			'width'  => 240,
+			'height' => 240,
+		],
+		'left'   => [
+			'size'   => 'medium',
+			'sizes'  => '(max-width: 640px) 22vw, (max-width: 980px) 24vw, 140px',
+			'width'  => 280,
+			'height' => 280,
+		],
+		'bottom' => [
+			'size'   => 'medium',
+			'sizes'  => '(max-width: 640px) 16vw, (max-width: 980px) 16vw, 96px',
+			'width'  => 192,
+			'height' => 192,
+		],
+	];
+
+	return $images[ $position ] ?? $images['main'];
 }

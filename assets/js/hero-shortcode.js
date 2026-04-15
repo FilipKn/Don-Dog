@@ -11,8 +11,16 @@
 		window.requestAnimationFrame(function () {
 			window.setTimeout(function () {
 				hero.classList.add('is-text-visible');
-			}, 1000);
+			}, getTextDelay());
 		});
+	}
+
+	function getTextDelay() {
+		if (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) {
+			return 180;
+		}
+
+		return 1000;
 	}
 
 	function revealHero(hero) {

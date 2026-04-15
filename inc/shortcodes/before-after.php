@@ -130,13 +130,14 @@ function dondog_before_after_render_image( $image_source, $type, $label, $name, 
 	if ( is_numeric( $image_source ) ) {
 		$image = wp_get_attachment_image(
 			absint( $image_source ),
-			'large',
+			'medium_large',
 			false,
 			[
 				'class'    => 'dondog-before-after__img',
 				'alt'      => $alt,
 				'loading'  => $loading,
 				'decoding' => 'async',
+				'sizes'    => '(max-width: 720px) 50vw, 205px',
 			]
 		);
 
@@ -152,7 +153,7 @@ function dondog_before_after_render_image( $image_source, $type, $label, $name, 
 
 	if ( filter_var( $image_source, FILTER_VALIDATE_URL ) ) {
 		return sprintf(
-			'<figure class="%1$s"><img class="dondog-before-after__img" src="%2$s" alt="%3$s" loading="%4$s" decoding="async"><span class="dondog-before-after__badge">%5$s</span></figure>',
+			'<figure class="%1$s"><img class="dondog-before-after__img" src="%2$s" alt="%3$s" width="410" height="660" loading="%4$s" decoding="async"><span class="dondog-before-after__badge">%5$s</span></figure>',
 			esc_attr( $class_name ),
 			esc_url( $image_source ),
 			esc_attr( $alt ),
