@@ -1,0 +1,349 @@
+body.login {
+	--dondog-login-bg: #f7f5f1;
+	--dondog-login-card: #ffffff;
+	--dondog-login-ink: #1a1a1a;
+	--dondog-login-muted: #6b6560;
+	--dondog-login-olive: #7a8b6f;
+	--dondog-login-line: rgba(26, 26, 26, 0.08);
+	--dondog-login-image: linear-gradient(135deg, #1f241b, #806b4f);
+	--dondog-login-logo: none;
+	display: grid;
+	grid-template-columns: minmax(360px, 50vw) minmax(420px, 1fr);
+	min-height: 100vh;
+	margin: 0;
+	background: var(--dondog-login-bg);
+	color: var(--dondog-login-ink);
+	font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+body.login * {
+	box-sizing: border-box;
+}
+
+.dondog-login-visual {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	min-height: 100vh;
+	padding: clamp(42px, 5vw, 64px);
+	overflow: hidden;
+	background-image:
+		linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.54)),
+		var(--dondog-login-image);
+	background-position: center;
+	background-size: cover;
+}
+
+.dondog-login-visual__content {
+	position: relative;
+	z-index: 1;
+	max-width: 520px;
+	color: #ffffff;
+}
+
+.dondog-login-visual__eyebrow,
+.login .message,
+.login #login_error {
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+}
+
+.dondog-login-visual__eyebrow {
+	margin: 0 0 16px;
+	color: rgba(255, 255, 255, 0.78);
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.dondog-login-visual__title {
+	margin: 0;
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+	font-size: clamp(38px, 4.3vw, 58px);
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	line-height: 1.05;
+}
+
+.dondog-login-visual__text {
+	max-width: 430px;
+	margin: 20px 0 0;
+	color: rgba(255, 255, 255, 0.78);
+	font-size: 17px;
+	line-height: 1.65;
+}
+
+body.login #login {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: min(100%, 520px);
+	min-height: 100vh;
+	margin: 0 auto;
+	padding: clamp(44px, 6vw, 72px) clamp(28px, 5vw, 48px);
+}
+
+.login h1 {
+	margin: 0 0 44px;
+	text-align: left;
+}
+
+.login h1 a {
+	display: inline-flex;
+	align-items: center;
+	width: auto;
+	height: 42px;
+	min-width: 196px;
+	margin: 0;
+	padding: 0 0 0 54px;
+	background-image: var(--dondog-login-logo);
+	background-position: left center;
+	background-repeat: no-repeat;
+	background-size: 42px 42px;
+	color: var(--dondog-login-ink);
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+	font-size: 24px;
+	font-weight: 600;
+	line-height: 1;
+	text-indent: 0;
+	text-decoration: none;
+}
+
+.login h1 a::after {
+	content: "Don Dog";
+}
+
+.login form {
+	display: flex;
+	flex-direction: column;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.dondog-login-intro {
+	margin: 0 0 28px;
+}
+
+.dondog-login-intro__eyebrow {
+	margin: 0 0 12px;
+	color: var(--dondog-login-olive);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.dondog-login-intro h2 {
+	margin: 0;
+	color: var(--dondog-login-ink);
+	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+	font-size: clamp(32px, 3vw, 42px);
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	line-height: 1.12;
+}
+
+.dondog-login-intro p:last-child {
+	margin: 10px 0 0;
+	color: var(--dondog-login-muted);
+	font-size: 16px;
+	line-height: 1.5;
+}
+
+.login label {
+	color: var(--dondog-login-ink);
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.login form .input,
+.login input[type="text"],
+.login input[type="password"] {
+	width: 100%;
+	min-height: 52px;
+	margin: 8px 0 24px;
+	padding: 0 18px;
+	border: 1px solid var(--dondog-login-line);
+	border-radius: 14px;
+	background: #ffffff;
+	box-shadow: none;
+	color: var(--dondog-login-ink);
+	font-size: 16px;
+	line-height: 52px;
+}
+
+.login form .input:focus,
+.login input[type="text"]:focus,
+.login input[type="password"]:focus {
+	border-color: rgba(122, 139, 111, 0.5);
+	box-shadow: 0 0 0 4px rgba(122, 139, 111, 0.12);
+	outline: none;
+}
+
+.login .forgetmenot {
+	display: flex;
+	align-items: center;
+	min-height: 24px;
+	margin: -2px 0 22px;
+}
+
+.login .forgetmenot label {
+	color: var(--dondog-login-muted);
+	font-weight: 500;
+}
+
+.login input[type="checkbox"] {
+	width: 18px;
+	height: 18px;
+	margin: 0 8px 0 0;
+	border-color: var(--dondog-login-line);
+	box-shadow: none;
+}
+
+.login input[type="checkbox"]:checked::before {
+	filter: sepia(1) saturate(0.5) hue-rotate(44deg);
+}
+
+.wp-core-ui .button-primary {
+	width: 100%;
+	min-height: 56px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--dondog-login-olive);
+	box-shadow: 0 16px 30px rgba(122, 139, 111, 0.22);
+	color: #ffffff;
+	font-size: 15px;
+	font-weight: 700;
+	text-shadow: none;
+	transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.wp-core-ui .button-primary:hover,
+.wp-core-ui .button-primary:focus {
+	background: #6f8065;
+	box-shadow: 0 22px 42px rgba(122, 139, 111, 0.3);
+	transform: translateY(-1px);
+}
+
+.login #nav,
+.login #backtoblog {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.login #nav {
+	order: 4;
+	margin-top: 28px;
+	padding-top: 28px;
+	border-top: 1px solid var(--dondog-login-line);
+}
+
+.login #nav a,
+.login #backtoblog a,
+.login .privacy-policy-page-link a {
+	color: var(--dondog-login-muted);
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.login #nav a:hover,
+.login #nav a:focus,
+.login #backtoblog a:hover,
+.login #backtoblog a:focus,
+.login .privacy-policy-page-link a:hover,
+.login .privacy-policy-page-link a:focus {
+	color: var(--dondog-login-ink);
+}
+
+.login #backtoblog {
+	order: 5;
+	margin-top: 22px;
+}
+
+.login #backtoblog a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 54px;
+	border: 1px solid var(--dondog-login-line);
+	border-radius: 999px;
+	background: #ffffff;
+}
+
+.login #backtoblog a::before {
+	content: "<- ";
+}
+
+.login .privacy-policy-page-link {
+	order: 6;
+	margin: 28px 0 0;
+	color: rgba(107, 101, 96, 0.55);
+	text-align: center;
+}
+
+.login .privacy-policy-page-link::before {
+	content: "(c) 2026 Don Dog. Vse pravice pridrzane.";
+	font-size: 13px;
+}
+
+.login .privacy-policy-page-link a {
+	display: none;
+}
+
+.login .message,
+.login #login_error {
+	margin: 0 0 20px;
+	padding: 14px 16px;
+	border: 1px solid rgba(122, 139, 111, 0.18);
+	border-left: 4px solid var(--dondog-login-olive);
+	border-radius: 14px;
+	background: #ffffff;
+	box-shadow: none;
+	color: var(--dondog-login-muted);
+	font-size: 12px;
+}
+
+@media (max-width: 900px) {
+	body.login {
+		display: block;
+		background:
+			linear-gradient(rgba(247, 245, 241, 0.88), rgba(247, 245, 241, 0.94)),
+			var(--dondog-login-image);
+		background-position: center;
+		background-size: cover;
+	}
+
+	.dondog-login-visual {
+		display: none;
+	}
+
+	body.login #login {
+		width: min(100%, 520px);
+		min-height: 100vh;
+	}
+}
+
+@media (max-width: 480px) {
+	body.login #login {
+		padding: 34px 22px 42px;
+	}
+
+	.login h1 {
+		margin-bottom: 34px;
+	}
+
+	.login form {
+		padding-top: 0;
+	}
+
+	.dondog-login-intro h2 {
+		font-size: 31px;
+	}
+}
