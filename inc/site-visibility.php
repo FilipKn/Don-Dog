@@ -31,6 +31,34 @@ function dondog_allow_current_request() {
 }
 
 /**
+ * Prevent page-cache plugins from storing the hidden public front-end.
+ *
+ * This only affects requests that reach WordPress. Already cached pages still
+ * need to be purged in the cache plugin/server cache.
+ *
+ * @return void
+ */
+function dondog_disable_public_cache_when_hidden() {
+	if ( dondog_allow_current_request() ) {
+		return;
+	}
+
+	if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+		define( 'DONOTCACHEPAGE', true );
+	}
+
+	if ( ! defined( 'LSCACHE_NO_CACHE' ) ) {
+		define( 'LSCACHE_NO_CACHE', true );
+	}
+
+	if ( ! headers_sent() ) {
+		header( 'X-LiteSpeed-Cache-Control: no-cache' );
+		header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
+	}
+}
+add_action( 'init', 'dondog_disable_public_cache_when_hidden', 0 );
+
+/**
  * Show the custom 404 page to every public front-end visitor.
  *
  * @return void
@@ -48,6 +76,10 @@ function dondog_show_404_to_public_visitors() {
 
 	status_header( 404 );
 	nocache_headers();
+
+	if ( ! headers_sent() ) {
+		header( 'X-LiteSpeed-Cache-Control: no-cache' );
+	}
 
 	include get_query_template( '404' );
 	exit;
