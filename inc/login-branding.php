@@ -25,10 +25,14 @@ if ( ! defined( 'DONDOG_LOGIN_LOGO_URL' ) ) {
  * @return void
  */
 function dondog_enqueue_login_branding() {
+	dondog_enqueue_playfair_display();
+
 	wp_enqueue_style(
 		'dondog-login-branding',
 		get_stylesheet_directory_uri() . '/assets/css/login.css',
-		[],
+		[
+			'dondog-playfair-display',
+		],
 		DONDOG_THEME_VERSION
 	);
 

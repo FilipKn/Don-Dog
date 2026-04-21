@@ -39,7 +39,7 @@ function dondog_render_footer_shortcode( $atts ) {
 			'facebook_icon'  => '',
 			'facebook_url'   => 'https://www.facebook.com/pasjisalonDONDOG/',
 			'nav_title'      => 'Navigacija',
-			'nav_items'      => 'Domov|/;Storitve|/cenik/;Galerija|/galerija/;Mnenja|/#mnenja;Kontakt|/kontakt/',
+			'nav_items'      => 'Domov|/;Storitve|/cenik/;Galerija|/galerija/;Kontakt|/kontakt/',
 			'contact_title'  => 'Kontakt',
 			'address_icon'   => '',
 			'address'        => 'Dobrava 5a, Radlje ob Dravi, Slovenija',

@@ -12,3 +12,44 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 */
 
 /* Add your custom styles here */
+
+:root {
+	--dondog-font-primary: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+	font-family: var(--dondog-font-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.elementor-heading-title,
+.wp-block-heading,
+.widget-title {
+	font-family: var(--dondog-font-primary);
+}
+
+body .elementor-widget-heading .elementor-heading-title,
+body .elementor-widget-text-editor,
+body .elementor-widget-text-editor p,
+body .elementor-widget-text-editor li,
+body .elementor-widget-text-editor a,
+body .elementor-widget-button .elementor-button,
+body .elementor-widget-button .elementor-button-text,
+body .elementor-icon-box-title,
+body .elementor-icon-box-description,
+body .elementor-image-box-title,
+body .elementor-image-box-description,
+body .elementor-post__title,
+body .elementor-post__excerpt {
+	font-family: var(--dondog-font-primary) !important;
+}

@@ -10,16 +10,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Enqueue the shared Playfair Display font family.
+ *
+ * @return void
+ */
+function dondog_enqueue_playfair_display() {
+	wp_enqueue_style(
+		'dondog-playfair-display',
+		'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap',
+		[],
+		null
+	);
+}
+
+/**
  * Enqueue child theme styles.
  *
  * @return void
  */
 function dondog_enqueue_theme_styles() {
+	dondog_enqueue_playfair_display();
+
 	wp_enqueue_style(
 		'hello-elementor-child-style',
 		get_stylesheet_directory_uri() . '/style.css',
 		[
 			'hello-elementor-theme-style',
+			'dondog-playfair-display',
 		],
 		DONDOG_THEME_VERSION
 	);

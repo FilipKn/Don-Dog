@@ -19,7 +19,7 @@ body.dondog-404-body {
 		radial-gradient(circle at bottom right, rgba(136, 149, 117, 0.18), transparent 25%),
 		linear-gradient(180deg, #faf7f2 0%, var(--dondog-404-bg) 100%);
 	color: var(--dondog-404-ink);
-	font-family: "Segoe UI", Arial, sans-serif;
+	font-family: var(--dondog-font-primary);
 }
 
 .dondog-404 {
@@ -166,7 +166,7 @@ body.dondog-404-body {
 
 .dondog-404__title {
 	max-width: 10ch;
-	font-family: Georgia, "Times New Roman", serif;
+	font-family: var(--dondog-font-primary);
 	font-size: clamp(3.2rem, 8vw, 6rem);
 	line-height: 0.92;
 	letter-spacing: -0.04em;
