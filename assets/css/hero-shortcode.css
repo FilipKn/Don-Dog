@@ -45,6 +45,18 @@
 	margin-top: 60px;
 }
 
+.dondog-hero__language {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 0 0 18px;
+}
+
+.dondog-hero__language .dondog-language-switcher {
+	background: rgba(255, 255, 255, 0.48);
+	box-shadow: 0 10px 24px rgba(26, 26, 26, 0.04);
+}
+
 .dondog-hero__eyebrow {
 	margin: 0 0 19px;
 	color: var(--dondog-hero-olive);
@@ -173,6 +185,7 @@
 	line-height: 1;
 }
 
+.dondog-hero.is-text-ready .dondog-hero__language,
 .dondog-hero.is-text-ready .dondog-hero__eyebrow,
 .dondog-hero.is-text-ready .dondog-hero__title,
 .dondog-hero.is-text-ready .dondog-hero__text,
@@ -198,6 +211,7 @@
 	transform: translate3d(-88px, 18px, 0);
 }
 
+.dondog-hero.is-text-visible .dondog-hero__language,
 .dondog-hero.is-text-visible .dondog-hero__eyebrow,
 .dondog-hero.is-text-visible .dondog-hero__title,
 .dondog-hero.is-text-visible .dondog-hero__text,
@@ -206,6 +220,10 @@
 	opacity: 1;
 	filter: blur(0);
 	transform: translate3d(0, 0, 0);
+}
+
+.dondog-hero.is-text-visible .dondog-hero__language {
+	transition-delay: 0ms;
 }
 
 .dondog-hero.is-text-visible .dondog-hero__eyebrow {
@@ -483,6 +501,10 @@
 		justify-content: center;
 	}
 
+	.dondog-hero__language {
+		justify-content: center;
+	}
+
 	.dondog-hero__visual {
 		width: min(500px, 82vw);
 		justify-self: center;
@@ -524,6 +546,7 @@
 }
 
 @media (max-width: 640px) {
+	.dondog-hero.is-text-ready .dondog-hero__language,
 	.dondog-hero.is-text-ready .dondog-hero__eyebrow,
 	.dondog-hero.is-text-ready .dondog-hero__title,
 	.dondog-hero.is-text-ready .dondog-hero__text,
@@ -567,10 +590,16 @@
 	}
 
 	.dondog-hero__eyebrow,
+	.dondog-hero__language,
 	.dondog-hero__title,
 	.dondog-hero__text {
 		position: relative;
 		z-index: 2;
+	}
+
+	.dondog-hero__language {
+		justify-content: flex-start;
+		margin-bottom: 16px;
 	}
 
 	.dondog-hero__title {
@@ -687,11 +716,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+	.dondog-hero.is-text-ready .dondog-hero__language,
 	.dondog-hero.is-text-ready .dondog-hero__eyebrow,
 	.dondog-hero.is-text-ready .dondog-hero__title,
 	.dondog-hero.is-text-ready .dondog-hero__text,
 	.dondog-hero.is-text-ready .dondog-hero__actions,
 	.dondog-hero.is-text-ready .dondog-hero__features,
+	.dondog-hero.is-ready .dondog-hero__language,
 	.dondog-hero.is-ready .dondog-hero__eyebrow,
 	.dondog-hero.is-ready .dondog-hero__title,
 	.dondog-hero.is-ready .dondog-hero__text,

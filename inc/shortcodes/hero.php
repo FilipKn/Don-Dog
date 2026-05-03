@@ -30,27 +30,38 @@ add_action( 'init', 'dondog_register_hero_shortcode' );
  */
 function dondog_render_hero_shortcode( $atts ) {
 	$defaults = [
-		'eyebrow'        => 'Salon za nego živali',
-		'title_top'      => 'Vrhunska nega za',
-		'title_bottom'   => 'vašega',
-		'title_accent'   => 'PSA.',
-		'text'           => 'Striženje, kopanje in nega za pse, mačke in druge male živali.',
-		'primary_text'   => 'Rezerviraj termin',
-		'primary_url'    => 'https://dondog.si/rezervacije',
-		'secondary_text' => 'Naše storitve',
-		'secondary_url'  => 'https://dondog.si/cenik/',
-		'features'       => '33+ zadovoljnih strank|Nežen pristop|Profesionalna nega',
-		'main_image'     => '',
-		'top_image'      => '',
-		'right_image'    => '',
-		'left_image'     => '',
-		'bottom_image'   => '',
+		'eyebrow'                 => 'Salon za nego živali',
+		'title_top'               => 'Vrhunska nega za',
+		'title_bottom'            => 'vašega',
+		'title_accent'            => 'PSA.',
+		'text'                    => 'Striženje, kopanje in nega za pse, mačke in druge male živali.',
+		'primary_text'            => 'Rezerviraj termin',
+		'primary_url'             => 'https://dondog.si/rezervacije',
+		'secondary_text'          => 'Naše storitve',
+		'secondary_url'           => 'https://dondog.si/cenik/',
+		'features'                => '33+ zadovoljnih strank|Nežen pristop|Profesionalna nega',
+		'main_image'              => '',
+		'top_image'               => '',
+		'right_image'             => '',
+		'left_image'              => '',
+		'bottom_image'            => '',
+		'language_switcher'       => 'true',
+		'language_switcher_names' => 'false',
 	];
 
 	$atts                  = shortcode_atts( $defaults, $atts, 'dondog_hero' );
 	$atts                  = dondog_apply_shortcode_language_defaults( 'dondog_hero', $atts, $defaults );
 	$atts['primary_url']   = dondog_translate_url( $atts['primary_url'] );
 	$atts['secondary_url'] = dondog_translate_url( $atts['secondary_url'] );
+	$language_switcher     = '';
+
+	if ( filter_var( $atts['language_switcher'], FILTER_VALIDATE_BOOLEAN ) && function_exists( 'dondog_render_language_switcher_shortcode' ) ) {
+		$language_switcher = dondog_render_language_switcher_shortcode(
+			[
+				'show_names' => $atts['language_switcher_names'],
+			]
+		);
+	}
 
 	$title_id = wp_unique_id( 'dondog-hero-title-' );
 
@@ -59,6 +70,12 @@ function dondog_render_hero_shortcode( $atts ) {
 	<section class="dondog-hero is-ready is-text-ready" data-dondog-animate="hero" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
 		<div class="dondog-hero__container">
 			<div class="dondog-hero__content">
+				<?php if ( '' !== trim( $language_switcher ) ) : ?>
+					<div class="dondog-hero__language">
+						<?php echo $language_switcher; ?>
+					</div>
+				<?php endif; ?>
+
 				<p class="dondog-hero__eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></p>
 
 				<h1 class="dondog-hero__title" id="<?php echo esc_attr( $title_id ); ?>">
@@ -108,11 +125,13 @@ function dondog_render_hero_shortcode( $atts ) {
 	<noscript>
 		<style>
 			.dondog-hero.is-ready .dondog-hero__eyebrow,
+			.dondog-hero.is-ready .dondog-hero__language,
 			.dondog-hero.is-ready .dondog-hero__title,
 			.dondog-hero.is-ready .dondog-hero__text,
 			.dondog-hero.is-ready .dondog-hero__actions,
 			.dondog-hero.is-ready .dondog-hero__features,
 			.dondog-hero.is-text-ready .dondog-hero__eyebrow,
+			.dondog-hero.is-text-ready .dondog-hero__language,
 			.dondog-hero.is-text-ready .dondog-hero__title,
 			.dondog-hero.is-text-ready .dondog-hero__text,
 			.dondog-hero.is-text-ready .dondog-hero__actions,
