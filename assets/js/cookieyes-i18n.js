@@ -9,7 +9,15 @@
 		'.cky-revisit-bottom-left',
 		'.cky-revisit-bottom-right',
 		'.cky-btn-revisit-wrapper',
+		'#cookie-law-info-bar',
+		'#cookie-law-info-again',
+		'.cli-bar-container',
+		'.cli-modal',
+		'.cli_settings_button',
+		'.cli_action_button',
 		'[class*="cky-"]',
+		'[class*="cli-"]',
+		'[class*="cookieyes"]',
 		'[id^="cky"]'
 	].join(',');
 	var textAttributes = ['aria-label', 'title', 'alt', 'value'];
@@ -28,6 +36,32 @@
 
 	function normalize(value) {
 		return value.replace(/\s+/g, ' ').trim();
+	}
+
+	function getSearchRoots() {
+		var roots = [];
+
+		function addRoot(root) {
+			if (!root || roots.indexOf(root) !== -1) {
+				return;
+			}
+
+			roots.push(root);
+
+			if (!root.querySelectorAll) {
+				return;
+			}
+
+			Array.prototype.forEach.call(root.querySelectorAll('*'), function (element) {
+				if (element.shadowRoot) {
+					addRoot(element.shadowRoot);
+				}
+			});
+		}
+
+		addRoot(document);
+
+		return roots;
 	}
 
 	function translateString(value) {
@@ -84,7 +118,7 @@
 	function translateTextNode(node) {
 		var parent = node.parentElement;
 
-		if (!parent || skippedTags[parent.tagName] || !isCookieYesElement(parent)) {
+		if (!parent || skippedTags[parent.tagName]) {
 			return;
 		}
 
@@ -128,12 +162,49 @@
 	}
 
 	function translateCookieYesDom() {
-		Array.prototype.forEach.call(document.querySelectorAll(cookieYesSelector), translateElement);
+		getSearchRoots().forEach(function (root) {
+			if (!root.querySelectorAll) {
+				return;
+			}
+
+			Array.prototype.forEach.call(root.querySelectorAll(cookieYesSelector), translateElement);
+		});
+	}
+
+	function translateKnownCookieText(root) {
+		var target = root;
+
+		if (root.nodeType === 9) {
+			target = root.body || root.documentElement;
+		}
+
+		if (!target || !target.ownerDocument) {
+			return;
+		}
+
+		var walker = target.ownerDocument.createTreeWalker(target, NodeFilter.SHOW_TEXT, {
+			acceptNode: function (node) {
+				var parent = node.parentElement;
+
+				if (!parent || skippedTags[parent.tagName]) {
+					return NodeFilter.FILTER_REJECT;
+				}
+
+				return translateString(node.nodeValue) !== node.nodeValue ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+			}
+		});
+		var textNode = walker.nextNode();
+
+		while (textNode) {
+			translateTextNode(textNode);
+			textNode = walker.nextNode();
+		}
 	}
 
 	function translateAll() {
 		if (hasTranslations()) {
 			translateCookieYesDom();
+			getSearchRoots().forEach(translateKnownCookieText);
 		}
 	}
 
@@ -152,6 +223,7 @@
 						}
 
 						Array.prototype.forEach.call(node.querySelectorAll(cookieYesSelector), translateElement);
+						translateKnownCookieText(node);
 					}
 
 					if (node.nodeType === 3) {

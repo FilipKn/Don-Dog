@@ -215,7 +215,7 @@ function dondog_enqueue_cookieyes_i18n() {
 		get_stylesheet_directory_uri() . '/assets/js/cookieyes-i18n.js',
 		[],
 		DONDOG_THEME_VERSION,
-		true
+		false
 	);
 
 	wp_add_inline_script(
@@ -225,3 +225,24 @@ function dondog_enqueue_cookieyes_i18n() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dondog_enqueue_cookieyes_i18n', 110 );
+
+/**
+ * Keep the CookieYes translator out of JS optimizers so it runs immediately.
+ *
+ * @param string $tag    Script tag.
+ * @param string $handle Script handle.
+ * @param string $src    Script source.
+ * @return string
+ */
+function dondog_cookieyes_i18n_script_tag( $tag, $handle, $src ) {
+	if ( 'dondog-cookieyes-i18n' !== $handle ) {
+		return $tag;
+	}
+
+	return sprintf(
+		'<script src="%1$s" id="%2$s-js" data-no-optimize="1" data-cfasync="false"></script>' . "\n",
+		esc_url( $src ),
+		esc_attr( $handle )
+	);
+}
+add_filter( 'script_loader_tag', 'dondog_cookieyes_i18n_script_tag', 10, 3 );
