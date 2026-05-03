@@ -115,6 +115,10 @@ function dondog_get_shortcode_language_defaults( $shortcode ) {
 		'dondog_button'       => [
 			'text' => 'Termin buchen',
 		],
+		'dondog_header'       => [
+			'nav_items' => 'Startseite|/;Preise|/cenik/;Über uns|/o-nas/;Galerie|/galerija/;Kontakt|/kontakt/',
+			'cta_text'  => 'Termin buchen',
+		],
 		'dondog_footer'       => [
 			'description' => 'Premium-Hundesalon in Radlje ob Dravi. Ihr Hund verdient das Beste - und genau das bekommt er bei uns.',
 			'nav_title'   => 'Navigation',

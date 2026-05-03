@@ -54,6 +54,118 @@ body .elementor-post__excerpt {
 	font-family: var(--dondog-font-primary) !important;
 }
 
+.dondog-header {
+	--dondog-header-bg: #f5f1eb;
+	--dondog-header-ink: #1a1a1a;
+	--dondog-header-muted: #5f5a54;
+	--dondog-header-olive: #7a8b6f;
+	--dondog-header-line: rgba(26, 26, 26, 0.72);
+	position: relative;
+	z-index: 20;
+	width: 100%;
+	border-top: 2px solid var(--dondog-header-ink);
+	border-bottom: 1px solid var(--dondog-header-line);
+	background: var(--dondog-header-bg);
+	color: var(--dondog-header-ink);
+	font-family: var(--dondog-font-primary);
+}
+
+.dondog-header,
+.dondog-header * {
+	box-sizing: border-box;
+}
+
+.dondog-header__inner {
+	display: grid;
+	grid-template-columns: minmax(150px, 220px) minmax(0, 1fr) minmax(230px, auto);
+	align-items: center;
+	gap: clamp(22px, 3vw, 44px);
+	width: min(1580px, 100%);
+	min-height: 72px;
+	margin: 0 auto;
+	padding: 0 clamp(18px, 6vw, 130px);
+}
+
+.dondog-header__brand {
+	display: inline-flex;
+	align-items: center;
+	width: fit-content;
+	color: var(--dondog-header-ink);
+	text-decoration: none !important;
+}
+
+.dondog-header__logo-img {
+	display: block;
+	width: auto;
+	max-width: 158px;
+	max-height: 48px;
+	object-fit: contain;
+}
+
+.dondog-header__logo-fallback {
+	color: var(--dondog-header-ink);
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 1;
+}
+
+.dondog-header__nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: clamp(22px, 2.4vw, 42px);
+	min-width: 0;
+}
+
+.dondog-header__nav-link {
+	color: var(--dondog-header-muted);
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 1.2;
+	text-decoration: none !important;
+	white-space: nowrap;
+	transition: color 160ms ease, transform 160ms ease;
+}
+
+.dondog-header__nav-link:hover,
+.dondog-header__nav-link:focus-visible {
+	color: var(--dondog-header-ink);
+	transform: translateY(-1px);
+}
+
+.dondog-header__actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: 14px;
+}
+
+.dondog-header__cta {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	padding: 0 30px;
+	border: 1px solid rgba(26, 26, 26, 0.48);
+	border-radius: 999px;
+	background: var(--dondog-header-olive);
+	box-shadow: 0 8px 18px rgba(122, 139, 111, 0.18);
+	color: #ffffff !important;
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1;
+	text-decoration: none !important;
+	white-space: nowrap;
+	transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.dondog-header__cta:hover,
+.dondog-header__cta:focus-visible {
+	background: #6f8065;
+	box-shadow: 0 12px 24px rgba(122, 139, 111, 0.25);
+	transform: translateY(-1px);
+}
+
 .dondog-language-switcher {
 	--dondog-lang-bg: rgba(255, 255, 255, 0.72);
 	--dondog-lang-active: #7a8b6f;
@@ -129,5 +241,90 @@ body .elementor-post__excerpt {
 		min-height: 31px;
 		padding: 0 10px;
 		font-size: 12px;
+	}
+}
+
+@media (max-width: 1100px) {
+	.dondog-header__inner {
+		grid-template-columns: auto 1fr;
+		min-height: 76px;
+	}
+
+	.dondog-header__brand {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.dondog-header__actions {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.dondog-header__nav {
+		grid-column: 1 / -1;
+		grid-row: 2;
+		justify-content: center;
+		padding: 0 0 14px;
+	}
+}
+
+@media (max-width: 760px) {
+	.dondog-header__inner {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px 16px;
+		min-height: 0;
+		padding: 14px 18px 16px;
+	}
+
+	.dondog-header__brand {
+		order: 1;
+		flex: 1 1 auto;
+	}
+
+	.dondog-header__logo-img {
+		max-width: 132px;
+		max-height: 42px;
+	}
+
+	.dondog-header__actions {
+		order: 2;
+		flex: 0 0 auto;
+		gap: 8px;
+	}
+
+	.dondog-header__cta {
+		min-height: 40px;
+		padding: 0 15px;
+		font-size: 14px;
+	}
+
+	.dondog-header__nav {
+		order: 3;
+		justify-content: flex-start;
+		width: 100%;
+		gap: 10px;
+		overflow-x: auto;
+		padding: 4px 0 0;
+		scrollbar-width: none;
+	}
+
+	.dondog-header__nav::-webkit-scrollbar {
+		display: none;
+	}
+
+	.dondog-header__nav-link {
+		font-size: 16px;
+	}
+}
+
+@media (max-width: 420px) {
+	.dondog-header__actions {
+		width: 100%;
+		justify-content: space-between;
+	}
+
+	.dondog-header__cta {
+		flex: 1 1 auto;
 	}
 }

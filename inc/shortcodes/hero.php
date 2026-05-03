@@ -45,7 +45,7 @@ function dondog_render_hero_shortcode( $atts ) {
 		'right_image'             => '',
 		'left_image'              => '',
 		'bottom_image'            => '',
-		'language_switcher'       => 'true',
+		'language_switcher'       => 'false',
 		'language_switcher_names' => 'false',
 	];
 
