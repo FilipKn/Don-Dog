@@ -1,0 +1,248 @@
+<?php
+/**
+ * BookingPress front-end language support.
+ *
+ * @package DonDog
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Return exact BookingPress text replacements for German pages.
+ *
+ * BookingPress stores several front-end labels and service names in its own
+ * tables, so Polylang does not translate them automatically.
+ *
+ * @return array<string,string>
+ */
+function dondog_bookingpress_i18n_map() {
+	static $map = null;
+
+	if ( null !== $map ) {
+		return $map;
+	}
+
+	$map = [
+		'Rezervacije' => 'Buchungen',
+		'Rezervacija' => 'Buchung',
+		'Rezerviraj termin' => 'Termin buchen',
+		'Storitev' => 'Dienstleistung',
+		'Storitve' => 'Dienstleistungen',
+		'Izberi kategorijo' => 'Kategorie auswählen',
+		'Izberi storitev' => 'Dienstleistung auswählen',
+		'Kategorija' => 'Kategorie',
+		'Datum' => 'Datum',
+		'Čas' => 'Uhrzeit',
+		'Časovni termin' => 'Uhrzeit',
+		'Datum in čas' => 'Datum und Uhrzeit',
+		'Informacije' => 'Informationen',
+		'Osebni podatki' => 'Persönliche Daten',
+		'Povzetek' => 'Zusammenfassung',
+		'Plačilo' => 'Zahlung',
+		'Naprej' => 'Weiter',
+		'Naslednji' => 'Weiter',
+		'Nadaljuj' => 'Weiter',
+		'Nazaj' => 'Zurück',
+		'Prejšnji' => 'Zurück',
+		'Potrdi' => 'Bestätigen',
+		'Potrdi rezervacijo' => 'Buchung bestätigen',
+		'Končaj' => 'Abschließen',
+		'Cena' => 'Preis',
+		'Trajanje' => 'Dauer',
+		'min' => 'Min.',
+		'minut' => 'Minuten',
+		'Brezplačno' => 'Kostenlos',
+		'Hvala' => 'Danke',
+		'Uspešno' => 'Erfolgreich',
+		'Ni razpoložljivih terminov' => 'Keine freien Termine verfügbar',
+		'Termin ni na voljo' => 'Der Termin ist nicht verfügbar',
+		'Ta termin ni več na voljo' => 'Dieser Termin ist nicht mehr verfügbar',
+		'Vaša rezervacija je bila uspešno oddana.' => 'Ihre Buchung wurde erfolgreich gesendet.',
+		'Prosimo, izberite storitev za rezervacijo termina.' => 'Bitte wählen Sie eine Dienstleistung für die Terminbuchung aus.',
+		'Prosimo, izberite datum termina za nadaljevanje rezervacije.' => 'Bitte wählen Sie ein Datum aus, um mit der Buchung fortzufahren.',
+		'Prosimo, izberite časovni termin za nadaljevanje rezervacije.' => 'Bitte wählen Sie eine Uhrzeit aus, um mit der Buchung fortzufahren.',
+		'Ime in priimek' => 'Vor- und Nachname',
+		'Vnesite ime in priimek' => 'Vor- und Nachnamen eingeben',
+		'Prosim vnesite ime in priimek' => 'Bitte geben Sie Vor- und Nachnamen ein',
+		'Email naslov' => 'E-Mail-Adresse',
+		'Vnesite email naslov' => 'E-Mail-Adresse eingeben',
+		'Prosim vnesite email naslov' => 'Bitte geben Sie eine E-Mail-Adresse ein',
+		'Telefon' => 'Telefon',
+		'Vnesite telefonsko številko' => 'Telefonnummer eingeben',
+		'Prosim vnesite telefonsko številko' => 'Bitte geben Sie eine Telefonnummer ein',
+		'Opomba' => 'Notiz',
+		'Note' => 'Notiz',
+		'Enter note details' => 'Notiz eingeben',
+		'Please enter appointment note' => 'Bitte geben Sie eine Notiz zum Termin ein',
+		'Username' => 'Benutzername',
+		'Enter your username' => 'Benutzernamen eingeben',
+		'Please enter your username' => 'Bitte geben Sie einen Benutzernamen ein',
+		'Enter your phone number' => 'Telefonnummer eingeben',
+		'Celotna nega - psi' => 'Komplettpflege - Hunde',
+		'Posamezne storitve - psi' => 'Einzelleistungen - Hunde',
+		'Razna nega - mačke' => 'Weitere Pflege - Katzen',
+		'Mali psi (do 10kg) 38-44€' => 'Kleine Hunde (bis 10 kg) 38-44€',
+		'Srednji psi (do 20kg) 46-59€' => 'Mittelgroße Hunde (bis 20 kg) 46-59€',
+		'Veliki psi (do 40kg) 59-75€' => 'Große Hunde (bis 40 kg) 59-75€',
+		'XL psi (nad 40kg) od 75€' => 'XL-Hunde (über 40 kg) ab 75€',
+		'Nega obočesne dlake' => 'Pflege der Augenpartie',
+		'Higienska nega' => 'Hygienepflege',
+		'Krajšanje krempljev' => 'Krallen kürzen',
+		'Korekcijsko striženje' => 'Korrekturschnitt',
+		'Trimanje' => 'Trimmen',
+		'Razčesavanje' => 'Entfilzen',
+		'Celotna nega - mačke' => 'Komplettpflege - Katzen',
+		'Razčesavanje - mačke' => 'Entfilzen - Katzen',
+		'Ponedeljek' => 'Montag',
+		'Torek' => 'Dienstag',
+		'Sreda' => 'Mittwoch',
+		'Četrtek' => 'Donnerstag',
+		'Petek' => 'Freitag',
+		'Sobota' => 'Samstag',
+		'Nedelja' => 'Sonntag',
+		'Pon' => 'Mo',
+		'Tor' => 'Di',
+		'Sre' => 'Mi',
+		'Čet' => 'Do',
+		'Pet' => 'Fr',
+		'Sob' => 'Sa',
+		'Ned' => 'So',
+		'januar' => 'Januar',
+		'februar' => 'Februar',
+		'marec' => 'März',
+		'april' => 'April',
+		'maj' => 'Mai',
+		'junij' => 'Juni',
+		'julij' => 'Juli',
+		'avgust' => 'August',
+		'september' => 'September',
+		'oktober' => 'Oktober',
+		'november' => 'November',
+		'december' => 'Dezember',
+		'Select Category' => 'Kategorie auswählen',
+		'Select Service' => 'Dienstleistung auswählen',
+		'Service' => 'Dienstleistung',
+		'Services' => 'Dienstleistungen',
+		'Date' => 'Datum',
+		'Time' => 'Uhrzeit',
+		'Date & Time' => 'Datum und Uhrzeit',
+		'Date and Time' => 'Datum und Uhrzeit',
+		'Basic Details' => 'Persönliche Daten',
+		'Information' => 'Informationen',
+		'Summary' => 'Zusammenfassung',
+		'Payment' => 'Zahlung',
+		'Next' => 'Weiter',
+		'Back' => 'Zurück',
+		'Previous' => 'Zurück',
+		'Confirm' => 'Bestätigen',
+		'Confirm Booking' => 'Buchung bestätigen',
+		'Book Appointment' => 'Termin buchen',
+		'Book Now' => 'Jetzt buchen',
+		'Price' => 'Preis',
+		'Duration' => 'Dauer',
+		'Free' => 'Kostenlos',
+		'No service found' => 'Keine Dienstleistung gefunden',
+		'No time slots available' => 'Keine freien Termine verfügbar',
+		'Please select service to proceed booking.' => 'Bitte wählen Sie eine Dienstleistung aus, um fortzufahren.',
+		'Please select appointment date to proceed booking.' => 'Bitte wählen Sie ein Datum aus, um fortzufahren.',
+		'Please select appointment time to proceed booking.' => 'Bitte wählen Sie eine Uhrzeit aus, um fortzufahren.',
+		'Full name' => 'Vor- und Nachname',
+		'Name' => 'Name',
+		'First name' => 'Vorname',
+		'Last name' => 'Nachname',
+		'Email address' => 'E-Mail-Adresse',
+		'Email Address' => 'E-Mail-Adresse',
+		'Phone' => 'Telefon',
+		'Phone number' => 'Telefonnummer',
+		'Enter your full name' => 'Vor- und Nachnamen eingeben',
+		'Enter your email address' => 'E-Mail-Adresse eingeben',
+		'Please enter your full name' => 'Bitte geben Sie Vor- und Nachnamen ein',
+		'Please enter your email address' => 'Bitte geben Sie eine E-Mail-Adresse ein',
+	];
+
+	return $map;
+}
+
+/**
+ * Translate exact BookingPress strings generated through WordPress i18n.
+ *
+ * @param string $translated_text Current translated text.
+ * @param string $text            Original text.
+ * @param string $domain          Text domain.
+ * @return string
+ */
+function dondog_translate_bookingpress_text( $translated_text, $text, $domain = '' ) {
+	static $is_german = null;
+
+	if ( null === $is_german ) {
+		$is_german = dondog_is_german();
+	}
+
+	if ( ! $is_german || ( is_admin() && ! wp_doing_ajax() ) ) {
+		return $translated_text;
+	}
+
+	$map = dondog_bookingpress_i18n_map();
+
+	if ( isset( $map[ $text ] ) ) {
+		return $map[ $text ];
+	}
+
+	if ( isset( $map[ $translated_text ] ) ) {
+		return $map[ $translated_text ];
+	}
+
+	return $translated_text;
+}
+add_filter( 'gettext', 'dondog_translate_bookingpress_text', 20, 3 );
+add_filter( 'gettext_with_context', 'dondog_translate_bookingpress_text', 20, 3 );
+
+/**
+ * Translate plural BookingPress strings generated through WordPress i18n.
+ *
+ * @param string $translation Current translated text.
+ * @param string $single      Singular text.
+ * @param string $plural      Plural text.
+ * @param int    $number      Number.
+ * @param string $domain      Text domain.
+ * @return string
+ */
+function dondog_translate_bookingpress_plural_text( $translation, $single, $plural, $number, $domain = '' ) {
+	return dondog_translate_bookingpress_text( $translation, 1 === (int) $number ? $single : $plural, $domain );
+}
+add_filter( 'ngettext', 'dondog_translate_bookingpress_plural_text', 20, 5 );
+add_filter( 'ngettext_with_context', 'dondog_translate_bookingpress_plural_text', 20, 5 );
+
+/**
+ * Enqueue the front-end fallback for BookingPress Vue-rendered text.
+ *
+ * @return void
+ */
+function dondog_enqueue_bookingpress_i18n() {
+	if ( is_admin() || ! dondog_is_german() ) {
+		return;
+	}
+
+	$script_path = get_stylesheet_directory() . '/assets/js/bookingpress-i18n.js';
+
+	if ( ! file_exists( $script_path ) ) {
+		return;
+	}
+
+	wp_enqueue_script(
+		'dondog-bookingpress-i18n',
+		get_stylesheet_directory_uri() . '/assets/js/bookingpress-i18n.js',
+		[],
+		DONDOG_THEME_VERSION,
+		true
+	);
+
+	wp_add_inline_script(
+		'dondog-bookingpress-i18n',
+		'window.dondogBookingPressI18n = ' . wp_json_encode( dondog_bookingpress_i18n_map() ) . ';',
+		'before'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'dondog_enqueue_bookingpress_i18n', 100 );
