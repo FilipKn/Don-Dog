@@ -32,7 +32,7 @@ function dondog_render_footer_shortcode( $atts ) {
 	$defaults = [
 		'logo'           => '',
 		'brand_name'     => 'Don Dog',
-		'description'    => 'Premium pasji salon v srcu Ljubljane. Vas pes si zasluzi najboljse - mi mu to damo.',
+		'description'    => 'Premium pasji salon v Radljah ob Dravi. Vas pes si zasluzi najboljse - mi mu to damo.',
 		'instagram_icon' => '',
 		'instagram_url'  => 'https://www.instagram.com/pasji_salon_dondog/',
 		'facebook_icon'  => '',

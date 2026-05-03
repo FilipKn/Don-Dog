@@ -15,19 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool
  */
 function dondog_allow_current_request() {
-	if ( is_user_logged_in() ) {
-		return true;
-	}
-
-	if ( is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
-		return true;
-	}
-
-	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-		return true;
-	}
-
-	return false;
+	// The site is public now; keep this module loaded as a harmless no-op.
+	return true;
 }
 
 /**
