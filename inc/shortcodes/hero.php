@@ -56,11 +56,15 @@ function dondog_render_hero_shortcode( $atts ) {
 	$language_switcher     = '';
 
 	if ( filter_var( $atts['language_switcher'], FILTER_VALIDATE_BOOLEAN ) && function_exists( 'dondog_render_language_switcher_shortcode' ) ) {
-		$language_switcher = dondog_render_language_switcher_shortcode(
-			[
-				'show_names' => $atts['language_switcher_names'],
-			]
-		);
+		try {
+			$language_switcher = dondog_render_language_switcher_shortcode(
+				[
+					'show_names' => $atts['language_switcher_names'],
+				]
+			);
+		} catch ( Throwable $error ) {
+			$language_switcher = '';
+		}
 	}
 
 	$title_id = wp_unique_id( 'dondog-hero-title-' );

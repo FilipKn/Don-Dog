@@ -42,13 +42,17 @@ function dondog_render_language_switcher_shortcode( $atts ) {
 		'dondog_language_switcher'
 	);
 
-	$languages = pll_the_languages(
-		[
-			'raw'           => 1,
-			'hide_if_empty' => 0,
-			'hide_current'  => 0,
-		]
-	);
+	try {
+		$languages = pll_the_languages(
+			[
+				'raw'           => 1,
+				'hide_if_empty' => 0,
+				'hide_current'  => 0,
+			]
+		);
+	} catch ( Throwable $error ) {
+		return '';
+	}
 
 	if ( ! is_array( $languages ) || [] === $languages ) {
 		return '';
