@@ -1,7 +1,6 @@
 (function () {
 	'use strict';
 
-	var translations = window.dondogCookieYesI18n || {};
 	var cookieYesSelector = [
 		'.cky-consent-container',
 		'.cky-modal',
@@ -31,7 +30,11 @@
 	};
 
 	function hasTranslations() {
-		return Object.keys(translations).length > 0;
+		return Object.keys(getTranslations()).length > 0;
+	}
+
+	function getTranslations() {
+		return window.dondogCookieYesI18n || {};
 	}
 
 	function normalize(value) {
@@ -69,6 +72,7 @@
 			return value;
 		}
 
+		var translations = getTranslations();
 		var trimmed = normalize(value);
 
 		if (Object.prototype.hasOwnProperty.call(translations, trimmed)) {

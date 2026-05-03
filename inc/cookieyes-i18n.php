@@ -217,14 +217,25 @@ function dondog_enqueue_cookieyes_i18n() {
 		DONDOG_THEME_VERSION,
 		false
 	);
-
-	wp_add_inline_script(
-		'dondog-cookieyes-i18n',
-		'window.dondogCookieYesI18n = ' . wp_json_encode( dondog_cookieyes_i18n_map() ) . ';',
-		'before'
-	);
 }
 add_action( 'wp_enqueue_scripts', 'dondog_enqueue_cookieyes_i18n', 110 );
+
+/**
+ * Print CookieYes translations before optimized scripts can run.
+ *
+ * @return void
+ */
+function dondog_print_cookieyes_i18n_data() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	printf(
+		'<script id="dondog-cookieyes-i18n-data" data-no-optimize="1" data-cfasync="false">window.dondogCookieYesI18n=%s;</script>' . "\n",
+		wp_json_encode( dondog_cookieyes_i18n_map() )
+	);
+}
+add_action( 'wp_head', 'dondog_print_cookieyes_i18n_data', 1 );
 
 /**
  * Keep the CookieYes translator out of JS optimizers so it runs immediately.
