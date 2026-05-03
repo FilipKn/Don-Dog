@@ -29,16 +29,16 @@ add_action( 'init', 'dondog_register_button_shortcode' );
  * @return string
  */
 function dondog_render_button_shortcode( $atts ) {
-	$atts = shortcode_atts(
-		[
-			'text'    => 'Rezerviraj termin',
-			'url'     => 'https://dondog.si/rezervacije/',
-			'align'   => 'center',
-			'new_tab' => 'false',
-		],
-		$atts,
-		'dondog_button'
-	);
+	$defaults = [
+		'text'    => 'Rezerviraj termin',
+		'url'     => 'https://dondog.si/rezervacije/',
+		'align'   => 'center',
+		'new_tab' => 'false',
+	];
+
+	$atts        = shortcode_atts( $defaults, $atts, 'dondog_button' );
+	$atts        = dondog_apply_shortcode_language_defaults( 'dondog_button', $atts, $defaults );
+	$atts['url'] = dondog_translate_url( $atts['url'] );
 
 	$align  = dondog_button_get_align_class( $atts['align'] );
 	$target = filter_var( $atts['new_tab'], FILTER_VALIDATE_BOOLEAN ) ? ' target="_blank" rel="noopener noreferrer"' : '';

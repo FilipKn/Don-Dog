@@ -29,32 +29,31 @@ add_action( 'init', 'dondog_register_before_after_shortcode' );
  * @return string
  */
 function dondog_render_before_after_shortcode( $atts ) {
-	$atts = shortcode_atts(
-		[
-			'before_label'  => 'Pred',
-			'after_label'   => 'Po',
-			'item_1_before' => '',
-			'item_1_after'  => '',
-			'item_1_name'   => 'Bella',
-			'item_1_breed'  => 'Maltezan',
-			'item_2_before' => '',
-			'item_2_after'  => '',
-			'item_2_name'   => 'Max',
-			'item_2_breed'  => 'Zlati retriver',
-			'item_3_before' => '',
-			'item_3_after'  => '',
-			'item_3_name'   => 'Luka',
-			'item_3_breed'  => 'Yorkshire terier',
-		],
-		$atts,
-		'dondog_before_after'
-	);
+	$defaults = [
+		'before_label'  => 'Pred',
+		'after_label'   => 'Po',
+		'item_1_before' => '',
+		'item_1_after'  => '',
+		'item_1_name'   => 'Bella',
+		'item_1_breed'  => 'Maltezan',
+		'item_2_before' => '',
+		'item_2_after'  => '',
+		'item_2_name'   => 'Max',
+		'item_2_breed'  => 'Zlati retriver',
+		'item_3_before' => '',
+		'item_3_after'  => '',
+		'item_3_name'   => 'Luka',
+		'item_3_breed'  => 'Yorkshire terier',
+	];
+
+	$atts = shortcode_atts( $defaults, $atts, 'dondog_before_after' );
+	$atts = dondog_apply_shortcode_language_defaults( 'dondog_before_after', $atts, $defaults );
 
 	$items = dondog_before_after_get_items( $atts );
 
 	ob_start();
 	?>
-	<section class="dondog-before-after" aria-label="<?php echo esc_attr__( 'Pred in po galerija', 'dondog' ); ?>">
+	<section class="dondog-before-after" aria-label="<?php echo esc_attr( dondog_lang_text( 'Pred in po galerija', 'Vorher-nachher-Galerie' ) ); ?>">
 		<div class="dondog-before-after__grid">
 			<?php foreach ( $items as $index => $item ) : ?>
 				<article class="dondog-before-after__card">
@@ -165,7 +164,7 @@ function dondog_before_after_render_image( $image_source, $type, $label, $name, 
 	return sprintf(
 		'<figure class="%1$s dondog-before-after__image--placeholder"><span class="dondog-before-after__placeholder-text">%2$s</span><span class="dondog-before-after__badge">%3$s</span></figure>',
 		esc_attr( $class_name ),
-		esc_html__( 'Slika', 'dondog' ),
+		esc_html( dondog_lang_text( 'Slika', 'Bild' ) ),
 		esc_html( $label )
 	);
 }

@@ -29,27 +29,28 @@ add_action( 'init', 'dondog_register_hero_shortcode' );
  * @return string
  */
 function dondog_render_hero_shortcode( $atts ) {
-	$atts = shortcode_atts(
-		[
-			'eyebrow'        => 'Salon za nego živali',
-			'title_top'      => 'Vrhunska nega za',
-			'title_bottom'   => 'vašega',
-			'title_accent'   => 'PSA.',
-			'text'           => 'Striženje, kopanje in nega za pse, mačke in druge male Živali.',
-			'primary_text'   => 'Rezerviraj termin',
-			'primary_url'    => 'https://dondog.si/rezervacije',
-			'secondary_text' => 'Naše storitve',
-			'secondary_url'  => 'https://dondog.si/cenik/',
-			'features'       => '33+ zadovoljnih strank|Nežen pristop|Profesionalna nega',
-			'main_image'     => '',
-			'top_image'      => '',
-			'right_image'    => '',
-			'left_image'     => '',
-			'bottom_image'   => '',
-		],
-		$atts,
-		'dondog_hero'
-	);
+	$defaults = [
+		'eyebrow'        => 'Salon za nego živali',
+		'title_top'      => 'Vrhunska nega za',
+		'title_bottom'   => 'vašega',
+		'title_accent'   => 'PSA.',
+		'text'           => 'Striženje, kopanje in nega za pse, mačke in druge male živali.',
+		'primary_text'   => 'Rezerviraj termin',
+		'primary_url'    => 'https://dondog.si/rezervacije',
+		'secondary_text' => 'Naše storitve',
+		'secondary_url'  => 'https://dondog.si/cenik/',
+		'features'       => '33+ zadovoljnih strank|Nežen pristop|Profesionalna nega',
+		'main_image'     => '',
+		'top_image'      => '',
+		'right_image'    => '',
+		'left_image'     => '',
+		'bottom_image'   => '',
+	];
+
+	$atts                  = shortcode_atts( $defaults, $atts, 'dondog_hero' );
+	$atts                  = dondog_apply_shortcode_language_defaults( 'dondog_hero', $atts, $defaults );
+	$atts['primary_url']   = dondog_translate_url( $atts['primary_url'] );
+	$atts['secondary_url'] = dondog_translate_url( $atts['secondary_url'] );
 
 	$title_id = wp_unique_id( 'dondog-hero-title-' );
 
@@ -81,25 +82,25 @@ function dondog_render_hero_shortcode( $atts ) {
 					</a>
 				</div>
 
-				<ul class="dondog-hero__features" aria-label="<?php echo esc_attr__( 'Prednosti', 'hello-elementor-child' ); ?>">
+				<ul class="dondog-hero__features" aria-label="<?php echo esc_attr( dondog_lang_text( 'Prednosti', 'Vorteile' ) ); ?>">
 					<?php foreach ( dondog_hero_get_features( $atts['features'] ) as $feature ) : ?>
 						<li><?php echo esc_html( $feature ); ?></li>
 					<?php endforeach; ?>
 				</ul>
 			</div>
 
-			<div class="dondog-hero__visual" aria-label="<?php echo esc_attr__( 'Slike salona in zivali', 'hello-elementor-child' ); ?>">
+			<div class="dondog-hero__visual" aria-label="<?php echo esc_attr( dondog_lang_text( 'Slike salona in živali', 'Bilder aus dem Salon und von Tieren' ) ); ?>">
 				<span class="dondog-hero__ring dondog-hero__ring--outer" aria-hidden="true"></span>
 				<span class="dondog-hero__ring dondog-hero__ring--inner" aria-hidden="true"></span>
 				<span class="dondog-hero__dot dondog-hero__dot--large" aria-hidden="true"></span>
 				<span class="dondog-hero__dot dondog-hero__dot--small" aria-hidden="true"></span>
 
 				<?php
-				echo dondog_hero_render_image( $atts['main_image'], 'main', __( 'Glavna slika', 'hello-elementor-child' ), 'eager' );
-				echo dondog_hero_render_image( $atts['top_image'], 'top', __( 'Zgornja slika', 'hello-elementor-child' ) );
-				echo dondog_hero_render_image( $atts['right_image'], 'right', __( 'Desna slika', 'hello-elementor-child' ) );
-				echo dondog_hero_render_image( $atts['left_image'], 'left', __( 'Leva slika', 'hello-elementor-child' ) );
-				echo dondog_hero_render_image( $atts['bottom_image'], 'bottom', __( 'Spodnja slika', 'hello-elementor-child' ) );
+				echo dondog_hero_render_image( $atts['main_image'], 'main', dondog_lang_text( 'Glavna slika', 'Hauptbild' ), 'eager' );
+				echo dondog_hero_render_image( $atts['top_image'], 'top', dondog_lang_text( 'Zgornja slika', 'Oberes Bild' ) );
+				echo dondog_hero_render_image( $atts['right_image'], 'right', dondog_lang_text( 'Desna slika', 'Rechtes Bild' ) );
+				echo dondog_hero_render_image( $atts['left_image'], 'left', dondog_lang_text( 'Leva slika', 'Linkes Bild' ) );
+				echo dondog_hero_render_image( $atts['bottom_image'], 'bottom', dondog_lang_text( 'Spodnja slika', 'Unteres Bild' ) );
 				?>
 			</div>
 		</div>

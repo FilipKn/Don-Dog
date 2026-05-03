@@ -29,39 +29,38 @@ add_action( 'init', 'dondog_register_footer_shortcode' );
  * @return string
  */
 function dondog_render_footer_shortcode( $atts ) {
-	$atts = shortcode_atts(
-		[
-			'logo'           => '',
-			'brand_name'     => 'Don Dog',
-			'description'    => 'Premium pasji salon v srcu Ljubljane. Vas pes si zasluzi najboljse - mi mu to damo.',
-			'instagram_icon' => '',
-			'instagram_url'  => 'https://www.instagram.com/pasji_salon_dondog/',
-			'facebook_icon'  => '',
-			'facebook_url'   => 'https://www.facebook.com/pasjisalonDONDOG/',
-			'nav_title'      => 'Navigacija',
-			'nav_items'      => 'Domov|/;Storitve|/cenik/;Galerija|/galerija/;Kontakt|/kontakt/',
-			'contact_title'  => 'Kontakt',
-			'address_icon'   => '',
-			'address'        => 'Dobrava 5a, Radlje ob Dravi, Slovenija',
-			'phone_icon'     => '',
-			'phone'          => '+386 40 659 936',
-			'phone_url'      => 'tel:+38640659936',
-			'email_icon'     => '',
-			'email'          => 'donablaznik@gmail.com',
-			'email_url'      => 'mailto:donablaznik@gmail.com',
-			'hours_title'    => 'Delovni čas',
-			'hours_icon'     => '',
-			'hours_items'    => 'Pon - Pet|8:00 - 18:00;Sob|Zaprto;Ned|Zaprto',
-			'copyright'      => '(c) 2026 Don Dog. Vse pravice pridržane.',
-			'credit'         => 'Oblikovano z ljubeznijo do psov',
-		],
-		$atts,
-		'dondog_footer'
-	);
+	$defaults = [
+		'logo'           => '',
+		'brand_name'     => 'Don Dog',
+		'description'    => 'Premium pasji salon v srcu Ljubljane. Vas pes si zasluzi najboljse - mi mu to damo.',
+		'instagram_icon' => '',
+		'instagram_url'  => 'https://www.instagram.com/pasji_salon_dondog/',
+		'facebook_icon'  => '',
+		'facebook_url'   => 'https://www.facebook.com/pasjisalonDONDOG/',
+		'nav_title'      => 'Navigacija',
+		'nav_items'      => 'Domov|/;Storitve|/cenik/;Galerija|/galerija/;Kontakt|/kontakt/',
+		'contact_title'  => 'Kontakt',
+		'address_icon'   => '',
+		'address'        => 'Dobrava 5a, Radlje ob Dravi, Slovenija',
+		'phone_icon'     => '',
+		'phone'          => '+386 40 659 936',
+		'phone_url'      => 'tel:+38640659936',
+		'email_icon'     => '',
+		'email'          => 'donablaznik@gmail.com',
+		'email_url'      => 'mailto:donablaznik@gmail.com',
+		'hours_title'    => 'Delovni čas',
+		'hours_icon'     => '',
+		'hours_items'    => 'Pon - Pet|8:00 - 18:00;Sob|Zaprto;Ned|Zaprto',
+		'copyright'      => '(c) 2026 Don Dog. Vse pravice pridržane.',
+		'credit'         => 'Oblikovano z ljubeznijo do psov',
+	];
+
+	$atts = shortcode_atts( $defaults, $atts, 'dondog_footer' );
+	$atts = dondog_apply_shortcode_language_defaults( 'dondog_footer', $atts, $defaults );
 
 	ob_start();
 	?>
-	<footer class="dondog-footer" aria-label="<?php echo esc_attr__( 'Noga strani', 'dondog' ); ?>">
+	<footer class="dondog-footer" aria-label="<?php echo esc_attr( dondog_lang_text( 'Noga strani', 'Fußzeile' ) ); ?>">
 		<div class="dondog-footer__main">
 			<section class="dondog-footer__brand" aria-label="<?php echo esc_attr__( 'Don Dog', 'dondog' ); ?>">
 				<?php echo dondog_footer_render_logo( $atts['logo'], $atts['brand_name'] ); ?>
@@ -70,7 +69,7 @@ function dondog_render_footer_shortcode( $atts ) {
 					<p class="dondog-footer__description"><?php echo esc_html( $atts['description'] ); ?></p>
 				<?php endif; ?>
 
-				<div class="dondog-footer__socials" aria-label="<?php echo esc_attr__( 'Druzabna omrezja', 'dondog' ); ?>">
+				<div class="dondog-footer__socials" aria-label="<?php echo esc_attr( dondog_lang_text( 'Družabna omrežja', 'Soziale Netzwerke' ) ); ?>">
 					<?php
 					echo dondog_footer_render_social_link( $atts['instagram_url'], $atts['instagram_icon'], 'Instagram', 'IG' );
 					echo dondog_footer_render_social_link( $atts['facebook_url'], $atts['facebook_icon'], 'Facebook', 'FB' );
@@ -78,41 +77,41 @@ function dondog_render_footer_shortcode( $atts ) {
 				</div>
 			</section>
 
-			<nav class="dondog-footer__column" aria-label="<?php echo esc_attr__( 'Navigacija', 'dondog' ); ?>">
+			<nav class="dondog-footer__column" aria-label="<?php echo esc_attr( dondog_lang_text( 'Navigacija', 'Navigation' ) ); ?>">
 				<h2 class="dondog-footer__heading"><?php echo esc_html( $atts['nav_title'] ); ?></h2>
 				<ul class="dondog-footer__links">
 					<?php foreach ( dondog_footer_parse_pairs( $atts['nav_items'] ) as $item ) : ?>
 						<li>
-							<a href="<?php echo esc_url( $item['value'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
+							<a href="<?php echo esc_url( dondog_translate_url( $item['value'] ) ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
 						</li>
 					<?php endforeach; ?>
 				</ul>
 			</nav>
 
-			<section class="dondog-footer__column" aria-label="<?php echo esc_attr__( 'Kontakt', 'dondog' ); ?>">
+			<section class="dondog-footer__column" aria-label="<?php echo esc_attr( dondog_lang_text( 'Kontakt', 'Kontakt' ) ); ?>">
 				<h2 class="dondog-footer__heading"><?php echo esc_html( $atts['contact_title'] ); ?></h2>
 				<ul class="dondog-footer__contact">
 					<li>
-						<?php echo dondog_footer_render_icon( $atts['address_icon'], 'Lokacija', 'pin' ); ?>
+						<?php echo dondog_footer_render_icon( $atts['address_icon'], dondog_lang_text( 'Lokacija', 'Standort' ), 'pin' ); ?>
 						<span><?php echo esc_html( $atts['address'] ); ?></span>
 					</li>
 					<li>
-						<?php echo dondog_footer_render_icon( $atts['phone_icon'], 'Telefon', 'phone' ); ?>
+						<?php echo dondog_footer_render_icon( $atts['phone_icon'], dondog_lang_text( 'Telefon', 'Telefon' ), 'phone' ); ?>
 						<a href="<?php echo esc_url( $atts['phone_url'] ); ?>"><?php echo esc_html( $atts['phone'] ); ?></a>
 					</li>
 					<li>
-						<?php echo dondog_footer_render_icon( $atts['email_icon'], 'Email', 'mail' ); ?>
+						<?php echo dondog_footer_render_icon( $atts['email_icon'], dondog_lang_text( 'Email', 'E-Mail' ), 'mail' ); ?>
 						<a href="<?php echo esc_url( $atts['email_url'] ); ?>"><?php echo esc_html( $atts['email'] ); ?></a>
 					</li>
 				</ul>
 			</section>
 
-			<section class="dondog-footer__column" aria-label="<?php echo esc_attr__( 'Delovni cas', 'dondog' ); ?>">
+			<section class="dondog-footer__column" aria-label="<?php echo esc_attr( dondog_lang_text( 'Delovni čas', 'Öffnungszeiten' ) ); ?>">
 				<h2 class="dondog-footer__heading"><?php echo esc_html( $atts['hours_title'] ); ?></h2>
 				<ul class="dondog-footer__hours">
 					<?php foreach ( dondog_footer_parse_pairs( $atts['hours_items'] ) as $item ) : ?>
 						<li>
-							<?php echo dondog_footer_render_icon( $atts['hours_icon'], 'Cas', 'time' ); ?>
+							<?php echo dondog_footer_render_icon( $atts['hours_icon'], dondog_lang_text( 'Čas', 'Zeit' ), 'time' ); ?>
 							<span><strong><?php echo esc_html( $item['label'] ); ?></strong> - <?php echo esc_html( $item['value'] ); ?></span>
 						</li>
 					<?php endforeach; ?>
