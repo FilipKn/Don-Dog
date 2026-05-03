@@ -52,6 +52,8 @@ function dondog_render_footer_shortcode( $atts ) {
 		'hours_icon'     => '',
 		'hours_items'    => 'Pon - Pet|8:00 - 18:00;Sob|Zaprto;Ned|Zaprto',
 		'copyright'      => '(c) 2026 Don Dog. Vse pravice pridržane.',
+		'privacy_text'   => 'Politika zasebnosti',
+		'privacy_url'    => 'https://dondog.si/sl/politika-zasebnosti/',
 		'credit'         => 'Oblikovano z ljubeznijo do psov',
 	];
 
@@ -120,7 +122,14 @@ function dondog_render_footer_shortcode( $atts ) {
 		</div>
 
 		<div class="dondog-footer__bottom">
-			<p><?php echo esc_html( $atts['copyright'] ); ?></p>
+			<p>
+				<?php echo esc_html( $atts['copyright'] ); ?>
+
+				<?php if ( '' !== trim( $atts['privacy_text'] ) && '' !== trim( $atts['privacy_url'] ) ) : ?>
+					<span class="dondog-footer__separator" aria-hidden="true">|</span>
+					<a href="<?php echo esc_url( $atts['privacy_url'] ); ?>"><?php echo esc_html( $atts['privacy_text'] ); ?></a>
+				<?php endif; ?>
+			</p>
 			<p><?php echo esc_html( $atts['credit'] ); ?></p>
 		</div>
 	</footer>

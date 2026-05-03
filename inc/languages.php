@@ -127,6 +127,7 @@ function dondog_get_shortcode_language_defaults( $shortcode ) {
 			'hours_title' => 'Öffnungszeiten',
 			'hours_items' => 'Mo - Fr|8:00 - 18:00;Sa|Geschlossen;So|Geschlossen',
 			'copyright'   => '(c) 2026 Don Dog. Alle Rechte vorbehalten.',
+			'privacy_text' => 'Datenschutz',
 			'credit'      => 'Mit Liebe zu Hunden gestaltet',
 		],
 	];
