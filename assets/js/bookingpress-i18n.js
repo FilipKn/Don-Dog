@@ -30,6 +30,11 @@
 		}
 
 		var trimmed = value.trim();
+		var translatedTimeRange = trimmed.replace(/^(\d{1,2}:\d{2})\s+to\s+(\d{1,2}:\d{2})$/i, '$1 - $2');
+
+		if (translatedTimeRange !== trimmed) {
+			return value.replace(trimmed, translatedTimeRange);
+		}
 
 		if (!Object.prototype.hasOwnProperty.call(translations, trimmed)) {
 			return value;
