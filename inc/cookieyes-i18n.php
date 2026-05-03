@@ -10,11 +10,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Return exact CookieYes text replacements for German pages.
+ * Return exact CookieYes text replacements for the current language.
  *
  * @return array<string,string>
  */
 function dondog_cookieyes_i18n_map() {
+	if ( ! dondog_is_german() ) {
+		return dondog_cookieyes_sl_i18n_map();
+	}
+
 	static $map = null;
 
 	if ( null !== $map ) {
@@ -98,12 +102,100 @@ function dondog_cookieyes_i18n_map() {
 }
 
 /**
+ * Return exact CookieYes text replacements for Slovenian pages.
+ *
+ * @return array<string,string>
+ */
+function dondog_cookieyes_sl_i18n_map() {
+	static $map = null;
+
+	if ( null !== $map ) {
+		return $map;
+	}
+
+	$map = [
+		'Customise Consent Preferences' => 'Prilagodite nastavitve soglasja',
+		'Customize Consent Preferences' => 'Prilagodite nastavitve soglasja',
+		'Consent Preferences' => 'Nastavitve soglasja',
+		'Cookie Settings' => 'Nastavitve piškotkov',
+		'Cookie preferences' => 'Nastavitve piškotkov',
+		'Privacy Overview' => 'Pregled zasebnosti',
+		'Cenimo vašo zasebnost' => 'Cenimo vašo zasebnost',
+		'We value your privacy' => 'Cenimo vašo zasebnost',
+		'This website uses cookies' => 'To spletno mesto uporablja piškotke',
+		'To spletno mesto uporablja piškotke' => 'To spletno mesto uporablja piškotke',
+		'Necessary' => 'Nujni',
+		'Nujni' => 'Nujni',
+		'Functional' => 'Funkcionalni',
+		'Funkcionalni' => 'Funkcionalni',
+		'Analytics' => 'Analitični',
+		'Analitika' => 'Analitični',
+		'Performance' => 'Zmogljivostni',
+		'Zmogljivost' => 'Zmogljivostni',
+		'Advertisement' => 'Oglaševalski',
+		'Oglaševanje' => 'Oglaševalski',
+		'Other' => 'Drugi',
+		'Drugo' => 'Drugi',
+		'Uncategorized' => 'Nekategorizirani',
+		'Nekategorizirano' => 'Nekategorizirani',
+		'Always Active' => 'Vedno aktivno',
+		'Vedno aktivno' => 'Vedno aktivno',
+		'Enabled' => 'Omogočeno',
+		'Disabled' => 'Onemogočeno',
+		'Show more' => 'Prikaži več',
+		'Prikaži več' => 'Prikaži več',
+		'Show less' => 'Prikaži manj',
+		'Prikaži manj' => 'Prikaži manj',
+		'Accept All' => 'Sprejmi vse',
+		'Sprejmi vse' => 'Sprejmi vse',
+		'Reject All' => 'Zavrni vse',
+		'Zavrni vse' => 'Zavrni vse',
+		'Customize' => 'Prilagodi',
+		'Customise' => 'Prilagodi',
+		'Prilagodi' => 'Prilagodi',
+		'Save My Preferences' => 'Shrani moje nastavitve',
+		'Shrani moje nastavitve' => 'Shrani moje nastavitve',
+		'Close' => 'Zapri',
+		'Zapri' => 'Zapri',
+		'Cookie List' => 'Seznam piškotkov',
+		'Seznam piškotkov' => 'Seznam piškotkov',
+		'Cookie' => 'Piškotek',
+		'Duration' => 'Trajanje',
+		'Description' => 'Opis',
+		'Provider' => 'Ponudnik',
+		'Type' => 'Vrsta',
+		'Powered by' => 'Omogoča',
+		'Necessary cookies are required to enable the basic features of this site, such as providing secure log-in or adjusting your consent preferences. These cookies do not store any personally identifiable data.' => 'Nujni piškotki so potrebni za omogočanje osnovnih funkcij tega spletnega mesta, kot sta varna prijava ali prilagajanje nastavitev soglasja. Ti piškotki ne shranjujejo osebno prepoznavnih podatkov.',
+		'Functional cookies help perform certain functionalities like sharing the content of the website on social media platforms, collecting feedback, and other third-party features.' => 'Funkcionalni piškotki pomagajo izvajati določene funkcije, kot so deljenje vsebine na družbenih omrežjih, zbiranje povratnih informacij in druge funkcije tretjih oseb.',
+		'Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics such as the number of visitors, bounce rate, traffic source, etc.' => 'Analitični piškotki nam pomagajo razumeti, kako obiskovalci uporabljajo spletno mesto. Zagotavljajo podatke o številu obiskovalcev, stopnji odboja, virih prometa in podobnih meritvah.',
+		'Performance cookies are used to understand and analyse the key performance indexes of the website which helps in delivering a better user experience for the visitors.' => 'Zmogljivostni piškotki se uporabljajo za razumevanje in analizo ključnih kazalnikov delovanja spletnega mesta, kar pomaga izboljšati uporabniško izkušnjo.',
+		'Advertisement cookies are used to provide visitors with customised advertisements based on the pages you visited previously and to analyse the effectiveness of the ad campaigns.' => 'Oglaševalski piškotki se uporabljajo za prikaz prilagojenih oglasov glede na predhodno obiskane strani ter za analizo učinkovitosti oglaševalskih kampanj.',
+		'Other uncategorized cookies are those that are being analyzed and have not been classified into a category as yet.' => 'Drugi nekategorizirani piškotki so piškotki, ki se še analizirajo in še niso razvrščeni v posamezno kategorijo.',
+		'Piškotke uporabljamo za zagotavljanje učinkovite navigacije in izvajanje določenih funkcij. Podrobne informacije o vseh piškotkih najdete pod posameznimi kategorijami privolitve spodaj.' => 'Piškotke uporabljamo za zagotavljanje učinkovite navigacije in izvajanje določenih funkcij. Podrobne informacije o vseh piškotkih najdete pod posameznimi kategorijami privolitve spodaj.',
+		'Piškotki, ki so razvrščeni kot »Nujni«, se shranijo v vašem brskalniku, saj so bistveni za omogočanje osnovnih funkcij spletnega mesta.' => 'Piškotki, ki so razvrščeni kot »Nujni«, se shranijo v vašem brskalniku, saj so bistveni za omogočanje osnovnih funkcij spletnega mesta.',
+		'Piškotki, ki so razvrščeni kot »Nujni«, se shranijo v vašem brskalniku, saj so bistveni za omogočanje osnovnih funkcij spletnega mesta....' => 'Piškotki, ki so razvrščeni kot »Nujni«, se shranijo v vašem brskalniku, saj so bistveni za omogočanje osnovnih funkcij spletnega mesta....',
+		'We use cookies to enhance your browsing experience, serve personalized ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.' => 'Piškotke uporabljamo za izboljšanje vaše uporabniške izkušnje, prikaz prilagojene vsebine ali oglasov ter analizo prometa. S klikom na »Sprejmi vse« soglašate z uporabo piškotkov.',
+		'We use cookies to improve your browsing experience, personalize content and ads, provide social media features, and analyze our traffic.' => 'Piškotke uporabljamo za izboljšanje vaše uporabniške izkušnje, prilagajanje vsebine in oglasov, zagotavljanje funkcij družbenih omrežij ter analizo prometa.',
+		'Uporabljamo piškotke za izboljšanje vaše izkušnje brskanja, prikaz prilagojenih oglasov ali vsebine in analizo našega prometa.' => 'Piškotke uporabljamo za izboljšanje vaše uporabniške izkušnje, prikaz prilagojene vsebine ali oglasov ter analizo prometa.',
+		'By clicking “Accept All”, you consent to our use of cookies.' => 'S klikom na »Sprejmi vse« soglašate z uporabo piškotkov.',
+		'By clicking "Accept All", you consent to our use of cookies.' => 'S klikom na »Sprejmi vse« soglašate z uporabo piškotkov.',
+		'Z izbiro »Sprejmi vse« soglašate z uporabo vseh piškotkov.' => 'S klikom na »Sprejmi vse« soglašate z uporabo vseh piškotkov.',
+		'Read More' => 'Preberi več',
+		'Preberi več' => 'Preberi več',
+		'Privacy Policy' => 'Politika zasebnosti',
+		'Politika zasebnosti' => 'Politika zasebnosti',
+	];
+
+	return $map;
+}
+
+/**
  * Enqueue CookieYes front-end text translations.
  *
  * @return void
  */
 function dondog_enqueue_cookieyes_i18n() {
-	if ( is_admin() || ! dondog_is_german() ) {
+	if ( is_admin() ) {
 		return;
 	}
 
