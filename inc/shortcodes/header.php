@@ -33,7 +33,7 @@ function dondog_render_header_shortcode( $atts ) {
 		'logo'                    => '',
 		'brand_name'              => 'Don Dog',
 		'home_url'                => '/',
-		'nav_items'               => 'Domov|/;Cenik|/cenik/;O nas|/o-nas/;Galerija|/galerija/;Kontakt|/kontakt/',
+		'nav_items'               => 'Domov|/;Cenik|/cenik/;O nas|/o-nas/;Galerija|https://dondog.si/sl/page/;Kontakt|/kontakt/',
 		'cta_text'                => 'Rezerviraj termin',
 		'cta_url'                 => 'https://dondog.si/rezervacije/',
 		'language_switcher'       => 'true',

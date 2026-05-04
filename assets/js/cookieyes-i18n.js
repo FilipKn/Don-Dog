@@ -29,8 +29,11 @@
 		PRE: true
 	};
 	var observedTargets = typeof WeakSet !== 'undefined' ? new WeakSet() : null;
+	var searchRoots = [document];
 	var persistentTimer = null;
 	var persistentRuns = 0;
+	var cachedTranslationMap = null;
+	var cachedTranslationSources = [];
 	var cookieYesGlobals = [
 		'ckySettings',
 		'ckyConfig',
@@ -46,41 +49,52 @@
 	];
 
 	function hasTranslations() {
-		return Object.keys(getTranslations()).length > 0;
+		return getTranslationSources().length > 0;
 	}
 
 	function getTranslations() {
 		return window.dondogCookieYesI18n || {};
 	}
 
+	function getTranslationSources() {
+		var translations = getTranslations();
+
+		if (translations !== cachedTranslationMap) {
+			cachedTranslationMap = translations;
+			cachedTranslationSources = Object.keys(translations).sort(function (a, b) {
+				return b.length - a.length;
+			});
+		}
+
+		return cachedTranslationSources;
+	}
+
 	function normalize(value) {
 		return value.replace(/\s+/g, ' ').trim();
 	}
 
-	function getSearchRoots() {
-		var roots = [];
-
-		function addRoot(root) {
-			if (!root || roots.indexOf(root) !== -1) {
-				return;
-			}
-
-			roots.push(root);
-
-			if (!root.querySelectorAll) {
-				return;
-			}
-
-			Array.prototype.forEach.call(root.querySelectorAll('*'), function (element) {
-				if (element.shadowRoot) {
-					addRoot(element.shadowRoot);
-				}
-			});
+	function addSearchRoot(root) {
+		if (!root || searchRoots.indexOf(root) !== -1) {
+			return;
 		}
 
-		addRoot(document);
+		searchRoots.push(root);
+	}
 
-		return roots;
+	function collectShadowRoots(root) {
+		if (!root || !root.querySelectorAll) {
+			return;
+		}
+
+		Array.prototype.forEach.call(root.querySelectorAll('*'), function (element) {
+			if (element.shadowRoot) {
+				addSearchRoot(element.shadowRoot);
+			}
+		});
+	}
+
+	function getSearchRoots() {
+		return searchRoots.slice();
 	}
 
 	function translateString(value) {
@@ -89,7 +103,9 @@
 		}
 
 		var translations = getTranslations();
+		var sources = getTranslationSources();
 		var trimmed = normalize(value);
+		var normalizedTranslated;
 
 		if (Object.prototype.hasOwnProperty.call(translations, trimmed)) {
 			return value.replace(value.trim(), translations[trimmed]);
@@ -97,7 +113,7 @@
 
 		var translated = value;
 
-		Object.keys(translations).forEach(function (source) {
+		sources.forEach(function (source) {
 			if (source.length < 12 || translated.indexOf(source) === -1) {
 				return;
 			}
@@ -105,17 +121,31 @@
 			translated = translated.split(source).join(translations[source]);
 		});
 
-		Object.keys(translations).forEach(function (source) {
-			var normalizedTranslated = normalize(translated);
+		normalizedTranslated = normalize(translated);
 
+		sources.forEach(function (source) {
 			if (source.length < 12 || normalizedTranslated.indexOf(source) === -1) {
 				return;
 			}
 
-			translated = normalizedTranslated.split(source).join(translations[source]);
+			normalizedTranslated = normalizedTranslated.split(source).join(translations[source]);
 		});
 
-		return translated;
+		return normalizedTranslated !== normalize(value) ? normalizedTranslated : translated;
+	}
+
+	function containsKnownTranslationSource(value) {
+		var normalized;
+
+		if (typeof value !== 'string' || '' === value) {
+			return false;
+		}
+
+		normalized = normalize(value);
+
+		return getTranslationSources().some(function (source) {
+			return source.length >= 6 && normalized.indexOf(source) !== -1;
+		});
 	}
 
 	function markObserved(target) {
@@ -321,7 +351,6 @@
 		if (hasTranslations()) {
 			translateCookieYesGlobals();
 			translateCookieYesDom();
-			getSearchRoots().forEach(translateKnownCookieText);
 		}
 	}
 
@@ -337,10 +366,13 @@
 						Array.prototype.forEach.call(node.querySelectorAll(cookieYesSelector), translateElement);
 					}
 
-					translateKnownCookieText(node);
+					if (containsKnownTranslationSource(node.textContent)) {
+						translateKnownCookieText(node);
+					}
 
 					if (node.shadowRoot) {
-						translateKnownCookieText(node.shadowRoot);
+						addSearchRoot(node.shadowRoot);
+						translateCookieYesDom();
 						observeChanges();
 					}
 				}
@@ -378,6 +410,8 @@
 			return;
 		}
 
+		collectShadowRoots(document);
+
 		getSearchRoots().forEach(function (root) {
 			observeTarget(root.nodeType === 9 ? root.body || root.documentElement : root);
 		});
@@ -402,7 +436,7 @@
 			translateAll();
 			observeChanges();
 
-			if (persistentRuns >= 120) {
+			if (persistentRuns >= 32) {
 				window.clearInterval(persistentTimer);
 				persistentTimer = null;
 			}

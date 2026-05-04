@@ -186,25 +186,10 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 	$position     = sanitize_html_class( $position );
 	$class_name   = 'dondog-hero__image dondog-hero__image--' . sanitize_html_class( $position );
 	$image_meta   = dondog_hero_get_image_meta( $position );
+	$attachment_id = dondog_hero_get_attachment_id_from_source( $image_source );
 
-	if ( is_numeric( $image_source ) ) {
-		$image_attrs = [
-			'class'    => 'dondog-hero__img',
-			'loading'  => $loading,
-			'decoding' => 'async',
-			'sizes'    => $image_meta['sizes'],
-		];
-
-		if ( 'eager' === $loading ) {
-			$image_attrs['fetchpriority'] = 'high';
-		}
-
-		$image = wp_get_attachment_image(
-			absint( $image_source ),
-			$image_meta['size'],
-			false,
-			$image_attrs
-		);
+	if ( $attachment_id ) {
+		$image = dondog_hero_render_attachment_image( $attachment_id, $image_meta, $loading );
 
 		if ( $image ) {
 			return sprintf(
@@ -216,14 +201,23 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 	}
 
 	if ( filter_var( $image_source, FILTER_VALIDATE_URL ) ) {
+		$image_class = 'dondog-hero__img';
+		$lazy_attrs  = '';
+
+		if ( 'eager' === $loading ) {
+			$image_class .= ' skip-lazy';
+			$lazy_attrs   = ' fetchpriority="high" data-no-lazy="1"';
+		}
+
 		return sprintf(
-			'<figure class="%1$s"><img class="dondog-hero__img" src="%2$s" alt="" width="%3$d" height="%4$d" loading="%5$s" decoding="async"%6$s></figure>',
+			'<figure class="%1$s"><img class="%2$s" src="%3$s" alt="" width="%4$d" height="%5$d" loading="%6$s" decoding="async"%7$s></figure>',
 			esc_attr( $class_name ),
+			esc_attr( $image_class ),
 			esc_url( $image_source ),
 			absint( $image_meta['width'] ),
 			absint( $image_meta['height'] ),
 			esc_attr( $loading ),
-			'eager' === $loading ? ' fetchpriority="high"' : ''
+			$lazy_attrs
 		);
 	}
 
@@ -232,6 +226,140 @@ function dondog_hero_render_image( $image_source, $position, $fallback, $loading
 		esc_attr( $class_name ),
 		esc_html( $fallback )
 	);
+}
+
+/**
+ * Render a responsive hero image from a WordPress attachment.
+ *
+ * @param int                  $attachment_id Attachment ID.
+ * @param array<string,mixed>  $image_meta    Image size metadata.
+ * @param string               $loading       Loading strategy.
+ * @return string
+ */
+function dondog_hero_render_attachment_image( $attachment_id, $image_meta, $loading ) {
+	$image_attrs = [
+		'alt'      => '',
+		'class'    => 'dondog-hero__img',
+		'loading'  => $loading,
+		'decoding' => 'async',
+		'sizes'    => $image_meta['sizes'],
+	];
+
+	if ( 'eager' === $loading ) {
+		$image_attrs['class']         .= ' skip-lazy';
+		$image_attrs['fetchpriority'] = 'high';
+		$image_attrs['data-no-lazy']  = '1';
+	}
+
+	return wp_get_attachment_image(
+		$attachment_id,
+		$image_meta['size'],
+		false,
+		$image_attrs
+	);
+}
+
+/**
+ * Resolve a shortcode image value to an attachment ID when possible.
+ *
+ * @param string $image_source Attachment ID or image URL.
+ * @return int
+ */
+function dondog_hero_get_attachment_id_from_source( $image_source ) {
+	static $cache = [];
+
+	$image_source = trim( (string) $image_source );
+
+	if ( '' === $image_source ) {
+		return 0;
+	}
+
+	if ( is_numeric( $image_source ) ) {
+		return absint( $image_source );
+	}
+
+	if ( ! filter_var( $image_source, FILTER_VALIDATE_URL ) ) {
+		return 0;
+	}
+
+	if ( isset( $cache[ $image_source ] ) ) {
+		return $cache[ $image_source ];
+	}
+
+	$attachment_id = attachment_url_to_postid( $image_source );
+
+	if ( $attachment_id ) {
+		$cache[ $image_source ] = absint( $attachment_id );
+		return $cache[ $image_source ];
+	}
+
+	$cache[ $image_source ] = dondog_hero_find_attachment_id_by_upload_path( $image_source );
+
+	return $cache[ $image_source ];
+}
+
+/**
+ * Find an attachment ID for edited/scaled upload URLs that attachment_url_to_postid can miss.
+ *
+ * @param string $image_url Image URL.
+ * @return int
+ */
+function dondog_hero_find_attachment_id_by_upload_path( $image_url ) {
+	$uploads   = wp_get_upload_dir();
+	$base_path = isset( $uploads['baseurl'] ) ? wp_parse_url( $uploads['baseurl'], PHP_URL_PATH ) : '';
+	$url_path  = wp_parse_url( $image_url, PHP_URL_PATH );
+
+	if ( ! is_string( $base_path ) || ! is_string( $url_path ) || '' === $base_path || 0 !== strpos( $url_path, $base_path ) ) {
+		return 0;
+	}
+
+	$relative_path = ltrim( substr( $url_path, strlen( $base_path ) ), '/' );
+	$candidates    = array_unique(
+		array_filter(
+			[
+				$relative_path,
+				preg_replace( '/-\d+x\d+(?=\.[^.]+$)/', '', $relative_path ),
+				preg_replace( '/-scaled(?=\.[^.]+$)/', '', $relative_path ),
+			]
+		)
+	);
+
+	foreach ( $candidates as $candidate ) {
+		$attachment_id = dondog_hero_find_attachment_id_by_meta_value( $candidate, '=' );
+
+		if ( $attachment_id ) {
+			return $attachment_id;
+		}
+	}
+
+	return dondog_hero_find_attachment_id_by_meta_value( wp_basename( $relative_path ), 'LIKE' );
+}
+
+/**
+ * Query one attachment by _wp_attached_file value.
+ *
+ * @param string $value   Meta value.
+ * @param string $compare Meta comparison.
+ * @return int
+ */
+function dondog_hero_find_attachment_id_by_meta_value( $value, $compare ) {
+	$ids = get_posts(
+		[
+			'fields'         => 'ids',
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 1,
+			'meta_query'     => [
+				[
+					'key'     => '_wp_attached_file',
+					'value'   => $value,
+					'compare' => $compare,
+				],
+			],
+		]
+	);
+
+	return isset( $ids[0] ) ? absint( $ids[0] ) : 0;
 }
 
 /**

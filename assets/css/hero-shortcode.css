@@ -227,23 +227,23 @@
 }
 
 .dondog-hero.is-text-visible .dondog-hero__eyebrow {
-	transition-delay: 80ms;
+	transition-delay: 40ms;
 }
 
 .dondog-hero.is-text-visible .dondog-hero__title {
-	transition-delay: 190ms;
+	transition-delay: 90ms;
 }
 
 .dondog-hero.is-text-visible .dondog-hero__text {
-	transition-delay: 340ms;
+	transition-delay: 150ms;
 }
 
 .dondog-hero.is-text-visible .dondog-hero__actions {
-	transition-delay: 500ms;
+	transition-delay: 220ms;
 }
 
 .dondog-hero.is-text-visible .dondog-hero__features {
-	transition-delay: 650ms;
+	transition-delay: 300ms;
 }
 
 .dondog-hero__visual {
@@ -331,27 +331,27 @@
 
 .dondog-hero.is-visible .dondog-hero__image--main,
 .dondog-hero.is-visible .dondog-hero__image--main::before {
-	animation-delay: 360ms;
+	animation-delay: 90ms;
 }
 
 .dondog-hero.is-visible .dondog-hero__image--top,
 .dondog-hero.is-visible .dondog-hero__image--top::before {
-	animation-delay: 500ms;
+	animation-delay: 140ms;
 }
 
 .dondog-hero.is-visible .dondog-hero__image--right,
 .dondog-hero.is-visible .dondog-hero__image--right::before {
-	animation-delay: 620ms;
+	animation-delay: 190ms;
 }
 
 .dondog-hero.is-visible .dondog-hero__image--left,
 .dondog-hero.is-visible .dondog-hero__image--left::before {
-	animation-delay: 740ms;
+	animation-delay: 240ms;
 }
 
 .dondog-hero.is-visible .dondog-hero__image--bottom,
 .dondog-hero.is-visible .dondog-hero__image--bottom::before {
-	animation-delay: 860ms;
+	animation-delay: 290ms;
 }
 
 .dondog-hero.is-ready .dondog-hero__ring,

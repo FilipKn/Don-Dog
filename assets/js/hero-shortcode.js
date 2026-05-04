@@ -17,10 +17,10 @@
 
 	function getTextDelay() {
 		if (window.matchMedia && window.matchMedia('(max-width: 640px)').matches) {
-			return 180;
+			return 80;
 		}
 
-		return 1000;
+		return 120;
 	}
 
 	function revealHero(hero) {
