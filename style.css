@@ -191,6 +191,57 @@ body .elementor-post__excerpt {
 	}
 }
 
+body .cky-audit-table-element table,
+body .cky-audit-table-element table.cky-cookie-audit-table {
+	border: 1px solid rgba(127, 146, 117, 0.34) !important;
+	background: #fffbf3 !important;
+	box-shadow: 0 18px 42px rgba(55, 47, 39, 0.09) !important;
+}
+
+body .cky-audit-table-element table thead,
+body .cky-audit-table-element table tbody,
+body .cky-audit-table-element table tr {
+	background: transparent !important;
+}
+
+body .cky-audit-table-element table th {
+	border-color: rgba(255, 255, 255, 0.28) !important;
+	background: #7f9275 !important;
+	color: #fffdf9 !important;
+}
+
+body .cky-audit-table-element table td {
+	border-color: rgba(127, 146, 117, 0.22) !important;
+	background: #fffaf1 !important;
+	color: #2b251f !important;
+}
+
+body .cky-audit-table-element table tr:nth-child(even) td {
+	background: #f3ede2 !important;
+}
+
+body .cky-audit-table-element table tr:hover td {
+	background: #ebe3d5 !important;
+}
+
+body .cky-audit-table-element table td:first-child {
+	background: #eef2e8 !important;
+	color: #415439 !important;
+}
+
+body .cky-audit-table-element table tr:nth-child(even) td:first-child {
+	background: #e6ecdf !important;
+}
+
+body .cky-audit-table-element table td:nth-child(2) {
+	background: #f8f2e8 !important;
+	color: #685f55 !important;
+}
+
+body .cky-audit-table-element table tr:nth-child(even) td:nth-child(2) {
+	background: #eee7dc !important;
+}
+
 .dondog-header {
 	--dondog-header-bg: #f5f1eb;
 	--dondog-header-ink: #1a1a1a;
