@@ -3,7 +3,7 @@
  * Footer shortcode.
  *
  * Usage:
- * [dondog_footer logo="123" instagram_icon="124" facebook_icon="125"]
+ * [dondog_footer logo="13" instagram_icon="124" facebook_icon="125"]
  *
  * @package DonDog
  */
