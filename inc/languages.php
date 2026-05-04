@@ -116,7 +116,7 @@ function dondog_get_shortcode_language_defaults( $shortcode ) {
 			'text' => 'Termin buchen',
 		],
 		'dondog_header'       => [
-			'nav_items' => 'Startseite|/;Preise|/cenik/;Über uns|/o-nas/;Galerie|/galerija/;Kontakt|/kontakt/',
+			'nav_items' => 'Startseite|/;Preise|/cenik/;Über uns|/o-nas/;Galerie|https://dondog.si/elementor-1158/;Kontakt|/kontakt/',
 			'cta_text'  => 'Termin buchen',
 		],
 		'dondog_footer'       => [
