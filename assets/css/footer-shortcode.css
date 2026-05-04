@@ -178,16 +178,31 @@
 .dondog-footer__contact li,
 .dondog-footer__hours li {
 	display: grid;
-	grid-template-columns: 18px minmax(0, 1fr);
+	grid-template-columns: 22px minmax(0, 1fr);
 	align-items: start;
-	gap: 12px;
+	gap: 10px;
 }
 
 .dondog-footer__contact .dondog-footer__icon,
 .dondog-footer__hours .dondog-footer__icon {
-	width: 18px;
-	height: 18px;
+	width: 22px;
+	height: 22px;
+	margin-top: 1px;
 	background: transparent;
+	line-height: 1;
+	place-self: start center;
+}
+
+.dondog-footer__contact .dondog-footer__icon-img,
+.dondog-footer__hours .dondog-footer__icon-img {
+	width: 15px;
+	height: 15px;
+}
+
+.dondog-footer__contact li > span:not(.dondog-footer__icon),
+.dondog-footer__contact li > a,
+.dondog-footer__hours li > span:not(.dondog-footer__icon) {
+	padding-top: 1px;
 }
 
 .dondog-footer__hours strong {
