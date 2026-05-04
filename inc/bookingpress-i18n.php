@@ -64,7 +64,15 @@ function dondog_bookingpress_i18n_map() {
 		'minut' => 'Minuten',
 		'Brezplačno' => 'Kostenlos',
 		'Hvala' => 'Danke',
+		'Hvala za rezervacijo!' => 'Vielen Dank für Ihre Reservierung!',
 		'Uspešno' => 'Erfolgreich',
+		'ID termina:' => 'Termin-ID:',
+		'Vaš termin je bil uspešno rezerviran!' => 'Ihr Termin wurde erfolgreich gebucht!',
+		'Informacije o terminu smo poslali na vaš email.' => 'Die Termininformationen wurden an Ihre E-Mail-Adresse gesendet.',
+		'Storitev:' => 'Dienstleistung:',
+		'Čas in datum:' => 'Datum und Uhrzeit:',
+		'Ime stranke:' => 'Kunde:',
+		'Dodaj na koledar' => 'Zum Kalender hinzufügen',
 		'Ni razpoložljivih terminov' => 'Keine freien Termine verfügbar',
 		'Termin ni na voljo' => 'Der Termin ist nicht verfügbar',
 		'Ta termin ni več na voljo' => 'Dieser Termin ist nicht mehr verfügbar',
@@ -188,6 +196,134 @@ function dondog_bookingpress_i18n_map() {
 }
 
 /**
+ * Return the German BookingPress thank-you page URL.
+ *
+ * @return string
+ */
+function dondog_bookingpress_german_thank_you_url() {
+	return home_url( '/vielen-dank/' );
+}
+
+/**
+ * Replace Slovenian/default BookingPress thank-you URLs on German booking pages.
+ *
+ * @param string $value URL or text value.
+ * @return string
+ */
+function dondog_bookingpress_rewrite_thank_you_url( $value ) {
+	if ( ! dondog_is_german() || ! is_string( $value ) || '' === trim( $value ) ) {
+		return $value;
+	}
+
+	$trimmed = trim( $value );
+
+	if ( false !== stripos( $trimmed, '/vielen-dank' ) ) {
+		return $value;
+	}
+
+	$path = wp_parse_url( $trimmed, PHP_URL_PATH );
+
+	if ( ! is_string( $path ) || '' === $path ) {
+		$path = $trimmed;
+	}
+
+	$normalized_path = '/' . trim( rawurldecode( $path ), '/' ) . '/';
+	$thank_you_paths = [
+		'/thank-you/',
+		'/sl/thank-you/',
+		'/thankyou/',
+		'/sl/thankyou/',
+		'/hvala/',
+		'/sl/hvala/',
+		'/zahvala/',
+		'/sl/zahvala/',
+		'/hvala-za-rezervacijo/',
+		'/sl/hvala-za-rezervacijo/',
+	];
+
+	if ( ! in_array( $normalized_path, $thank_you_paths, true ) ) {
+		return $value;
+	}
+
+	$replacement = dondog_bookingpress_german_thank_you_url();
+	$query       = wp_parse_url( $trimmed, PHP_URL_QUERY );
+	$fragment    = wp_parse_url( $trimmed, PHP_URL_FRAGMENT );
+
+	if ( is_string( $query ) && '' !== $query ) {
+		$replacement .= '?' . $query;
+	}
+
+	if ( is_string( $fragment ) && '' !== $fragment ) {
+		$replacement .= '#' . $fragment;
+	}
+
+	return str_replace( $trimmed, $replacement, $value );
+}
+
+/**
+ * Recursively replace BookingPress thank-you URLs in form data.
+ *
+ * @param mixed $value BookingPress data.
+ * @return mixed
+ */
+function dondog_bookingpress_rewrite_thank_you_urls_in_value( $value ) {
+	if ( is_string( $value ) ) {
+		return dondog_bookingpress_rewrite_thank_you_url( $value );
+	}
+
+	if ( is_array( $value ) ) {
+		foreach ( $value as $key => $item ) {
+			$value[ $key ] = dondog_bookingpress_rewrite_thank_you_urls_in_value( $item );
+		}
+
+		return $value;
+	}
+
+	if ( is_object( $value ) ) {
+		foreach ( get_object_vars( $value ) as $key => $item ) {
+			$value->{$key} = dondog_bookingpress_rewrite_thank_you_urls_in_value( $item );
+		}
+	}
+
+	return $value;
+}
+
+/**
+ * Filter BookingPress front-end form data before Vue receives it.
+ *
+ * @param mixed $bookingpress_booking_form_data BookingPress form data.
+ * @return mixed
+ */
+function dondog_bookingpress_filter_frontend_thank_you_url( $bookingpress_booking_form_data ) {
+	return dondog_bookingpress_rewrite_thank_you_urls_in_value( $bookingpress_booking_form_data );
+}
+add_filter( 'bookingpress_get_booking_form_customize_data_filter', 'dondog_bookingpress_filter_frontend_thank_you_url', 20 );
+add_filter( 'bookingpress_customize_add_dynamic_data_fields', 'dondog_bookingpress_filter_frontend_thank_you_url', 20 );
+
+/**
+ * Return exact BookingPress text replacements for Slovenian pages.
+ *
+ * @return array<string,string>
+ */
+function dondog_bookingpress_slovenian_i18n_map() {
+	return [
+		'Note' => 'Opomba',
+		'Notes' => 'Opombe',
+		'Enter note details' => 'Vnesite opombo',
+		'Please enter appointment note' => 'Prosimo, vnesite opombo termina.',
+	];
+}
+
+/**
+ * Return BookingPress replacements for the current page language.
+ *
+ * @return array<string,string>
+ */
+function dondog_bookingpress_current_i18n_map() {
+	return dondog_is_german() ? dondog_bookingpress_i18n_map() : dondog_bookingpress_slovenian_i18n_map();
+}
+
+/**
  * Translate exact BookingPress strings generated through WordPress i18n.
  *
  * @param string $translated_text Current translated text.
@@ -196,17 +332,11 @@ function dondog_bookingpress_i18n_map() {
  * @return string
  */
 function dondog_translate_bookingpress_text( $translated_text, $text, $domain = '' ) {
-	static $is_german = null;
-
-	if ( null === $is_german ) {
-		$is_german = dondog_is_german();
-	}
-
-	if ( ! $is_german || ( is_admin() && ! wp_doing_ajax() ) ) {
+	if ( is_admin() && ! wp_doing_ajax() ) {
 		return $translated_text;
 	}
 
-	$map = dondog_bookingpress_i18n_map();
+	$map = dondog_bookingpress_current_i18n_map();
 
 	if ( isset( $map[ $text ] ) ) {
 		return $map[ $text ];
@@ -243,7 +373,13 @@ add_filter( 'ngettext_with_context', 'dondog_translate_bookingpress_plural_text'
  * @return void
  */
 function dondog_enqueue_bookingpress_i18n() {
-	if ( is_admin() || ! dondog_is_german() ) {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$map = dondog_bookingpress_current_i18n_map();
+
+	if ( [] === $map ) {
 		return;
 	}
 
@@ -263,7 +399,12 @@ function dondog_enqueue_bookingpress_i18n() {
 
 	wp_add_inline_script(
 		'dondog-bookingpress-i18n',
-		'window.dondogBookingPressI18n = ' . wp_json_encode( dondog_bookingpress_i18n_map() ) . ';',
+		'window.dondogBookingPressI18n = ' . wp_json_encode( $map ) . ';window.dondogBookingPressI18nConfig = ' . wp_json_encode(
+			[
+				'language'    => dondog_get_current_language(),
+				'thankYouUrl' => dondog_is_german() ? dondog_bookingpress_german_thank_you_url() : '',
+			]
+		) . ';',
 		'before'
 	);
 }

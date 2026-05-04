@@ -2,6 +2,7 @@
 	'use strict';
 
 	var translations = window.dondogBookingPressI18n || {};
+	var config = window.dondogBookingPressI18nConfig || {};
 	var bookingPressSelector = [
 		'[id^="bookingpress_booking_form"]',
 		'.bookingpress',
@@ -24,6 +25,69 @@
 		return Object.keys(translations).length > 0;
 	}
 
+	function isGermanPage() {
+		return config.language === 'de';
+	}
+
+	function getGermanThankYouUrl() {
+		return typeof config.thankYouUrl === 'string' ? config.thankYouUrl : '';
+	}
+
+	function isGermanThankYouPage() {
+		return isGermanPage() && /\/vielen-dank\/?$/i.test(window.location.pathname);
+	}
+
+	function rewriteThankYouUrl(value) {
+		var target = getGermanThankYouUrl();
+
+		if (!isGermanPage() || !target || typeof value !== 'string' || value === '') {
+			return value;
+		}
+
+		if (value.indexOf('/vielen-dank') !== -1) {
+			return value;
+		}
+
+		var trimmed = value.trim();
+		var parsed;
+
+		try {
+			parsed = new URL(trimmed, window.location.origin);
+		} catch (error) {
+			return value;
+		}
+
+		var normalizedPath = parsed.pathname.replace(/\/+$/, '') + '/';
+		var thankYouPaths = [
+			'/thank-you/',
+			'/sl/thank-you/',
+			'/thankyou/',
+			'/sl/thankyou/',
+			'/hvala/',
+			'/sl/hvala/',
+			'/zahvala/',
+			'/sl/zahvala/',
+			'/hvala-za-rezervacijo/',
+			'/sl/hvala-za-rezervacijo/'
+		];
+
+		if (thankYouPaths.indexOf(normalizedPath) === -1) {
+			return value;
+		}
+
+		var replacement = target;
+
+		if (parsed.search) {
+			replacement += parsed.search;
+		}
+
+		if (parsed.hash) {
+			replacement += parsed.hash;
+		}
+
+		return value.replace(trimmed, replacement);
+	}
+
 	function translateString(value) {
 		if (typeof value !== 'string' || value === '') {
 			return value;
@@ -37,10 +101,10 @@
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(translations, trimmed)) {
-			return value;
+			return rewriteThankYouUrl(value);
 		}
 
-		return value.replace(trimmed, translations[trimmed]);
+		return rewriteThankYouUrl(value.replace(trimmed, translations[trimmed]));
 	}
 
 	function isBookingPressElement(element) {
@@ -120,6 +184,30 @@
 		Array.prototype.forEach.call(document.querySelectorAll(bookingPressSelector), translateElement);
 	}
 
+	function translateThankYouPageDom() {
+		if (!isGermanThankYouPage() || !document.body) {
+			return;
+		}
+
+		var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+			acceptNode: function (node) {
+				var parent = node.parentElement;
+
+				if (!parent || skippedTags[parent.tagName]) {
+					return NodeFilter.FILTER_REJECT;
+				}
+
+				return translateString(node.nodeValue) !== node.nodeValue ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+			}
+		});
+		var textNode = walker.nextNode();
+
+		while (textNode) {
+			textNode.nodeValue = translateString(textNode.nodeValue);
+			textNode = walker.nextNode();
+		}
+	}
+
 	function translateObjectStrings(value, seen) {
 		if (!value || typeof value !== 'object') {
 			return;
@@ -157,6 +245,20 @@
 		});
 	}
 
+	function refreshGlobalsFromBookingPressInteraction(event) {
+		var target = event.target;
+
+		if (target && target.nodeType === 1 && isBookingPressElement(target)) {
+			translateBookingPressGlobals();
+		}
+	}
+
+	function bindBookingPressInteractionHandlers() {
+		['click', 'change', 'submit'].forEach(function (eventName) {
+			document.addEventListener(eventName, refreshGlobalsFromBookingPressInteraction, true);
+		});
+	}
+
 	function translateAll() {
 		if (!hasTranslations()) {
 			return;
@@ -164,6 +266,7 @@
 
 		translateBookingPressGlobals();
 		translateBookingPressDom();
+		translateThankYouPageDom();
 	}
 
 	function observeChanges() {
@@ -205,10 +308,12 @@
 		document.addEventListener('DOMContentLoaded', function () {
 			translateAll();
 			observeChanges();
+			bindBookingPressInteractionHandlers();
 		});
 	} else {
 		translateAll();
 		observeChanges();
+		bindBookingPressInteractionHandlers();
 	}
 
 	[100, 500, 1000, 2000].forEach(function (delay) {
