@@ -24,6 +24,20 @@ function dondog_enqueue_playfair_display() {
 }
 
 /**
+ * Enqueue the hero font with reliable Slovenian character support.
+ *
+ * @return void
+ */
+function dondog_enqueue_hero_font() {
+	wp_enqueue_style(
+		'dondog-lora',
+		'https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap',
+		[],
+		null
+	);
+}
+
+/**
  * Enqueue child theme styles.
  *
  * @return void
@@ -53,11 +67,14 @@ function dondog_enqueue_theme_styles() {
 	}
 
 	if ( dondog_current_page_has_shortcode( 'dondog_hero' ) ) {
+		dondog_enqueue_hero_font();
+
 		wp_enqueue_style(
 			'dondog-hero-shortcode-style',
 			get_stylesheet_directory_uri() . '/assets/css/hero-shortcode.css',
 			[
 				'hello-elementor-child-style',
+				'dondog-lora',
 			],
 			DONDOG_THEME_VERSION
 		);

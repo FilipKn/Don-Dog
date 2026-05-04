@@ -188,13 +188,13 @@ body .dondog-hero .dondog-hero__button,
 body .dondog-hero .dondog-hero__button *,
 body .dondog-hero .dondog-hero__features,
 body .dondog-hero .dondog-hero__features * {
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	font-family: "Lora", Georgia, "Times New Roman", serif !important;
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
 }
 
 body .dondog-hero .dondog-hero__title {
-	font-weight: 750 !important;
+	font-weight: 700 !important;
 	letter-spacing: 0 !important;
 	line-height: 1.15 !important;
 }
