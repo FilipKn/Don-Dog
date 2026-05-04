@@ -15,6 +15,7 @@ Tags: flexible-header, custom-colors, custom-menu, custom-logo, editor-style, fe
 
 :root {
 	--dondog-font-primary: "Playfair Display", Georgia, "Times New Roman", serif;
+	--dondog-font-mobile-serif: Georgia, "Times New Roman", serif;
 }
 
 body,
@@ -709,7 +710,9 @@ body .cky-footer-wrapper .cky-powered-by {
 	.dondog-header__cta {
 		min-height: 40px;
 		padding: 0 15px;
+		font-family: var(--dondog-font-mobile-serif);
 		font-size: 14px;
+		line-height: 1.25;
 	}
 
 	.dondog-header__nav {
@@ -727,7 +730,10 @@ body .cky-footer-wrapper .cky-powered-by {
 	}
 
 	.dondog-header__nav-link {
+		font-family: var(--dondog-font-mobile-serif);
 		font-size: 16px;
+		line-height: 1.28;
+		letter-spacing: 0;
 	}
 }
 
