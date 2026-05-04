@@ -178,8 +178,14 @@ function dondog_translate_url( $url, $language = '' ) {
 		return function_exists( 'pll_home_url' ) ? pll_home_url( $language ) : home_url( '/' );
 	}
 
+	$path_without_language = dondog_strip_language_prefix_from_path( $path );
+
+	if ( '' === $path_without_language ) {
+		return function_exists( 'pll_home_url' ) ? pll_home_url( $language ) : home_url( '/' );
+	}
+
 	if ( function_exists( 'pll_get_post' ) ) {
-		$page = get_page_by_path( $path );
+		$page = dondog_get_page_by_translatable_path( $path );
 
 		if ( $page instanceof WP_Post ) {
 			$translated_id = pll_get_post( $page->ID, $language );
@@ -190,7 +196,139 @@ function dondog_translate_url( $url, $language = '' ) {
 		}
 	}
 
+	$fallback_page = dondog_get_known_translated_page_for_path( $path, $language );
+
+	if ( $fallback_page instanceof WP_Post ) {
+		return get_permalink( $fallback_page );
+	}
+
 	return $url;
+}
+
+/**
+ * Resolve a page from a path, also accepting Polylang language-prefixed URLs.
+ *
+ * @param string $path URL path without leading/trailing slash.
+ * @return WP_Post|null
+ */
+function dondog_get_page_by_translatable_path( $path ) {
+	$candidates = array_unique(
+		array_filter(
+			[
+				trim( (string) $path, '/' ),
+				dondog_strip_language_prefix_from_path( $path ),
+			]
+		)
+	);
+
+	foreach ( $candidates as $candidate ) {
+		$page = get_page_by_path( $candidate );
+
+		if ( $page instanceof WP_Post ) {
+			return $page;
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Remove a Polylang language slug from the beginning of a URL path.
+ *
+ * @param string $path URL path without leading/trailing slash.
+ * @return string
+ */
+function dondog_strip_language_prefix_from_path( $path ) {
+	$path = trim( (string) $path, '/' );
+
+	if ( '' === $path ) {
+		return '';
+	}
+
+	$segments = explode( '/', $path );
+	$language_slugs = [ 'sl', 'de' ];
+
+	if ( function_exists( 'pll_languages_list' ) ) {
+		$polylang_slugs = pll_languages_list( [ 'fields' => 'slug' ] );
+
+		if ( is_array( $polylang_slugs ) ) {
+			$language_slugs = array_merge( $language_slugs, $polylang_slugs );
+		}
+	}
+
+	$language_slugs = array_unique( array_filter( array_map( 'strval', $language_slugs ) ) );
+
+	if ( in_array( $segments[0], $language_slugs, true ) ) {
+		array_shift( $segments );
+	}
+
+	return implode( '/', $segments );
+}
+
+/**
+ * Find known translated pages by slug if Polylang translations are not connected.
+ *
+ * @param string $path     Source URL path without leading/trailing slash.
+ * @param string $language Target language slug.
+ * @return WP_Post|null
+ */
+function dondog_get_known_translated_page_for_path( $path, $language ) {
+	$source_path = strtolower( dondog_strip_language_prefix_from_path( $path ) );
+	$known_paths = [
+		'de' => [
+			'cenik'               => [ 'preis', 'preise' ],
+			'o-nas'               => [ 'uber-uns', 'ueber-uns' ],
+			'galerija'            => [ 'galerie' ],
+			'kontakt'             => [ 'kontakt' ],
+			'rezervacije'         => [ 'reservierungen', 'termin-buchen', 'buchung' ],
+			'politika-zasebnosti' => [ 'datenschutz', 'datenschutzerklaerung', 'privacy-policy' ],
+		],
+		'sl' => [
+			'preis'                 => [ 'cenik' ],
+			'preise'                => [ 'cenik' ],
+			'uber-uns'              => [ 'o-nas' ],
+			'ueber-uns'             => [ 'o-nas' ],
+			'galerie'               => [ 'galerija' ],
+			'kontakt'               => [ 'kontakt' ],
+			'reservierungen'        => [ 'rezervacije' ],
+			'termin-buchen'         => [ 'rezervacije' ],
+			'buchung'               => [ 'rezervacije' ],
+			'datenschutz'           => [ 'politika-zasebnosti' ],
+			'datenschutzerklaerung' => [ 'politika-zasebnosti' ],
+			'privacy-policy'        => [ 'politika-zasebnosti' ],
+		],
+	];
+
+	if ( ! isset( $known_paths[ $language ][ $source_path ] ) ) {
+		return null;
+	}
+
+	foreach ( $known_paths[ $language ][ $source_path ] as $candidate ) {
+		$page = get_page_by_path( $candidate );
+
+		if ( $page instanceof WP_Post && dondog_page_matches_language( $page, $language ) ) {
+			return $page;
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Check if a page belongs to a language when Polylang can tell us.
+ *
+ * @param WP_Post $page     Page object.
+ * @param string  $language Language slug.
+ * @return bool
+ */
+function dondog_page_matches_language( WP_Post $page, $language ) {
+	if ( function_exists( 'pll_get_post_language' ) ) {
+		$page_language = pll_get_post_language( $page->ID, 'slug' );
+
+		return ! is_string( $page_language ) || '' === $page_language || $language === $page_language;
+	}
+
+	return true;
 }
 
 /**

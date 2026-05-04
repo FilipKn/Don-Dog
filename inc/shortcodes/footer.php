@@ -59,6 +59,7 @@ function dondog_render_footer_shortcode( $atts ) {
 
 	$atts = shortcode_atts( $defaults, $atts, 'dondog_footer' );
 	$atts = dondog_apply_shortcode_language_defaults( 'dondog_footer', $atts, $defaults );
+	$atts['privacy_url'] = dondog_translate_url( $atts['privacy_url'] );
 
 	ob_start();
 	?>
