@@ -69,8 +69,13 @@ body .elementor-post__excerpt {
 		--column-gap: 0 !important;
 	}
 
-	.elementor-element.elementor-element-162b0a3 {
+	.elementor-element.elementor-element-162b0a3,
+	.elementor-element.elementor-element-38aa65d,
+	.elementor-element.elementor-element-379f273 {
 		--min-height: auto !important;
+		--gap: 24px 0 !important;
+		--row-gap: 24px !important;
+		--column-gap: 0 !important;
 		--e-con-grid-template-rows: auto !important;
 		--align-items: start !important;
 		align-items: start !important;
@@ -78,7 +83,9 @@ body .elementor-post__excerpt {
 		grid-template-rows: auto !important;
 	}
 
-	.elementor-element.elementor-element-162b0a3 > .e-con {
+	.elementor-element.elementor-element-162b0a3 > .e-con,
+	.elementor-element.elementor-element-38aa65d > .e-con,
+	.elementor-element.elementor-element-379f273 > .e-con {
 		--min-height: auto !important;
 		align-self: start !important;
 		height: auto !important;
@@ -86,13 +93,19 @@ body .elementor-post__excerpt {
 	}
 
 	.elementor-element.elementor-element-162b0a3 > .e-con > .elementor-widget-image,
-	.elementor-element.elementor-element-162b0a3 > .e-con > .elementor-widget-image .elementor-widget-container {
+	.elementor-element.elementor-element-162b0a3 > .e-con > .elementor-widget-image .elementor-widget-container,
+	.elementor-element.elementor-element-38aa65d > .e-con > .elementor-widget-image,
+	.elementor-element.elementor-element-38aa65d > .e-con > .elementor-widget-image .elementor-widget-container,
+	.elementor-element.elementor-element-379f273 > .e-con > .elementor-widget-image,
+	.elementor-element.elementor-element-379f273 > .e-con > .elementor-widget-image .elementor-widget-container {
 		width: 100%;
 		overflow: hidden;
 		border-radius: 12px 12px 0 0;
 	}
 
-	.elementor-element.elementor-element-162b0a3 > .e-con > .elementor-widget-image img {
+	.elementor-element.elementor-element-162b0a3 > .e-con > .elementor-widget-image img,
+	.elementor-element.elementor-element-38aa65d > .e-con > .elementor-widget-image img,
+	.elementor-element.elementor-element-379f273 > .e-con > .elementor-widget-image img {
 		display: block !important;
 		width: 100% !important;
 		height: auto !important;
