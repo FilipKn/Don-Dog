@@ -42,7 +42,7 @@ function dondog_is_german() {
 }
 
 /**
- * Return Slovenian or German text for the current language.
+ * Return Slovenian or German text for the current language
  *
  * @param string $sl Slovenian text.
  * @param string $de German text.
