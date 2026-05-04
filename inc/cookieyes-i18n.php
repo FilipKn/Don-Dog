@@ -195,32 +195,6 @@ function dondog_cookieyes_sl_i18n_map() {
 }
 
 /**
- * Enqueue CookieYes front-end text translations.
- *
- * @return void
- */
-function dondog_enqueue_cookieyes_i18n() {
-	if ( is_admin() ) {
-		return;
-	}
-
-	$script_path = get_stylesheet_directory() . '/assets/js/cookieyes-i18n.js';
-
-	if ( ! file_exists( $script_path ) ) {
-		return;
-	}
-
-	wp_enqueue_script(
-		'dondog-cookieyes-i18n',
-		get_stylesheet_directory_uri() . '/assets/js/cookieyes-i18n.js',
-		[],
-		DONDOG_THEME_VERSION,
-		false
-	);
-}
-add_action( 'wp_enqueue_scripts', 'dondog_enqueue_cookieyes_i18n', 110 );
-
-/**
  * Print CookieYes translations before optimized scripts can run.
  *
  * @return void
@@ -238,22 +212,24 @@ function dondog_print_cookieyes_i18n_data() {
 add_action( 'wp_head', 'dondog_print_cookieyes_i18n_data', 1 );
 
 /**
- * Keep the CookieYes translator out of JS optimizers so it runs immediately.
+ * Print CookieYes translator inline so it can run before deferred CookieYes scripts.
  *
- * @param string $tag    Script tag.
- * @param string $handle Script handle.
- * @param string $src    Script source.
- * @return string
+ * @return void
  */
-function dondog_cookieyes_i18n_script_tag( $tag, $handle, $src ) {
-	if ( 'dondog-cookieyes-i18n' !== $handle ) {
-		return $tag;
+function dondog_print_cookieyes_i18n_runtime() {
+	if ( is_admin() ) {
+		return;
 	}
 
-	return sprintf(
-		'<script src="%1$s" id="%2$s-js" data-no-optimize="1" data-cfasync="false"></script>' . "\n",
-		esc_url( $src ),
-		esc_attr( $handle )
-	);
+	$script_path = get_stylesheet_directory() . '/assets/js/cookieyes-i18n.js';
+
+	if ( ! file_exists( $script_path ) ) {
+		return;
+	}
+
+	echo '<script id="dondog-cookieyes-i18n-runtime" data-no-optimize="1" data-cfasync="false">' . "\n";
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo file_get_contents( $script_path );
+	echo "\n</script>\n";
 }
-add_filter( 'script_loader_tag', 'dondog_cookieyes_i18n_script_tag', 10, 3 );
+add_action( 'wp_head', 'dondog_print_cookieyes_i18n_runtime', 2 );
