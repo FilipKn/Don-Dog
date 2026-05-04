@@ -54,6 +54,87 @@ body .elementor-post__excerpt {
 	font-family: var(--dondog-font-primary) !important;
 }
 
+.cky-audit-table-element {
+	margin: 28px 0 48px;
+	color: #24201d;
+}
+
+.cky-audit-table-element h2,
+.cky-audit-table-element h3 {
+	margin: 34px 0 10px;
+	font-family: var(--dondog-font-primary);
+	font-size: clamp(26px, 3vw, 34px);
+	font-weight: 600;
+	line-height: 1.15;
+	color: #24201d;
+}
+
+.cky-audit-table-element p {
+	max-width: 980px;
+	margin: 0 0 18px;
+	font-size: 17px;
+	line-height: 1.65;
+	color: #2d2824;
+}
+
+.cky-audit-table-element table {
+	width: 100%;
+	margin: 18px 0 44px;
+	overflow: hidden;
+	border: 1px solid rgba(126, 144, 112, 0.28);
+	border-radius: 8px;
+	border-collapse: separate;
+	border-spacing: 0;
+	background: #fff;
+	box-shadow: 0 12px 30px rgba(36, 32, 29, 0.06);
+}
+
+.cky-audit-table-element th {
+	padding: 15px 18px;
+	background: #829578;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: left;
+}
+
+.cky-audit-table-element td {
+	padding: 16px 18px;
+	border-top: 1px solid rgba(126, 144, 112, 0.2);
+	color: #24201d;
+	font-size: 14px;
+	line-height: 1.55;
+	vertical-align: top;
+}
+
+.cky-audit-table-element tr:nth-child(even) td {
+	background: #f7f4ee;
+}
+
+.cky-audit-table-element td:first-child {
+	width: 180px;
+	color: #4f5f48;
+	font-family: Consolas, "Courier New", monospace;
+	font-size: 13px;
+	word-break: break-word;
+}
+
+.cky-audit-table-element td:nth-child(2) {
+	width: 140px;
+	color: #5f5a54;
+}
+
+@media (max-width: 768px) {
+	.cky-audit-table-element {
+		overflow-x: auto;
+		padding-bottom: 6px;
+	}
+
+	.cky-audit-table-element table {
+		min-width: 760px;
+	}
+}
+
 .dondog-header {
 	--dondog-header-bg: #f5f1eb;
 	--dondog-header-ink: #1a1a1a;
