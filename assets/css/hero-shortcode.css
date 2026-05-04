@@ -5,11 +5,12 @@
 	--dondog-hero-olive: #7a8b6f;
 	--dondog-hero-line: rgba(122, 139, 111, 0.1);
 	--dondog-hero-line-soft: rgba(122, 139, 111, 0.05);
+	--dondog-hero-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
 	overflow: hidden;
 	background: var(--dondog-hero-bg);
 	color: var(--dondog-hero-ink);
-	font-family: var(--dondog-font-primary);
+	font-family: var(--dondog-hero-font);
 	width: 100%;
 	max-width: 100%;
 	margin-right: 0;
@@ -60,9 +61,10 @@
 .dondog-hero__eyebrow {
 	margin: 0 0 19px;
 	color: var(--dondog-hero-olive);
+	font-family: var(--dondog-hero-font);
 	font-size: 13px;
-	font-weight: 500;
-	letter-spacing: 1.04px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
 	line-height: 1.5;
 	text-transform: uppercase;
 }
@@ -71,11 +73,11 @@
 	display: grid;
 	gap: 0;
 	margin: 0;
-	font-family: var(--dondog-font-primary);
-	font-size: clamp(39px, 4vw, 46px);
-	font-weight: 600;
-	letter-spacing: -0.92px;
-	line-height: 1.1;
+	font-family: var(--dondog-hero-font);
+	font-size: clamp(38px, 4vw, 46px);
+	font-weight: 750;
+	letter-spacing: 0;
+	line-height: 1.14;
 }
 
 .dondog-hero__title span {
@@ -91,6 +93,7 @@
 	max-width: 420px;
 	margin: 19px 0 0;
 	color: var(--dondog-hero-muted);
+	font-family: var(--dondog-hero-font);
 	font-size: 17px;
 	font-weight: 400;
 	line-height: 1.7;
@@ -110,8 +113,9 @@
 	justify-content: center;
 	min-height: 52px;
 	border-radius: 999px;
+	font-family: var(--dondog-hero-font);
 	font-size: 15px;
-	font-weight: 500;
+	font-weight: 700;
 	line-height: 1.5;
 	text-decoration: none;
 	transition:
@@ -174,6 +178,7 @@
 	align-items: center;
 	gap: 8px;
 	color: var(--dondog-hero-muted);
+	font-family: var(--dondog-hero-font);
 	font-size: 13px;
 	line-height: 1.5;
 }
@@ -603,7 +608,7 @@
 	}
 
 	.dondog-hero__title {
-		font-family: var(--dondog-font-mobile-serif);
+		font-family: var(--dondog-hero-font);
 		font-size: clamp(36px, 11.5vw, 42px);
 		letter-spacing: 0;
 		line-height: 1.16;
@@ -613,7 +618,7 @@
 	.dondog-hero__text,
 	.dondog-hero__button,
 	.dondog-hero__features {
-		font-family: var(--dondog-font-mobile-serif);
+		font-family: var(--dondog-hero-font);
 		letter-spacing: 0;
 	}
 
@@ -694,7 +699,7 @@
 	}
 
 	.dondog-hero__title {
-		font-family: var(--dondog-font-mobile-serif);
+		font-family: var(--dondog-hero-font);
 		font-size: clamp(33px, 11vw, 38px);
 		line-height: 1.17;
 	}
