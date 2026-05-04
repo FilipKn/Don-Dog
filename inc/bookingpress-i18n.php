@@ -401,8 +401,9 @@ function dondog_enqueue_bookingpress_i18n() {
 		'dondog-bookingpress-i18n',
 		'window.dondogBookingPressI18n = ' . wp_json_encode( $map ) . ';window.dondogBookingPressI18nConfig = ' . wp_json_encode(
 			[
-				'language'    => dondog_get_current_language(),
-				'thankYouUrl' => dondog_is_german() ? dondog_bookingpress_german_thank_you_url() : '',
+				'language'          => dondog_get_current_language(),
+				'thankYouUrl'       => dondog_is_german() ? dondog_bookingpress_german_thank_you_url() : '',
+				'germanThankYouUrl' => dondog_bookingpress_german_thank_you_url(),
 			]
 		) . ';',
 		'before'

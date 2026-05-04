@@ -3,6 +3,8 @@
 
 	var translations = window.dondogBookingPressI18n || {};
 	var config = window.dondogBookingPressI18nConfig || {};
+	var germanBookingFlowKey = 'dondogBookingPressGermanFlow';
+	var germanBookingFlowMaxAge = 30 * 60 * 1000;
 	var bookingPressSelector = [
 		'[id^="bookingpress_booking_form"]',
 		'.bookingpress',
@@ -30,11 +32,38 @@
 	}
 
 	function getGermanThankYouUrl() {
-		return typeof config.thankYouUrl === 'string' ? config.thankYouUrl : '';
+		if (typeof config.thankYouUrl === 'string' && config.thankYouUrl !== '') {
+			return config.thankYouUrl;
+		}
+
+		return typeof config.germanThankYouUrl === 'string' ? config.germanThankYouUrl : '';
 	}
 
 	function isGermanThankYouPage() {
 		return isGermanPage() && /\/vielen-dank\/?$/i.test(window.location.pathname);
+	}
+
+	function getThankYouPaths() {
+		return [
+			'/thank-you/',
+			'/sl/thank-you/',
+			'/thankyou/',
+			'/sl/thankyou/',
+			'/hvala/',
+			'/sl/hvala/',
+			'/zahvala/',
+			'/sl/zahvala/',
+			'/hvala-za-rezervacijo/',
+			'/sl/hvala-za-rezervacijo/'
+		];
+	}
+
+	function normalizePath(path) {
+		return path.replace(/\/+$/, '') + '/';
+	}
+
+	function isKnownThankYouPath(path) {
+		return getThankYouPaths().indexOf(normalizePath(path)) !== -1;
 	}
 
 	function rewriteThankYouUrl(value) {
@@ -57,21 +86,7 @@
 			return value;
 		}
 
-		var normalizedPath = parsed.pathname.replace(/\/+$/, '') + '/';
-		var thankYouPaths = [
-			'/thank-you/',
-			'/sl/thank-you/',
-			'/thankyou/',
-			'/sl/thankyou/',
-			'/hvala/',
-			'/sl/hvala/',
-			'/zahvala/',
-			'/sl/zahvala/',
-			'/hvala-za-rezervacijo/',
-			'/sl/hvala-za-rezervacijo/'
-		];
-
-		if (thankYouPaths.indexOf(normalizedPath) === -1) {
+		if (!isKnownThankYouPath(parsed.pathname)) {
 			return value;
 		}
 
@@ -86,6 +101,73 @@
 		}
 
 		return value.replace(trimmed, replacement);
+	}
+
+	function markGermanBookingFlow() {
+		if (!isGermanPage() || !window.sessionStorage) {
+			return;
+		}
+
+		try {
+			window.sessionStorage.setItem(germanBookingFlowKey, String(Date.now()));
+		} catch (error) {
+			// Storage can be unavailable in private modes.
+		}
+	}
+
+	function getGermanBookingFlowStartedAt() {
+		if (!window.sessionStorage) {
+			return 0;
+		}
+
+		try {
+			return parseInt(window.sessionStorage.getItem(germanBookingFlowKey) || '0', 10);
+		} catch (error) {
+			return 0;
+		}
+	}
+
+	function clearGermanBookingFlow() {
+		if (!window.sessionStorage) {
+			return;
+		}
+
+		try {
+			window.sessionStorage.removeItem(germanBookingFlowKey);
+		} catch (error) {
+			// Storage can be unavailable in private modes.
+		}
+	}
+
+	function hasRecentGermanBookingFlow() {
+		var startedAt = getGermanBookingFlowStartedAt();
+
+		return startedAt > 0 && Date.now() - startedAt < germanBookingFlowMaxAge;
+	}
+
+	function pageLooksLikeBookingPressThankYou() {
+		if (!document.body) {
+			return false;
+		}
+
+		var text = document.body.textContent || '';
+
+		return text.indexOf('Hvala za rezervacijo') !== -1 && text.indexOf('ID termina') !== -1;
+	}
+
+	function redirectSlovenianThankYouAfterGermanBooking() {
+		var target = getGermanThankYouUrl();
+
+		if (!target || isGermanThankYouPage() || !hasRecentGermanBookingFlow()) {
+			return;
+		}
+
+		if (!isKnownThankYouPath(window.location.pathname) && !pageLooksLikeBookingPressThankYou()) {
+			return;
+		}
+
+		clearGermanBookingFlow();
+		window.location.replace(target + window.location.search + window.location.hash);
 	}
 
 	function translateString(value) {
@@ -249,6 +331,7 @@
 		var target = event.target;
 
 		if (target && target.nodeType === 1 && isBookingPressElement(target)) {
+			markGermanBookingFlow();
 			translateBookingPressGlobals();
 		}
 	}
@@ -267,6 +350,7 @@
 		translateBookingPressGlobals();
 		translateBookingPressDom();
 		translateThankYouPageDom();
+		redirectSlovenianThankYouAfterGermanBooking();
 	}
 
 	function observeChanges() {
