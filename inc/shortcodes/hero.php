@@ -71,6 +71,7 @@ function dondog_render_hero_shortcode( $atts ) {
 
 	ob_start();
 	?>
+	<?php echo dondog_hero_render_font_override(); ?>
 	<section class="dondog-hero is-ready is-text-ready" data-dondog-animate="hero" aria-labelledby="<?php echo esc_attr( $title_id ); ?>">
 		<div class="dondog-hero__container">
 			<div class="dondog-hero__content">
@@ -158,6 +159,61 @@ function dondog_render_hero_shortcode( $atts ) {
 	<?php
 
 	return ob_get_clean();
+}
+
+/**
+ * Render a hard hero-only font override.
+ *
+ * This is intentionally inline because some optimization plugins and Elementor
+ * font rules can beat the external shortcode stylesheet on mobile.
+ *
+ * @return string
+ */
+function dondog_hero_render_font_override() {
+	static $printed = false;
+
+	if ( $printed ) {
+		return '';
+	}
+
+	$printed = true;
+
+	return '<style id="dondog-hero-font-override">
+body .dondog-hero,
+body .dondog-hero .dondog-hero__eyebrow,
+body .dondog-hero .dondog-hero__title,
+body .dondog-hero .dondog-hero__title *,
+body .dondog-hero .dondog-hero__text,
+body .dondog-hero .dondog-hero__button,
+body .dondog-hero .dondog-hero__button *,
+body .dondog-hero .dondog-hero__features,
+body .dondog-hero .dondog-hero__features * {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+body .dondog-hero .dondog-hero__title {
+	font-weight: 750 !important;
+	letter-spacing: 0 !important;
+	line-height: 1.15 !important;
+}
+
+body .dondog-hero .dondog-hero__eyebrow {
+	font-weight: 700 !important;
+	letter-spacing: 0.08em !important;
+}
+
+body .dondog-hero .dondog-hero__button {
+	font-weight: 700 !important;
+}
+
+@media (max-width: 640px) {
+	body .dondog-hero .dondog-hero__title {
+		line-height: 1.18 !important;
+	}
+}
+</style>';
 }
 
 /**
