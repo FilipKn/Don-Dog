@@ -3,8 +3,6 @@
 
 	var translations = window.dondogBookingPressI18n || {};
 	var config = window.dondogBookingPressI18nConfig || {};
-	var germanBookingFlowKey = 'dondogBookingPressGermanFlow';
-	var germanBookingFlowMaxAge = 30 * 60 * 1000;
 	var bookingPressSelector = [
 		'[id^="bookingpress_booking_form"]',
 		'.bookingpress',
@@ -101,73 +99,6 @@
 		}
 
 		return value.replace(trimmed, replacement);
-	}
-
-	function markGermanBookingFlow() {
-		if (!isGermanPage() || !window.sessionStorage) {
-			return;
-		}
-
-		try {
-			window.sessionStorage.setItem(germanBookingFlowKey, String(Date.now()));
-		} catch (error) {
-			// Storage can be unavailable in private modes.
-		}
-	}
-
-	function getGermanBookingFlowStartedAt() {
-		if (!window.sessionStorage) {
-			return 0;
-		}
-
-		try {
-			return parseInt(window.sessionStorage.getItem(germanBookingFlowKey) || '0', 10);
-		} catch (error) {
-			return 0;
-		}
-	}
-
-	function clearGermanBookingFlow() {
-		if (!window.sessionStorage) {
-			return;
-		}
-
-		try {
-			window.sessionStorage.removeItem(germanBookingFlowKey);
-		} catch (error) {
-			// Storage can be unavailable in private modes.
-		}
-	}
-
-	function hasRecentGermanBookingFlow() {
-		var startedAt = getGermanBookingFlowStartedAt();
-
-		return startedAt > 0 && Date.now() - startedAt < germanBookingFlowMaxAge;
-	}
-
-	function pageLooksLikeBookingPressThankYou() {
-		if (!document.body) {
-			return false;
-		}
-
-		var text = document.body.textContent || '';
-
-		return text.indexOf('Hvala za rezervacijo') !== -1 && text.indexOf('ID termina') !== -1;
-	}
-
-	function redirectSlovenianThankYouAfterGermanBooking() {
-		var target = getGermanThankYouUrl();
-
-		if (!target || isGermanThankYouPage() || !hasRecentGermanBookingFlow()) {
-			return;
-		}
-
-		if (!isKnownThankYouPath(window.location.pathname) && !pageLooksLikeBookingPressThankYou()) {
-			return;
-		}
-
-		clearGermanBookingFlow();
-		window.location.replace(target + window.location.search + window.location.hash);
 	}
 
 	function translateString(value) {
@@ -327,12 +258,88 @@
 		});
 	}
 
+	function requestIsBookingPressAppointmentSubmission(data) {
+		if (!data) {
+			return false;
+		}
+
+		if (typeof data === 'string') {
+			return data.indexOf('bookingpress_front_save_appointment_booking') !== -1;
+		}
+
+		return typeof data === 'object' && data.action === 'bookingpress_front_save_appointment_booking';
+	}
+
+	function buildGermanThankYouRedirect(originalUrl) {
+		var target = getGermanThankYouUrl();
+
+		if (!target) {
+			return originalUrl;
+		}
+
+		try {
+			var parsed = new URL(originalUrl || target, window.location.origin);
+
+			return target + parsed.search + parsed.hash;
+		} catch (error) {
+			return target;
+		}
+	}
+
+	function redirectUrlIsKnownThankYou(originalUrl) {
+		if (typeof originalUrl !== 'string' || originalUrl === '') {
+			return false;
+		}
+
+		try {
+			return isKnownThankYouPath(new URL(originalUrl, window.location.origin).pathname);
+		} catch (error) {
+			return false;
+		}
+	}
+
+	function rewriteBookingPressBookingResponse(response) {
+		if (!response || !response.data || response.data.variant !== 'redirect_url') {
+			return response;
+		}
+
+		if (!redirectUrlIsKnownThankYou(response.data.redirect_data)) {
+			return response;
+		}
+
+		response.data.redirect_data = buildGermanThankYouRedirect(response.data.redirect_data);
+
+		return response;
+	}
+
+	function installAxiosRedirectInterceptor() {
+		if (!isGermanPage() || !window.axios || window.axios.dondogBookingPressRedirectWrapped) {
+			return;
+		}
+
+		var originalPost = window.axios.post;
+
+		if (typeof originalPost !== 'function') {
+			return;
+		}
+
+		window.axios.post = function () {
+			var shouldRewriteResponse = requestIsBookingPressAppointmentSubmission(arguments[1]);
+
+			return originalPost.apply(this, arguments).then(function (response) {
+				return shouldRewriteResponse ? rewriteBookingPressBookingResponse(response) : response;
+			});
+		};
+
+		window.axios.dondogBookingPressRedirectWrapped = true;
+	}
+
 	function refreshGlobalsFromBookingPressInteraction(event) {
 		var target = event.target;
 
 		if (target && target.nodeType === 1 && isBookingPressElement(target)) {
-			markGermanBookingFlow();
 			translateBookingPressGlobals();
+			installAxiosRedirectInterceptor();
 		}
 	}
 
@@ -350,7 +357,7 @@
 		translateBookingPressGlobals();
 		translateBookingPressDom();
 		translateThankYouPageDom();
-		redirectSlovenianThankYouAfterGermanBooking();
+		installAxiosRedirectInterceptor();
 	}
 
 	function observeChanges() {
